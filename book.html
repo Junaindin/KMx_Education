@@ -64,7 +64,7 @@
             z-index: 1000;
             box-shadow: var(--shadow);
             transition: var(--transition);
-            flex-wrap: wrap; /* මොබයිල් වලදී බිඳී නොයාමට */
+            flex-wrap: wrap; /* oblivion code added to avoid layout breaking on mobile */
         }
 
         .logo-area {
@@ -98,7 +98,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap; /* මොබයිල් එකේදී Menu Items එක පෙළට තැබීමට */
+            flex-wrap: wrap; /* menu alignment fix for small devices */
         }
 
         nav a {
@@ -236,7 +236,7 @@
             border-color: var(--accent-color);
         }
 
-        /* Book Cover Box */
+        /* --- මෙම කොටස පමණක් වෙනස් කරන ලදී (පින්තූරය නිවැරදිව පෙන්වීමට) --- */
         .book-cover {
             width: 100%;
             height: 250px;
@@ -250,12 +250,13 @@
             border: 1px dashed var(--card-border);
             position: relative;
             overflow: hidden;
+            padding: 5px; /* පින්තූරය වටා කුඩා ඉඩක් තැබීමට */
         }
 
         .book-cover img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* පින්තූරය කැපීම (crop) වැළැක්වීමට cover වෙනුවට contain කරන ලදී */
             transition: var(--transition);
         }
 
@@ -471,7 +472,7 @@
                     📚 Story Cover Image
                 </div>
                 <div class="book-info">
-                    <div class="book-title">සඳකඩ පහණ සහ තවත් කතා</div>
+                    <div class="book-title">සඳකඩ පහණ සහ තවත් katha</div>
                     <div class="book-author">W.K කසුන් කල්‍යන</div>
                     <div class="book-desc">සමාජයේ විවිධ පැතිකඩයන් නිරූපණය වන කෙටි කථා එකතුවක්.</div>
                     <div class="book-price">Rs. 450.00</div>

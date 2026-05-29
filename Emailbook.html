@@ -65,7 +65,7 @@
             top: 0;
             z-index: 1000;
             transition: var(--transition);
-            flex-wrap: wrap; /* මොබයිල් තිරවලදී මෙනු එක කැඩී නොයාමට */
+            flex-wrap: wrap; /* Accounted for mobile breakage */
         }
 
         .logo {
@@ -86,7 +86,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap; /* මොබයිල් එකේදී බටන්ස් පෙළට තැබීමට */
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -234,6 +234,84 @@
             box-shadow: 0 0 15px var(--active-color);
         }
 
+        /* --- CUSTOM POPUP MODAL STYLES (එක පාරින්ම වැඩ කිරීමට එකතු කරන ලදී) --- */
+        .custom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-modal {
+            background-color: var(--card-bg);
+            border: 2px solid var(--active-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-overlay.active .custom-modal {
+            transform: translateY(0);
+        }
+
+        .custom-modal i {
+            font-size: 45px;
+            color: var(--active-color);
+            margin-bottom: 15px;
+        }
+
+        .custom-modal h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .custom-modal p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-btn {
+            background-color: #800020;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .modal-btn {
+            background-color: var(--active-color);
+            color: #0d0f12;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
         /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 768px) {
             header {
@@ -358,13 +436,25 @@
         </div>
     </div>
 
+    <div class="custom-overlay" id="customOverlay">
+        <div class="custom-modal">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You for Your Order!</h3>
+            <p>ඔබගේ ඇණවුම සාර්ථකයි. විස්තර ඊමේල් මඟින් අප වෙත එවීමට පහත බටන් එක ඔබන්න.</p>
+            <button class="modal-btn" id="modalOkBtn">OK</button>
+        </div>
+    </div>
+
     <script>
         // 1. Auto-fill Today's Date
         document.getElementById('orderDate').valueAsDate = new Date();
 
-        // 2. Form Submission to Email App + Thank You Message
+        // ගෝලීයව mailto සබැඳිය තබා ගැනීමට Variable එකක්
+        let generatedMailtoUrl = "";
+
+        // 2. Form Submission to Custom Modal
         document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Default submit එක නවත්වන්න
+            e.preventDefault(); 
             
             // Input දත්ත ලබා ගැනීම
             const bookName = document.getElementById('bookName').value;
@@ -376,7 +466,7 @@
             const district = document.getElementById('district').value;
 
             // ඔයාගේ ඊමේල් ලිපිනය
-            const myEmail = "onlinbook@gmail.com";
+            const myEmail = "application2026k@gmail.com";
             
             // Email එකේ සිරස්තලය (Subject)
             const subject = encodeURIComponent("New Book Order - KMx Store");
@@ -394,14 +484,22 @@
                 "---------------------------------"
             );
 
-            // පරිශීලකයාට පෙන්වන Thank You Message එක
-            alert("Thank you for your order!\nConnecting to your email application to send the details...");
+            // Mailto URL එක සකසා සේව් කර ගැනීම
+            generatedMailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;
 
-            // mailto link එක සෑදීම සහ විවෘත කිරීම
-            window.location.href = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;
+            // බ්‍රවුසරය හිර නොකර Custom Popup එක පෙන්වීම
+            document.getElementById('customOverlay').classList.add('active');
         });
 
-        // 3. Dark Mode Toggle Script
+        // 3. Modal OK බටන් එක ක්ලික් කළ විට එක පාරින්ම ඊමේල් ඇප් එක විවෘත කිරීම
+        document.getElementById('modalOkBtn').addEventListener('click', function() {
+            document.getElementById('customOverlay').classList.remove('active');
+            if(generatedMailtoUrl !== "") {
+                window.location.href = generatedMailtoUrl;
+            }
+        });
+
+        // 4. Dark Mode Toggle Script
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = themeBtn.querySelector('i');
         const toggleText = document.getElementById('toggleText');

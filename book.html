@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMx Book Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* CSS Variables - ප්‍රධාන පිටුවට සමාන වර්ණ */
         :root {
@@ -49,11 +51,11 @@
             line-height: 1.6;
         }
 
-        /* Header Layout */
+        /* --- FIXED MOBILE RESPONSIVE HEADER --- */
         header {
             background-color: var(--header-bg);
             border-bottom: 2px solid var(--accent-color);
-            padding: 15px 30px;
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,6 +64,7 @@
             z-index: 1000;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            flex-wrap: wrap; /* මොබයිල් වලදී බිඳී නොයාමට */
         }
 
         .logo-area {
@@ -94,21 +97,27 @@
         nav {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 15px;
+            flex-wrap: wrap; /* මොබයිල් එකේදී Menu Items එක පෙළට තැබීමට */
         }
 
         nav a {
             text-decoration: none;
             color: var(--text-color);
-            font-weight: 500;
-            font-size: 15px;
+            font-weight: 600;
+            font-size: 14px;
             transition: var(--transition);
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
         }
 
         nav a:hover, nav a.active {
-            color: var(--header-bg);
+            color: #ffffff !important;
+            background-color: #800020;
+        }
+
+        [data-theme="dark"] nav a:hover, [data-theme="dark"] nav a.active {
+            color: #0d0d0d !important;
             background-color: var(--accent-color);
             box-shadow: var(--glow);
         }
@@ -117,7 +126,7 @@
             background: none;
             border: 2px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 8px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: bold;
@@ -126,9 +135,10 @@
             gap: 6px;
             transition: var(--transition);
             box-shadow: var(--glow);
+            font-size: 13px;
         }
 
-        /* Book Store Banner & Search Controls */
+        /* Store Container & Search Controls */
         .store-container {
             max-width: 1300px;
             margin: 0 auto;
@@ -190,6 +200,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
+            font-size: 14px;
         }
 
         .filter-btn:hover, .filter-btn.active {
@@ -199,7 +210,7 @@
             border-color: var(--accent-color);
         }
 
-        /* Advanced Books Grid Layout */
+        /* --- IMPROVED RESPONSIVE GRID LAYOUT --- */
         .books-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -228,7 +239,7 @@
         /* Book Cover Box */
         .book-cover {
             width: 100%;
-            height: 240px;
+            height: 250px;
             background: linear-gradient(135deg, rgba(128,0,32,0.05), rgba(128,0,32,0.02));
             border-radius: 8px;
             display: flex;
@@ -258,13 +269,17 @@
             top: 10px;
             left: 10px;
             background-color: var(--accent-color);
-            color: var(--header-bg);
+            color: #ffffff;
             padding: 4px 10px;
             border-radius: 4px;
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             box-shadow: var(--glow);
+            z-index: 5;
+        }
+        [data-theme="dark"] .book-badge {
+            color: #0d0d0d;
         }
 
         .book-info {
@@ -304,8 +319,9 @@
             text-shadow: var(--glow);
         }
 
-        /* Buy Button styling */
+        /* --- STABLE BUY BUTTON AS ANCHOR TAG --- */
         .buy-btn {
+            display: block;
             background-color: transparent;
             color: var(--text-color);
             border: 2px solid var(--accent-color);
@@ -317,6 +333,8 @@
             width: 100%;
             text-align: center;
             margin-top: auto;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
         .buy-btn:hover {
@@ -325,7 +343,7 @@
             box-shadow: var(--glow);
         }
 
-        /* Responsive Breakpoints */
+        /* --- MOBILE & TABLET MEDIA QUERIES (FIXED) --- */
         @media (max-width: 1024px) {
             .books-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -335,7 +353,13 @@
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
+                text-align: center;
+                padding: 15px 20px;
+            }
+            nav {
+                justify-content: center;
+                gap: 8px;
             }
             .search-filter-wrapper {
                 flex-direction: column;
@@ -344,17 +368,36 @@
             .search-box {
                 max-width: 100%;
             }
+            .filter-tabs {
+                justify-content: center;
+            }
             .books-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr); /* ටැබ්ලට් සහ මධ්‍යම ප්‍රමාණයේ ෆෝන් සඳහා කාඩ් 2 බැගින් */
+                gap: 15px;
             }
         }
 
         @media (max-width: 480px) {
+            header {
+                padding: 10px;
+            }
+            nav a {
+                padding: 5px 8px;
+                font-size: 13px;
+            }
+            .theme-toggle {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
             .books-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* කුඩා මොබයිල් ෆෝන් වලදී එක් පේළියට එක බැගින් */
+                gap: 20px;
             }
             .store-title {
                 font-size: 26px;
+            }
+            .book-cover {
+                height: 280px; /* ෆෝන් එකේදී කවර් එක පැහැදිලිව පෙනීමට */
             }
         }
     </style>
@@ -367,13 +410,9 @@
             <div class="logo-text">KMx Education</div>
         </div>
         <nav>
-
-
-
-
             <a href="index.html">Home</a>
             <a href="tech.html">Tech</a>
-            <a href="#" onclick="alert('You are already on the Home page'); return false;" class="active">Book Store</a>
+            <a href="book.html" class="active">Book Store</a>
             <a href="about.html">About</a>
             <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
                 <span id="toggleIcon">🌙</span> <span id="toggleText">Dark Mode</span>
@@ -408,25 +447,21 @@
                     <div class="book-author">W.K කසුන් කල්‍යන</div>
                     <div class="book-desc">Complete syllabus cover with advanced Python programming and Networking notes.</div>
                     <div class="book-price">Rs. 1,250.00</div>
-                    <button class="buy-btn" onclick="alert('පොත මිලදී ගැනීමේ පිටුවට සම්බන්ධ වෙමින්...')">Buy Now</button>
+                    <a href="order.html" class="buy-btn">Buy Now</a>
                 </div>
             </div>
 
             <div class="book-card" data-category="novels">
                 <span class="book-badge">Novel</span>
                 <div class="book-cover">
-                <img src="tharuwaka-daiwaya.jpg" alt="තරුවක දෛවය" style="width: 100%; height: 100%; object-fit: contain;">
+                    <img src="tharuwaka-daiwaya.jpg" alt="තරුවක දෛවය">
                 </div>
-
                 <div class="book-info">
                     <div class="book-title">තරුවක දෛවය</div>
                     <div class="book-author">By W.K කසුන් කල්‍යන</div>
                     <div class="book-desc">ආදරය සහ ජීවිතයේ අභිරහස් සිදුවීම් දාමයක් වටා ගෙතුණු අපූරු නවකතාවක්. </div>
                     <div class="book-price">Rs. 1350.00</div>       
-                    
-                    <button class="buy-btn" onclick="window.location.href='Emailbook.html'">Buy Now</button>
-
-                    
+                    <a href="order.html" class="buy-btn">Buy Now</a>
                 </div>
             </div>
 
@@ -440,7 +475,7 @@
                     <div class="book-author">W.K කසුන් කල්‍යන</div>
                     <div class="book-desc">සමාජයේ විවිධ පැතිකඩයන් නිරූපණය වන කෙටි කථා එකතුවක්.</div>
                     <div class="book-price">Rs. 450.00</div>
-                    <button class="buy-btn" onclick="alert('පොත මිලදී ගැනීමේ පිටුවට සම්බන්ධ වෙමින්...')">Buy Now</button>
+                    <a href="order.html" class="buy-btn">Buy Now</a>
                 </div>
             </div>
 
@@ -454,7 +489,7 @@
                     <div class="book-author">By Cyber KMx Team</div>
                     <div class="book-desc">Learn cybersecurity, networking protocols and ethical penetration testing from scratch.</div>
                     <div class="book-price">Rs. 1,800.00</div>
-                    <button class="buy-btn" onclick="alert('පොත මිලදී ගැනීමේ පිටුවට සම්බන්ධ වෙමින්...')">Buy Now</button>
+                    <a href="order.html" class="buy-btn">Buy Now</a>
                 </div>
             </div>
 
@@ -493,11 +528,9 @@
 
         // Live Category Filter Algorithm
         function filterCategory(category, button) {
-            // Active Button Switching Effect
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // Grid Filtering
             const cards = document.querySelectorAll('.book-card');
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-category') === category) {

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Education - Tech Hub</title>
+    <!-- Icons සඳහා FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Share+Tech+Mono&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (LIGHT MODE / PROFESSIONAL) --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --text-muted: #7f8c8d;
+            --active-color: #800020; /* ඔයාගේ පින්තූරවල තියෙන තද රතු/මරූන් වර්ණය */
+            --accent-color: #3498db;
+            --nav-bg: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.06);
+            --hover-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            --border-radius: 12px;
+            --font-main: 'Poppins', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- DARK MODE (HACKING / CYBERPUNK MATRIX VIBE) --- */
+        [data-theme="dark"] {
+            --bg-color: #0d0f12;
+            --card-bg: #161a1f;
+            --text-color: #00ff66; /* Neon Green */
+            --text-muted: #00aa44;
+            --active-color: #00ff66; /* Dark mode එකේදී Active බටන් එක කොළ පාට වේ */
+            --accent-color: #ff0055; /* Cyber Pink */
+            --nav-bg: #111418;
+            --shadow: 0 5px 15px rgba(0, 255, 102, 0.1);
+            --hover-shadow: 0 0 25px rgba(0, 255, 102, 0.4);
+            --font-main: 'Share Tech Mono', monospace; /* Hacker Font */
+        }
+
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+        }
+
+        .logo span {
+            color: #800020;
+        }
+        [data-theme="dark"] .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Active State Menu Item */
+        nav a.active-page {
+            background-color: #800020; /* Light Mode Maroon */
+            color: white !important;
+        }
+
+        [data-theme="dark"] nav a.active-page {
+            background-color: var(--active-color);
+            color: #0d0f12 !important;
+            box-shadow: 0 0 15px var(--active-color);
+        }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* --- TECH HERO HEADER --- */
+        .tech-header {
+            text-align: center;
+            background-color: var(--card-bg);
+            padding: 35px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            border-left: 6px solid var(--active-color);
+            transition: var(--transition);
+        }
+
+        .tech-header h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .tech-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* --- TRENDING TECH BANNER --- */
+        .trending-banner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        [data-theme="dark"] .trending-banner {
+            border: 1px solid var(--primary-color);
+        }
+
+        .banner-img {
+            height: 100%;
+            min-height: 300px;
+            overflow: hidden;
+        }
+
+        .banner-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .banner-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tech-badge {
+            background-color: var(--active-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            width: fit-content;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        [data-theme="dark"] .tech-badge {
+            color: #0d0f12;
+        }
+
+        .banner-content h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        .banner-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* --- ADVANCED TECH ARTICLES GRID --- */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .tech-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid transparent;
+        }
+
+        [data-theme="dark"] .tech-card {
+            border: 1px solid rgba(0, 255, 102, 0.15);
+        }
+
+        .card-img-wrapper {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .card-body {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body h3 {
+            font-size: 19px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .card-body p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        /* Action Buttons */
+        .tech-btn {
+            background: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: fit-content;
+            font-size: 14px;
+        }
+
+        .tech-btn:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            transform: translateX(5px);
+        }
+
+        /* --- ADVANCED HOVER EFFECS --- */
+        .trending-banner:hover .banner-img img,
+        .tech-card:hover .card-img-wrapper img {
+            transform: scale(1.1) rotate(1deg);
+            filter: brightness(1.1);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--hover-shadow);
+        }
+        [data-theme="dark"] .tech-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        /* --- RESPONSIVE DESIGN (LAPTOPS, TABLETS & PHONES) --- */
+        @media (max-width: 1024px) {
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr); /* Laptops & Tablets වලදී කාඩ් 2 බැගින් */
+            }
+            .trending-banner {
+                grid-template-columns: 1fr; /* බැනරය එක පිට එක වැටේ */
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 4%;
+            }
+            nav {
+                gap: 10px;
+            }
+            nav a {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column; /* මොබයිල් ෆෝන් වලදී Navigation එක මැදට ඒම */
+                gap: 15px;
+                text-align: center;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr; /* මොබයිල් ෆෝන් වලදී කාඩ් එක බැගින් පේළියට */
+            }
+            .banner-content {
+                padding: 20px;
+            }
+            .banner-content h2 {
+                font-size: 22px;
+            }
+            .tech-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <header>
+        <div class="logo">
+            <span>KMx</span> Education
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <!-- Tech පිටුව දැනට active බව පෙන්වීමට active-page පන්තිය යොදා ඇත -->
+            <a href="tech.html" class="active-page">Tech</a>
+            <a href="book.html">Book Store</a>
+            <a href="about.html">About</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- MAIN BODY CONTENT -->
+    <div class="container">
+        
+        <!-- TECH HERO HEADER -->
+        <section class="tech-header">
+            <h1>ICT & Technology Hub</h1>
+            <p>නවීන තාක්ෂණික ලෝකයේ නවතම තොරතුරු සහ ICT විෂයට අදාළ විශේෂ ලිපි මෙතැනින් ඉගෙන ගන්න.</p>
+        </section>
+
+        <!-- TRENDING TECH BANNER -->
+        <section class="trending-banner">
+            <div class="banner-img">
+                <img src="img/tech.png" alt="AI Education">
+            </div>
+            <div class="banner-content">
+                <div class="tech-badge">TRENDING TECH</div>
+                <h2>කෘතිම බුද්ධිය (AI) මඟින් අධ්‍යාපනයේ සිදුවන පෙරළිය</h2>
+                <p>කෘතිම බුද්ධිය නැතහොත් Artificial Intelligence තාක්ෂණය මඟින් වර්තමාන සිසුන්ගේ අධ්‍යයන කටයුතු පහසු කරවන ආකාරය සහ අනාගතයේදී ගුරුවරුන් වෙනුවට AI භාවිත විය හැකි ආකාරය පිළිබඳ ගැඹුරු විග්‍රහයක්.</p>
+                <button class="tech-btn">කියවන්න <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </section>
+
+        <!-- ADVANCED ARTICLES GRID -->
+        <main class="tech-grid">
+            
+            <!-- Tech Card 1 (Cyber Security) -->
+            <article class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="img/tech1.png" alt="Cyber Security">
+                </div>
+                <div class="card-body">
+                    <div class="tech-badge" style="background-color: #e74c3c;">CYBER SECURITY</div>
+                    <h3>Ethical Hacking සහ දත්ත ආරක්ෂාව</h3>
+                    <p>පද්ධතියක ඇති දුර්වලතා හඳුනාගෙන ඒවා Cyber ප්‍රහාරවලින් ආරක්ෂා කරගන්නේ කෙසේද? Ethical Hacker කෙනෙකු වීමට අවශ්‍ය මූලික පියවරයන්.</p>
+                    <button class="tech-btn">Read More</button>
+                </div>
+            </article>
+
+            <!-- Tech Card 2 (Coding & Frameworks) -->
+            <article class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="img/tech2.png" alt="Web Development">
+                </div>
+                <div class="card-body">
+                    <div class="tech-badge" style="background-color: #2ecc71;">WEB DEVELOPMENT</div>
+                    <h3>නවතම Web Technologies (2026)</h3>
+                    <p>වෙබ් අඩවි නිර්මාණය සඳහා වර්තමාන ලෝකයේ බහුලවම භාවිත වන HTML, CSS, JavaScript සහ නවීනතම Frameworks පිළිබඳව සවිස්තරාත්මක ලිපියක්.</p>
+                    <button class="tech-btn">Read More</button>
+                </div>
+            </article>
+
+            <!-- Tech Card 3 (IoT) -->
+            <article class="tech-card">
+                <div class="card-img-wrapper">
+                    <img src="img/tech3.png" alt="Internet of Things">
+                </div>
+                <div class="card-body">
+                    <div class="tech-badge" style="background-color: #f1c40f; color: #000;">HARDWARE & IOT</div>
+                    <h3>Internet of Things (IoT) යනු කුමක්ද?</h3>
+                    <p>ස්මාර්ට් උපාංග අන්තර්ජාලය හරහා එකිනෙකා හා සම්බන්ධ වෙමින් එදිනෙදා මිනිස් ජීවිතයේ වැඩකටයුතු ස්වයංක්‍රීයව (Automation) සිදුකරන ආකාරය.</p>
+                    <button class="tech-btn">Read More</button>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT FOR DYNAMIC DARK/LIGHT MODE TOGGLE -->
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        // කලින් පිටුවකදී තෝරාගත් තේමාව (Theme preference) පරීක්ෂා කිරීම
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            toggleText.textContent = "Light Mode";
+        }
+
+        // Click Event එක මඟින් සජීවීව වෙනස් කිරීම
+        themeBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+    </script>
+</body>
+</html>

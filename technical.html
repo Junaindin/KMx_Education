@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Education - Tech Hub</title>
+   
+    <style>
+        /* CSS මගින් පිටුව ලස්සන කිරීම */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 30px;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .gears {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: rotate 4s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* JavaScript මගින් ක්‍රියාත්මක වන Button එක */
+        .btn {
+            background-color: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0ea5e9;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">KMx Technical</div>
+       
+        <div class="gears">⚙️</div>
+       
+        <h1>වෙබ් අඩවිය සකස් කරමින් පවතී!</h1>
+        <p>අපගේ නවතම තාක්ෂණික අධ්‍යාපන පිටුව (Tech Hub) ඉතා ඉක්මනින් ඔබ වෙත රැගෙන ඒමට KMx කණ්ඩායම වැඩ කරමින් සිටියි. රැඳී සිටින්න අප සමඟ!</p>
+       
+        <button class="btn" onclick="showAlert()">වැඩි විස්තර</button>
+    </div>
+
+    <script>
+        /* JavaScript මගින් බටන් එක ක්ලික් කල විට පණිවිඩයක් පෙන්වීම */
+        function showAlert() {
+            alert("KMx Education වෙතින් ඉතා ඉක්මනින්ම ඔබට නවතම පාඨමාලා රැසක් බලාපොරොත්තු විය හැක!");
+        }
+    </script>
+
+</body>
+</html>

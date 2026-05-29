@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Education</title>
+    <style>
+        /* CSS Variables for Light and Dark (Hacker) Modes */
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #333333;
+            --header-bg: #ffffff;
+            --header-text: #2c3e50;
+            --accent-color: #800020; /* Deep crimson for professional look */
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #bdc3c7;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --hover-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --glow: none;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0d0d0d;
+            --text-color: #00ff66; /* Classic Hacker Green */
+            --header-bg: #1a1a1a;
+            --header-text: #00ff66;
+            --accent-color: #00ff66;
+            --sidebar-bg: #141414;
+            --card-bg: #1a1a1a;
+            --card-border: #00ff66;
+            --shadow: 0 0 5px rgba(0, 255, 102, 0.2);
+            --hover-shadow: 0 0 20px rgba(0, 255, 102, 0.6);
+            --glow: 0 0 10px rgba(0, 255, 102, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* Top Header */
+        header {
+            background-color: var(--header-bg);
+            border-bottom: 2px solid var(--accent-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-color);
+            color: var(--header-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+            text-shadow: var(--glow);
+            box-shadow: var(--glow);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--header-text);
+            letter-spacing: 0.5px;
+            text-shadow: var(--glow);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            color: var(--header-bg);
+            background-color: var(--accent-color);
+            box-shadow: var(--glow);
+        }
+
+        /* Dark Mode Toggle Switch */
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            font-size: 14px;
+            box-shadow: var(--glow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Layout Container */
+        .main-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        /* Sidebar Styling (Left Column) */
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background-color: var(--sidebar-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            transition: var(--transition);
+        }
+
+        .sidebar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Rounded rectangular image placeholders for Sidebar */
+        .img-placeholder-round {
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(135deg, rgba(128,0,32,0.1), rgba(128,0,32,0.05));
+            border: 2px solid var(--card-border);
+            border-radius: 15px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--text-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .img-placeholder-round {
+            background: #111;
+        }
+
+        .img-placeholder-round::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .sidebar-item:hover .img-placeholder-round::before {
+            left: 100%;
+            top: 100%;
+        }
+
+        .sidebar-item:hover .img-placeholder-round {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--accent-color);
+        }
+
+        .sidebar-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 5px;
+            color: var(--text-color);
+            text-shadow: var(--glow);
+        }
+
+        /* Content Area Styling (Right Column) */
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: var(--glow);
+            letter-spacing: 0.5px;
+        }
+
+        .paragraphs-container {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+        }
+
+        .paragraphs-container p {
+            margin-bottom: 15px;
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .paragraphs-container p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Bottom Grid Configuration */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Perfect Square image placeholders for Bottom Grid */
+        .img-placeholder-square {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, rgba(128,0,32,0.1), rgba(128,0,32,0.05));
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--text-color);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .img-placeholder-square {
+            background: #111;
+        }
+
+        .grid-item:hover .img-placeholder-square {
+            transform: scale(1.04);
+            box-shadow: var(--hover-shadow);
+            border-color: var(--accent-color);
+        }
+
+        .grid-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-color);
+            text-shadow: var(--glow);
+        }
+
+        /* Responsive Design Rules */
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            .sidebar-item {
+                margin-bottom: 0;
+            }
+            .bottom-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+            .welcome-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">KMx</div>
+            <div class="logo-text">KMx Education</div>
+        </div>
+        <nav>
+            <a href="#" onclick="alert('You are already on the Home page'); return false;">Home</a>
+            <a href="tech.html">Tech</a>
+            <a href="book.html">Book Store</a>
+            <a href="about.html">About</a>
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+                <span id="toggleIcon">🌙</span> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        
+        <aside class="sidebar">
+
+            <div class="sidebar-item">
+                <div class="img-placeholder-round">A1 img</div>
+                <div class="sidebar-label">Novels And Stories</div>
+            </div>
+
+            <div class="sidebar-item">
+                <div class="img-placeholder-round">A2 img</div>
+                <div class="sidebar-label">ICT Books</div>
+            </div>
+
+            <div class="sidebar-item">
+                <div class="img-placeholder-round">A3 img</div>
+                <div class="sidebar-label">Notes</div>
+            </div>
+
+            <div class="sidebar-item">
+                <div class="img-placeholder-round">A4 img</div>
+                <div class="sidebar-label">New Update</div>
+            </div>
+
+        </aside>
+
+
+
+
+
+
+
+
+        <main class="content-area">
+            
+            <div class="paragraphs-container">
+                <h1 class="welcome-title">Welcome KMx Education</h1>
+                <p>Hello welcome guys. This is my web page. This is simple paragraph. Although ethical is an often-overlooked and misunderstood word, the Merriam-Webster dictionary defines ethical perfectly for the context of this book and the professional security testing techniques that I cover that is, conforming to accepted professional standards of conduct. IT practitioners are obliged to perform all the tests covered in this book aboveboard and only after permission has been obtained by the owner(s) of the systems – hence the disclaimer in the introduction.</p>
+                <p>This is simple paragraph. Although ethical is an often-overlooked and misunderstood word, the Merriam-Webster dictionary defines ethical perfectly for the context of this book and the professional security testing techniques that I cover that is, conforming to accepted professional standards of conduct. IT practitioners are obliged to perform all the tests covered in this book aboveboard and only after permission has been obtained by the owner(s) of the systems – hence the disclaimer in the introduction.</p>
+            </div>
+
+
+
+            <div class="bottom-grid"> 
+
+                <div class="grid-item"> <a href="education.html" style="text-decoration: none; width: 100%;">
+                    <div class="img-placeholder-square">
+                        <img src="img\edu1.jpg" alt="Education" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+                    </div></a>
+                    <div class="grid-label">Education</div>
+                </div>
+
+
+
+                <div class="grid-item"><a href="project.html"style="text-decoration: none; width : 100%;">
+                    <div class="img-placeholder-square">
+                        <img src="img\edu2.jpg" alt="project" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+                    </div></a>
+                    <div class="grid-label">Projects</div>
+                </div>
+
+
+
+
+
+                <div class="grid-item"><a href="technical.html"style="text-decoration: none; width : 100%;">
+                    <div class="img-placeholder-square">
+                        <img src="img\edu.png" alt="technical" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+                    </div></a>
+                    <div class="grid-label">Technical</div>
+                </div>
+
+
+
+
+                <div class="grid-item"><a href="more.html"style="text-decoration: none; width : 100%;">
+                    <div class="img-placeholder-square">
+                        <img src="img\edu4.jpg" alt="more" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+                    </div></a>
+                    <div class="grid-label">More</div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const toggleText = document.getElementById('toggleText');
+
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                toggleIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                toggleIcon.textContent = '☀️';
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Apply saved theme preference on page initial load
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('toggleIcon').textContent = '☀️';
+                document.getElementById('toggleText').textContent = 'Light Mode';
+            }
+        };
+    </script>
+</body>
+</html>

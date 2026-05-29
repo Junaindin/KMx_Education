@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMx Book Store - Place Your Order</title>
-    <!-- Icons සඳහා FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Share+Tech+Mono&display=swap">
     
     <style>
@@ -55,7 +53,7 @@
             min-height: 100vh;
         }
 
-        /* --- NAVIGATION BAR --- */
+        /* --- RESPONSIVE NAVIGATION BAR --- */
         header {
             background-color: var(--nav-bg);
             padding: 15px 5%;
@@ -67,6 +65,7 @@
             top: 0;
             z-index: 1000;
             transition: var(--transition);
+            flex-wrap: wrap; /* මොබයිල් තිරවලදී මෙනු එක කැඩී නොයාමට */
         }
 
         .logo {
@@ -87,6 +86,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            flex-wrap: wrap; /* මොබයිල් එකේදී බටන්ස් පෙළට තැබීමට */
         }
 
         nav a {
@@ -142,7 +142,7 @@
 
         [data-theme="dark"] .form-card {
             border-top: 5px solid var(--active-color);
-            border: 1px solid rgba(0, 255, 10 green, 0.2);
+            border: 1px solid rgba(0, 255, 102, 0.2);
             box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
         }
 
@@ -229,16 +229,33 @@
         }
 
         [data-theme="dark"] .submit-btn {
-            background-color: var(--primary-color);
+            background-color: var(--active-color);
             color: #0d0f12;
-            box-shadow: 0 0 15px var(--primary-color);
+            box-shadow: 0 0 15px var(--active-color);
         }
 
         /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
+                text-align: center;
+                padding: 15px 20px;
+            }
+            nav {
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav a {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+            .theme-toggle {
+                padding: 5px 10px;
+                font-size: 12px;
             }
             .form-card {
                 padding: 25px 20px;
@@ -251,7 +268,6 @@
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
     <header>
         <a href="index.html" class="logo"><span>KMx</span> Education</a>
         <nav>
@@ -265,7 +281,6 @@
         </nav>
     </header>
 
-    <!-- FORM CONTAINER -->
     <div class="form-container">
         <div class="form-card">
             <h2>ඇණවුම් පත්‍රිකාව (Order Form)</h2>
@@ -273,43 +288,36 @@
             
             <form id="orderForm">
                 
-                <!-- පොතේ නම -->
                 <div class="form-group">
                     <label><i class="fas fa-book"></i> අවශ්‍ය පොතේ නම:</label>
                     <input type="text" id="bookName" placeholder="උදා: තරුවක දෛවය" required>
                 </div>
 
-                <!-- අද දිනය (JavaScript මඟින් Auto වැටේ) -->
                 <div class="form-group">
                     <label><i class="fas fa-calendar-alt"></i> අද දිනය:</label>
                     <input type="date" id="orderDate" required>
                 </div>
 
-                <!-- අවශ්‍ය පොත් ප්‍රමාණය -->
                 <div class="form-group">
                     <label><i class="fas fa-list-ol"></i> අවශ්‍ය පොත් ප්‍රමාණය:</label>
                     <input type="number" id="quantity" min="1" value="1" required>
                 </div>
 
-                <!-- පරිශීලකයාගේ ලිපිනය -->
                 <div class="form-group">
                     <label><i class="fas fa-map-marked-alt"></i> ඔබගේ ලිපිනය:</label>
                     <textarea id="userAddress" rows="3" placeholder="පොත් එවීමට අවශ්‍ය නිවැරදි ලිපිනය ඇතුළත් කරන්න" required></textarea>
                 </div>
 
-                <!-- දුරකථන අංකය -->
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> දුරකථන අංකය:</label>
                     <input type="tel" id="phoneNum" placeholder="උදා: 0712345678" required>
                 </div>
 
-                <!-- වට්ස්ඇප් අංකය -->
                 <div class="form-group">
                     <label><i class="fab fa-whatsapp"></i> වට්ස්ඇප් අංකය (WhatsApp):</label>
                     <input type="tel" id="whatsappNum" placeholder="උදා: 0712345678" required>
                 </div>
 
-                <!-- දිස්ත්‍රික්කය -->
                 <div class="form-group">
                     <label><i class="fas fa-city"></i> දිස්ත්‍රික්කය (District):</label>
                     <select id="district" required>
@@ -342,7 +350,6 @@
                     </select>
                 </div>
 
-                <!-- Submit බටන් එක -->
                 <button type="submit" class="submit-btn">
                     <i class="fas fa-paper-plane"></i> Submit Order
                 </button>
@@ -351,12 +358,11 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT FOR FORM HANDLING & THEME TOGGLE -->
     <script>
         // 1. Auto-fill Today's Date
         document.getElementById('orderDate').valueAsDate = new Date();
 
-        // 2. Form Submission to Email App
+        // 2. Form Submission to Email App + Thank You Message
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Default submit එක නවත්වන්න
             
@@ -387,6 +393,9 @@
                 "7. District: " + district + "\n\n" +
                 "---------------------------------"
             );
+
+            // පරිශීලකයාට පෙන්වන Thank You Message එක
+            alert("Thank you for your order!\nConnecting to your email application to send the details...");
 
             // mailto link එක සෑදීම සහ විවෘත කිරීම
             window.location.href = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;

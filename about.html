@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About KMx Education</title>
+    <style>
+        /* CSS Variables - ප්‍රධාන තේමාවන් ආරක්ෂා කර ගැනීමට */
+        :root {
+            --bg-color: #fafafa;
+            --text-color: #333333;
+            --header-bg: #ffffff;
+            --header-text: #2c3e50;
+            --accent-color: #800020; /* Deep crimson */
+            --card-bg: #ffffff;
+            --card-border: #bdc3c7;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --glow: none;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0d0d0d;
+            --text-color: #00ff66; /* Hacker Green */
+            --header-bg: #1a1a1a;
+            --header-text: #00ff66;
+            --accent-color: #00ff66;
+            --card-bg: #161616;
+            --card-border: #00ff66;
+            --shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+            --glow: 0 0 12px rgba(0, 255, 102, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.7;
+        }
+
+        /* Header Navigation Styles */
+        header {
+            background-color: var(--header-bg);
+            border-bottom: 2px solid var(--accent-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-color);
+            color: var(--header-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+            box-shadow: var(--glow);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--header-text);
+            text-shadow: var(--glow);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* ඔයා ඉල්ලපු විදිහට About එක ලස්සනට සෙලෙක්ට් වී පෙනෙන කොටස */
+        nav a.active {
+            color: var(--header-bg) !important;
+            background-color: var(--accent-color);
+            box-shadow: var(--glow);
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+        }
+
+        /* Main About Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Hero Banner Section */
+        .about-hero {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(128,0,32,0.05), rgba(0,255,102,0.02));
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+        }
+
+        .about-hero h1 {
+            font-size: 36px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-shadow: var(--glow);
+        }
+
+        /* Story Grid Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .about-img-box {
+            width: 100%;
+            height: 350px;
+            background-color: var(--card-bg);
+            border: 2px dashed var(--accent-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .about-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-text h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-shadow: var(--glow);
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        /* Vision & Mission Cards Section */
+        .services-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+            text-shadow: var(--glow);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] .service-card:hover {
+            box-shadow: var(--glow);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .service-card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: var(--header-text);
+        }
+
+        /* Contact Button style */
+        .contact-cta {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .contact-btn {
+            background-color: var(--accent-color);
+            color: var(--header-bg);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* Responsive UI Breakpoints */
+        @media (max-width: 850px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-img-box {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .about-hero h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">KMx</div>
+            <div class="logo-text">KMx Education</div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tech.html">Tech</a>
+            <a href="book.html">Book Store</a>
+            <!-- මෙම පිටුවේ About එක Active කර ඇත -->
+            <a href="about.html" class="active">About</a>
+            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">
+                <span id="toggleIcon">🌙</span> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main About Content Container -->
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <div class="about-hero">
+            <h1>About KMx Education</h1>
+            <p>Developing Next-Generation Tech Professionals and Enthusiasts.</p>
+        </div>
+
+        <!-- Introduction Story Section -->
+        <div class="about-grid">
+            <div class="about-img-box">
+                <!-- ඔයා ළඟ පින්තූරයක් තියෙනවා නම් src="about-team.jpg" වගේ දාන්න පුළුවන් -->
+                <img src="img\kmxabout.png" alt="KMx Team">
+            </div>
+
+
+
+
+            <div class="about-text">
+                <h2>අපේ කතාව (Our Story)</h2>
+                <p>KMx Education යනු ශ්‍රී ලාංකීය සිසුන්ට සහ තාක්ෂණයට ලැදි සැමට සරලව, නිවැරදිව සහ නවීන ක්‍රමවේදයන් ඔස්සේ තොරතුරු තාක්ෂණය (ICT) සහ නවීන විද්‍යාවන් ඉගෙන ගැනීමට සලසා දෙන ප්‍රමුඛ පෙළේ වෙදිකාවකි.</p>
+                <p>අපගේ ප්‍රධානතම අරමුණ වන්නේ හුදෙක් සිද්ධාන්ත පමණක් නොව, ප්‍රායෝගිකව කේතකරණය (Coding) සහ සයිබර් ආරක්ෂණය (Cyber Security) වැනි විෂයන් ප්‍රගුණ කිරීමට අවශ්‍ය කරන දැනුම සහ වටපිටාව නිර්මාණය කිරීමයි.</p>
+            </div>
+        </div>
+
+        <h2 class="services-title">අපගේ ප්‍රධාන සේවාවන් (What We Do)</h2>
+
+        <!-- Services 3-Card Grid Layout -->
+        <div class="services-grid">
+            <!-- Card 1 -->
+            <div class="service-card">
+                <span class="service-icon">🎓</span>
+                <h3>ICT Education</h3>
+                <p>A/L සිසුන්ට සහ ආරම්භකයින්ට ගැලපෙන පරිදි සකස් කළ සරල සහ උසස් තොරතුරු තාක්ෂණ පාඩම් මාලා.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="service-card">
+                <span class="service-icon">💻</span>
+                <h3>Tech Hub</h3>
+                <p>ලෝකයේ දිනෙන් දින අලුත් වන තාක්ෂණික තොරතුරු, කේතකරණ රහස් සහ සයිබර් ආරක්‍ෂණ උපක්‍රම මෙතනින්.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="service-card">
+                <span class="service-icon">📚</span>
+                <h3>Online Store</h3>
+                <p>නවකතා, කෙටි කතා සහ තාක්ෂණික විෂය නිර්දේශයන්ට අදාළ පොත්පත් ඉතාමත් පහසුවෙන් මිලදී ගැනීමේ හැකියාව.</p>
+            </div>
+        </div>
+
+        <!-- Contact Section CTA -->
+        <div class="contact-cta">
+            <h3 style="margin-bottom: 15px;">අප හා සම්බන්ධ වීමට අවශ්‍යද?</h3>
+            <button class="contact-btn" onclick="alert('Email: contact@kmxeducation.com\nදුරකථන: +94 7X XXX XXXX')">Contact Us</button>
+        </div>
+
+    </div>
+
+    <!-- Live JavaScript Theme Engine -->
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const toggleText = document.getElementById('toggleText');
+
+            if (currentTheme === 'dark') {
+                body.removeAttribute('data-theme');
+                toggleIcon.textContent = '🌙';
+                toggleText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                toggleIcon.textContent = '☀️';
+                toggleText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // පිටුව Load වෙද්දී කලින් Save කරපු Theme එක Apply කිරීම
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('toggleIcon').textContent = '☀️';
+                document.getElementById('toggleText').textContent = 'Light Mode';
+            }
+        };
+    </script>
+</body>
+</html>

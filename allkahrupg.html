@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Authors - KMx Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+   
+    <style>
+        /* --- CSS VARIABLES (LIGHT/DARK THEME) --- */
+        :root {
+            --bg-base: #fdfbf7;
+            --bg-surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            --title-color: #800020;
+           
+            --toggle-bg: #ffffff;
+            --toggle-text: #800020;
+            --toggle-border: #800020;
+        }
+
+        [data-theme="dark"] {
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #800020;
+            --primary-hover: #a10d32;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --title-color: #f59e0b;
+           
+            --toggle-bg: #800020;
+            --toggle-text: #ffffff;
+            --toggle-border: #800020;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        /* --- SUPERB HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            border: 2px solid var(--toggle-border);
+            color: var(--toggle-text);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        /* --- PAGE TITLE --- */
+        .page-title-box {
+            text-align: center;
+            margin: 50px auto 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-title-box h1 {
+            font-size: 32px;
+            color: var(--title-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* --- AUTHORS GRID SECTION --- */
+        .authors-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .authors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Author Card Design */
+        .author-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .author-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .img-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        /* Small Round Image Area as requested */
+        .author-thumb {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .verify-tick {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: #22c55e;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-surface);
+        }
+
+        .author-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .author-tags {
+            font-size: 12px;
+            color: var(--primary);
+            background-color: rgba(128, 0, 32, 0.08);
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .author-short-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            min-height: 66px; /* Balance heights */
+        }
+
+        /* More Details Button */
+        .more-details-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .more-details-btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(128, 0, 32, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .authors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tech.html">Tech</a>
+            <a href="#" class="active">Authors</a>
+            <a href="about.html">About</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="page-title-box">
+        <h1>KMx නිල කර්තෘ මණ්ඩලය</h1>
+        <p style="color: var(--text-muted);">KMx Education හරහා ඔබ වෙත දැනුම ගෙන එන ප්‍රධාන ලේඛකයන් මෙතැනින් එකම තැනකින් බලන්න.</p>
+    </div>
+
+    <div class="authors-container">
+        <div class="authors-grid">
+           
+            <div class="author-card">
+                <div>
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150" alt="Author 1" class="author-thumb">
+                        <div class="verify-tick"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="author-name">W.K. කසුන් කල්‍යාණ</div>
+                    <span class="author-tags">Novels & ICT Specialist</span>
+                    <p class="author-short-desc">"තරුවක දෛවය" නවකතාව ඇතුළු උසස් පෙළ තොරතුරු තාක්ෂණ ක්ෂේත්‍රයේ ග්‍රන්ථ රැසක් රචනා කළ ප්‍රධාන කර්තෘවරයෙකි.</p>
+                </div>
+                <button class="more-details-btn" onclick="goToDetails('W.K. Kasun Kalyana')">
+                    More Details <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="author-card">
+                <div>
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="Author 2" class="author-thumb">
+                        <div class="verify-tick"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="author-name">හිරුණි දිල්හාරා</div>
+                    <span class="author-tags">Short Stories / Novels</span>
+                    <p class="author-short-desc">යෞවන සමාජයේ සහ සරසවි ජීවිතයේ සැබෑ අත්දැකීම් පාදක කරගනිමින් හදවතට දැනෙන කෙටිකතා නිර්මාණය කරන ලේඛිකාවකි.</p>
+                </div>
+                <button class="more-details-btn" onclick="goToDetails('Hiruni Dilhara')">
+                    More Details <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="author-card">
+                <div>
+                    <div class="img-container">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150" alt="Author 3" class="author-thumb">
+                        <div class="verify-tick"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="author-name">කේ. එම්. සෙනෙවිරත්න</div>
+                    <span class="author-tags">Grammar & English Specialist</span>
+                    <p class="author-short-desc">පාසල් දරුවන්ට සහ උසස් අධ්‍යාපනය ලබන සිසුන්ට ඉංග්‍රීසි ව්‍යාකරණ (Grammar) ඉතා සරලව පොත්පත් මඟින් කියා දෙන ප්‍රවීණ දේශකයෙකි.</p>
+                </div>
+                <button class="more-details-btn" onclick="goToDetails('K.M. Seneviratne')">
+                    More Details <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 KMx Education. All Rights Reserved. Smart Portal Ecosystem.</p>
+    </footer>
+
+    <script>
+        // --- 1. DYNAMIC LIGHT / DARK THEME TOGGLE ENGINE ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+
+        // --- 2. NAVIGATION TO NEW.HTML WITH PARAMETERS ---
+        function goToDetails(authorName) {
+            // E.g: Navigates cleanly to new.html?author=W.K.%20Kasun%20Kalyana
+            window.location.href = `new.html?author=${encodeURIComponent(authorName)}`;
+        }
+    </script>
+</body>
+</html>

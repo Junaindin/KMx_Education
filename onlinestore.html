@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Content Hub - කවි, කෙටි කතා සහ ලිපි</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES & THEME MANAGEMENT --- */
+        :root {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-widget: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Dynamic Content Variable for User Controls */
+            --content-color: #1e293b; 
+            --like-color: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-widget: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --content-color: #f1f5f9 !important; /* Forces readable white font on Dark Mode */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.8;
+            transition: var(--transition);
+            
+            /* Anti-Copy Protection Active */
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* --- HEADER NAVIGATION BAR --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Font Size Controller Buttons */
+        .font-controller {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--bg-base);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .font-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .font-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Color Palette Styles */
+        .palette-container {
+            display: flex;
+            gap: 6px;
+            background-color: var(--bg-base);
+            padding: 6px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .color-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .color-dot:hover, .color-dot.active {
+            border-color: var(--text-main);
+            transform: scale(1.15);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        /* --- EMAIL ANNOUNCEMENT AD BOX --- */
+        .ad-banner {
+            max-width: 1100px;
+            margin: 20px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .ad-box {
+            background: linear-gradient(135deg, #800020, #5d0017);
+            color: #ffffff;
+            padding: 15px 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .ad-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14.5px;
+            font-weight: 500;
+        }
+
+        .ad-text i {
+            font-size: 22px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .ad-email {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px dashed rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .ad-email:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        @pragma pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- BIG HERO TITLE WITH SMOOTH LAUNCH ANIMATION --- */
+        .hero-section {
+            text-align: center;
+            margin: 40px auto 20px auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: smoothReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            padding: 0 15px;
+        }
+
+        .hero-title {
+            font-size: 46px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #800020, #0f766e, #b45309);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 8s ease infinite;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .hero-tagline {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        @keyframes smoothReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- INTERACTIVE CONTAINER --- */
+        .hub-container {
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 20px;
+        }
+
+        /* Category Filter Tabs */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding: 0 5px;
+        }
+
+        .cat-btn {
+            background-color: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .cat-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .cat-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        /* Advanced Search Bar */
+        .search-container {
+            max-width: 650px;
+            margin: 0 auto 40px auto;
+            position: relative;
+            padding: 0 5px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 55px;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 15px;
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(128, 0, 32, 0.1);
+        }
+
+        /* --- CREATIVE POSTS CONTENT GRID --- */
+        .posts-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .post-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            display: none; /* Controlled via Selector Switch */
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .post-card.active-tab {
+            display: flex;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(128,0,32,0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.06);
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .post-meta .author-badge {
+            color: var(--primary);
+            background-color: rgba(128,0,32,0.05);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .post-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* Line Clamping for 5 lines max preview */
+        .post-body {
+            font-size: 15px;
+            color: var(--content-color);
+            text-align: justify;
+            margin-bottom: 15px;
+            white-space: pre-line;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
+
+        /* Center alignments explicitly tailored for Poetry preview */
+        .post-card[data-category="poems"] .post-body {
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Read More Trigger Design */
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 5px 0;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more-btn:hover {
+            color: var(--primary-hover);
+            transform: translateX(3px);
+        }
+
+        /* Action Footer Panel */
+        .post-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        /* Like System Core Elements */
+        .like-btn {
+            background-color: var(--bg-widget);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .like-btn i {
+            font-size: 15px;
+            transition: transform 0.2s ease;
+        }
+
+        .like-btn:hover {
+            background-color: rgba(239, 68, 68, 0.08);
+            color: var(--like-color);
+        }
+
+        .like-btn.liked {
+            background-color: rgba(239, 68, 68, 0.12);
+            color: var(--like-color);
+        }
+
+        .like-btn.liked i {
+            font-weight: 900;
+            animation: pulseBeat 0.35s ease-in-out;
+        }
+
+        @keyframes pulseBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.35); }
+            100% { transform: scale(1); }
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* --- 90% SCREEN MODAL STRUCTURE OVERLAY --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background-color: var(--bg-surface);
+            width: 90%;
+            max-width: 1400px;
+            max-height: 85vh;
+            border-radius: var(--radius);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .modal-overlay.open .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-widget);
+        }
+
+        .modal-header-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-btn:hover {
+            background-color: rgba(0,0,0,0.05);
+            color: var(--primary);
+        }
+
+        .modal-body {
+            padding: 40px 50px;
+            overflow-y: auto;
+            font-size: 16px;
+            color: var(--content-color);
+            text-align: justify;
+            white-space: pre-line;
+            line-height: 2;
+        }
+
+        .modal-container.poem-layout .modal-body {
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* --- SYSTEM FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+        }
+
+        /* --- RESPONSIVE SCREEN ADAPTATIONS --- */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            .nav-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .ad-box {
+                flex-direction: column;
+                text-align: center;
+                justify-content: center;
+            }
+            .hub-container {
+                padding: 15px; /* Keeps consistent safety space on both sides */
+            }
+            .posts-wrapper {
+                grid-template-columns: 1fr; /* Prevents overflow pushing elements off-screen */
+                gap: 20px;
+            }
+            .post-card {
+                padding: 20px;
+            }
+            .modal-body {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SYSTEM NAVIGATION BAR -->
+    <header>
+        <a href="#" class="logo"><i class="fas fa-feather-alt"></i> KMx <span>Education</span></a>
+        
+        <div class="nav-controls">
+            <!-- Font Size Step Engine with Restrictions -->
+            <div class="font-controller">
+                <i class="fas fa-text-height" style="font-size: 12px; color: var(--text-muted); margin-right: 5px;"></i>
+                <button class="font-btn" onclick="adjustFontSize(-1)" title="අකුරු කුඩා කරන්න"><i class="fas fa-minus"></i></button>
+                <button class="font-btn" onclick="adjustFontSize(1)" title="අකුරු විශාල කරන්න"><i class="fas fa-plus"></i></button>
+            </div>
+
+            <!-- Content Color Swatch Palette Picker -->
+            <div class="palette-container" id="colorPalette">
+                <div class="color-dot active" data-color="#1e293b" style="background-color: #1e293b;" title="Default"></div>
+                <div class="color-dot" data-color="#0f766e" style="background-color: #0f766e;" title="Teal"></div>
+                <div class="color-dot" data-color="#b45309" style="background-color: #b45309;" title="Amber"></div>
+                <div class="color-dot" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="Navy"></div>
+            </div>
+
+            <!-- Core Theme Toggle Switch -->
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- EMAIL ADVERTISEMENT HUB BANNER -->
+    <div class="ad-banner">
+        <div class="ad-box">
+            <div class="ad-text">
+                <i class="fas fa-bullhorn"></i>
+                <span>ඔබේ නිර්මාණාත්මක කවි, කෙටි කතා සහ අධ්‍යාපනික ලිපි අපගේ වෙබ් අඩවියේ පළකර ගැනීමට අපට එවන්න.</span>
+            </div>
+            <a href="mailto:application2026k@gmail.com" class="ad-email">application2026k@gmail.com</a>
+        </div>
+    </div>
+
+    <!-- MAIN BRAND TITLE WITH REVEAL EFFECT -->
+    <div class="hero-section">
+        <h1 class="hero-title">KMx Online Store</h1>
+        <p class="hero-tagline">නිර්මාණශීලී හදවත්වල ලැගුම්හල - කවි, කෙටි කතා සහ ලිපි එකතුව</p>
+    </div>
+
+    <!-- MAIN APP STRUCTURE -->
+    <div class="hub-container">
+        
+        <!-- Tab Switches Box -->
+        <div class="category-nav">
+            <button class="cat-btn active" data-cat="poems"><i class="fas fa-heart"></i> කවි (Poems)</button>
+            <button class="cat-btn" data-cat="stories"><i class="fas fa-book"></i> කෙටි කතා (Stories)</button>
+            <button class="cat-btn" data-cat="articles"><i class="fas fa-newspaper"></i> ලිපි (Articles)</button>
+            <button class="cat-btn" data-cat="education"><i class="fas fa-graduation-cap"></i> අධ්‍යාපනික ලිපි</button>
+        </div>
+
+        <!-- Integrated Content & Author Search Core -->
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="hubSearch" class="search-input" placeholder="මාතෘකාව හෝ කතුවරයාගේ නම මෙතැනින් සොයන්න...">
+        </div>
+
+        <!-- Dynamic Content Engine Grid -->
+        <div class="posts-wrapper" id="postsWrapper">
+            
+            <!-- Poem Item Example 1 -->
+            <div class="post-card active-tab" data-category="poems" data-title="වැහි බිංදු" data-author="කසුන් කළ්‍යාණ" id="poem_01">
+                <div>
+                    <div class="post-meta"><span>කවි නිර්මාණ</span><span class="author-badge"><i class="fas fa-user"></i> කසුන් කළ්‍යාණ</span></div>
+                    <div class="post-title">වැහි බිංදු වැටෙන හවසක</div>
+                    <div class="post-body">සීතල සුළඟ ගත වෙළෙමින් හමා යයි,
+                        අතීතයේ මතක සෙමෙන් අවදි වෙයි.
+                        වැහි බිංදු පොළොව සිපගන්නා ඒ මොහොතේ,
+                        නොකී කතාවක් හදවත පතුලේ ඉතිරි වෙයි.
+                        මතකද අප හමුවූ ඒ වැස්ස ඇති දවස,
+                        තෙමුණු කුඩය යට සිනාසුණු ඔබේ මුහුණ.
+                        අදත් වැටෙනවා ඒ වගේම වැහි බිංදු,
+                        නමුත් ඔබ නැත, මතකය පමණක් ඉතිරිව ඇත.</div>
+                    <button class="read-more-btn" onclick="openContentReader('poem_01')">Read More... <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('poem_01')">
+                        <i class="far fa-heart"></i> <span class="like-count">42</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Poem Item Example 2 -->
+            <div class="post-card active-tab" data-category="poems" data-title="තරුවක දෛවය" data-author="නෙත්මි සේනානායක" id="poem_02">
+                <div>
+                    <div class="post-meta"><span>කවි නිර්මාණ</span><span class="author-badge"><i class="fas fa-user"></i> නෙත්මි සේනානායක</span></div>
+                    <div class="post-title">තරුවක දෛවය</div>
+                    <div class="post-body">ඈත අනන්තයේ දිලෙනා තාරකාවී,
+                        රෑ කළුවර නිවාලන්නට වෙහෙසෙවී.
+                        කවුරුත් නොදන්නා ඇගේ කඳුළු කතාව,
+                        නිහඬ අහස මැද රහසින් සැඟව යාවී.
+                        මහපොළොව දෙස බලා හෙලන සුසුම් සුළඟ,
+                        නිල් අහස් තලයේ සැඟවුණු රහස් ගොඩකි.
+                        පායන්නට දහසක් තරු එකතු වුවද රැයට,
+                        තනිවුණු තරුවක අගය දන්නේ කවුරුන්ද?</div>
+                    <button class="read-more-btn" onclick="openContentReader('poem_02')">Read More... <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('poem_02')">
+                        <i class="far fa-heart"></i> <span class="like-count">28</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Short Story Item Example -->
+            <div class="post-card" data-category="stories" data-title="අන්තිම දුම්රිය" data-author="කසුන් කළ්‍යාණ" id="story_01">
+                <div>
+                    <div class="post-meta"><span>කෙටි කතා</span><span class="author-badge"><i class="fas fa-user"></i> කසුන් කළ්‍යාණ</span></div>
+                    <div class="post-title">අන්තිම දුම්රිය</div>
+                    <div class="post-body">වේලාව රාත්‍රී නවය පසුවී තිබුණි. දුම්රිය ස්ථානයේ දැඩි නිශ්ශබ්දතාවයක් රජ කළේය. සීතල මීදුම අවට පරිසරයම වසා ගනිමින් තිබූ අතර, ලාම්පු කණුවලින් වැටුණු මද ආලෝකය අතරින් ඈතින් ඇසුණු දුම්රියක නළා හඬ පරිසරයේ නිහඬතාවය බිඳ දැමීය. 
+                    ඔහු තම ගමන් මල්ල තදින් අල්ලාගෙන වේදිකාවේ අසුනෙන් නැගී සිටියේය. මෙතෙක් කල් බලා සිටි ඒ තීරණාත්මක ගමන යාමට කාලය පැමිණ තිබුණි. ජීවිතයේ බොහෝ දේ අතහැර දමා යන මේ ගමන ඔහුගේ අනාගතය කෙසේ වෙනස් කරනු ඇත්දැයි ඔහුටම රහසක් විය. 
+                    දුම්රිය වේදිකාවට ළඟා වන විට ඔහුගේ හද ගැස්ම වේගවත් විය. මැදිරියකට ගොඩ වී ජනේලය අසල අසුනක වාඩි වූ ඔහු, සෙමෙන් ඇදී යන නගරයේ ආලෝක දෙස බලා සිටියේය. ආපසු හැරීමක් නැත, ජීවිතයේ අලුත් පරිච්ඡේදයක් දැන් ආරම්භ වී හමාරය.</div>
+                    <button class="read-more-btn" onclick="openContentReader('story_01')">Read More... <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('story_01')">
+                        <i class="far fa-heart"></i> <span class="like-count">65</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Article Item Example -->
+            <div class="post-card" data-category="articles" data-title="නූතන සමාජ මාධ්‍ය" data-author="අසංක පෙරේරා" id="article_01">
+                <div>
+                    <div class="post-meta"><span>පොදු ලිපි</span><span class="author-badge"><i class="fas fa-user"></i> අසංක පෙරේරා</span></div>
+                    <div class="post-title">නූතන සමාජය සහ මාධ්‍ය භාවිතය</div>
+                    <div class="post-body">සමාජ මාධ්‍ය යනු නූතන මිනිස් සන්නිවේදනයේ විප්ලවීය වෙනසක් ඇති කළ මෙවලමකි. එමඟින් ලෝකය පුරා සිටින පුද්ගලයන් එකිනෙකා සමඟ සම්බන්ධ කිරීමට විශාල පිටුවහලක් ලබාදේ. 
+                    එහෙත්, මෙම තාක්ෂණය අනිසි ලෙස භාවිතා කිරීම නිසා පුද්ගල සබඳතා බිඳවැටීම, මානසික ආතතිය ඉහළ යාම සහ ව්‍යාජ තොරතුරු සමාජගත වීම වැනි බරපතල ගැටලු රැසක් නිර්මාණය වී ඇත. එම නිසා බුද්ධිමත් මාධ්‍ය භාවිතයක් රටකට අත්‍යවශ්‍ය වේ.
+                    විශේෂයෙන්ම තරුණ පරපුර මේ පිළිබඳව දැඩි ලෙස අවධානය යොමු කළ යුතුය."* තාක්ෂණය අපව පාලනය කිරීමට ඉඩ නොදී, අප තාක්ෂණය නිවැරදිව පාලනය කිරීමට ඉගෙන ගත යුතුය. එවිට සමාජ මාධ්‍ය සැබෑ ලෙසම ප්‍රයෝජනවත් මෙවලමක් වනු ඇත.</div>
+                    <button class="read-more-btn" onclick="openContentReader('article_01')">Read More... <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('article_01')">
+                        <i class="far fa-heart"></i> <span class="like-count">37</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Educational Article Item Example -->
+            <div class="post-card" data-category="education" data-title="ඵලදායී පාඩම් ක්‍රම" data-author="ඩී. එම්. ගුණසේකර" id="edu_01">
+                <div>
+                    <div class="post-meta"><span>අධ්‍යාපනික</span><span class="author-badge"><i class="fas fa-user"></i> ඩී. එම්. ගුණසේකර</span></div>
+                    <div class="post-title">ඵලදායී ලෙස පාඩම් කරන්නේ කෙසේද?</div>
+                    <div class="post-body">විභාග ජයග්‍රහණය සඳහා පැය ගණනාවක් එක දිගට කටපාඩම් කිරීමට වඩා ක්‍රමවත් අධ්‍යයන රටාවක් (Active Recall) අනුගමනය කිරීම වැදගත් වේ. පාඩම් කිරීමේදී කෙටි සටහන් (Short Notes) සහ මනස් සිතියම් (Mind Maps) භාවිත කිරීමෙන් මතකය ධාරණය කර ගැනීමේ හැකියාව ඉහළ යයි. 
+                    එසේම සෑම විනාඩි 25ක අධ්‍යයනයකින් පසු විනාඩි 5ක කෙටි විවේකයක් ලබා ගැනීම (Pomodoro Technique) මඟින් මොළයේ ක්‍රියාකාරීත්වය මනාව පවත්වා ගත හැක.
+                    මීට අමතරව, නිසි පෝෂණය සහ ප්‍රමාණවත් නින්ද (අවම වශයෙන් පැය 6-7 ක්) මතකය තැන්පත් වීමට අත්‍යවශ්‍ය සාධක වේ. අවසාන වශයෙන්, පසුගිය විභාග ප්‍රශ්න පත්‍ර (Past Papers) සඳහා නියමිත වේලාවට අනුව පිළිතුරු ලිවීම මඟින් ඔබට විභාගය පිළිබඳ තිබෙන බිය සම්පූර්ණයෙන්ම නැති කර ගත හැකිය.</div>
+                    <button class="read-more-btn" onclick="openContentReader('edu_01')">Read More... <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('edu_01')">
+                        <i class="far fa-heart"></i> <span class="like-count">84</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- WIDESCREEN DYNAMIC OVERLAY MODAL FOR READER -->
+    <div class="modal-overlay" id="contentModalOverlay" onclick="closeContentReader(event, false)">
+        <div class="modal-container" id="modalContainer">
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <h2 id="modalTitle">මාතෘකාව</h2>
+                    <span id="modalMeta" style="font-size: 13px; color: var(--text-muted); font-weight: 600;">කතුවරයා</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeContentReader(event, true)"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Full dynamic content rendering ecosystem -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SYSTEM FOOTER -->
+    <footer>
+        <p>&copy; 2026 KMx Education. All Content Protected Under Smart Secure Architecture.</p>
+    </footer>
+
+    <script>
+        // --- 1. CORE THEME SYSTEM ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.className = 'fa-moon';
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fa-sun';
+                toggleText.textContent = "Light Mode";
+            }
+        });
+
+        // --- 2. ACCESSIBLE CONTENT FONT SIZE ENGINE ---
+        let baseFontSize = 15; 
+        const minFontSize = 13; 
+        const maxFontSize = 24; 
+
+        function adjustFontSize(direction) {
+            let newSize = baseFontSize + direction;
+            if (newSize >= minFontSize && newSize <= maxFontSize) {
+                baseFontSize = newSize;
+                document.querySelectorAll('.post-body, .modal-body').forEach(el => {
+                    el.style.fontSize = baseFontSize + 'px';
+                });
+            }
+        }
+
+        // --- 3. DYNAMIC CONTENT TEXT COLOR SWATCH PICKER ---
+        const colorDots = document.querySelectorAll('.color-dot');
+        colorDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                colorDots.forEach(d => d.classList.remove('active'));
+                dot.classList.add('active');
+                
+                const chosenColor = dot.getAttribute('data-color');
+                document.documentElement.style.setProperty('--content-color', chosenColor);
+            });
+        });
+
+        // --- 4. REAL-TIME FILTER & INTEGRATED CORE ENGINE ---
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const postCards = document.querySelectorAll('.post-card');
+        const searchInput = document.getElementById('hubSearch');
+        const postsWrapper = document.getElementById('postsWrapper');
+
+        function dynamicFilterHub() {
+            const activeCategory = document.querySelector('.cat-btn.active').getAttribute('data-cat');
+            const query = searchInput.value.toLowerCase().trim();
+            let visibleCounter = 0;
+
+            postCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardTitle = card.getAttribute('data-title').toLowerCase();
+                const cardAuthor = card.getAttribute('data-author').toLowerCase();
+
+                const isCorrectCat = (cardCategory === activeCategory);
+                const matchesSearch = cardTitle.includes(query) || cardAuthor.includes(query);
+
+                if (isCorrectCat && matchesSearch) {
+                    card.classList.add('active-tab');
+                    visibleCounter++;
+                } else {
+                    card.classList.remove('active-tab');
+                }
+            });
+
+            const existingNoRes = document.querySelector('.no-results');
+            if (visibleCounter === 0) {
+                if (!existingNoRes) {
+                    const noResDiv = document.createElement('div');
+                    noResDiv.classList.add('no-results');
+                    noResDiv.innerHTML = `<i class="fas fa-search-minus" style="display:block; font-size:36px; margin-bottom:12px; color:var(--text-muted);"></i> ඔබ සෙවූ මාතෘකාව හෝ කතුවරයා මෙම කාණ්ඩය යටතේ හමු නොවිණි.`;
+                    postsWrapper.appendChild(noResDiv);
+                }
+            } else if (existingNoRes) {
+                existingNoRes.remove();
+            }
+        }
+
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                searchInput.value = ''; 
+                dynamicFilterHub();
+            });
+        });
+
+        searchInput.addEventListener('input', dynamicFilterHub);
+
+        // --- 5. 90% SCREEN DISPLAY POPUP ENGINE ---
+        const modalOverlay = document.getElementById('contentModalOverlay');
+        const modalContainer = document.getElementById('modalContainer');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMeta = document.getElementById('modalMeta');
+        const modalBody = document.getElementById('modalBody');
+
+        function openContentReader(postId) {
+            const sourceCard = document.getElementById(postId);
+            const title = sourceCard.getAttribute('data-title');
+            const author = sourceCard.getAttribute('data-author');
+            const category = sourceCard.getAttribute('data-category');
+            
+            const fullBodyText = sourceCard.querySelector('.post-body').textContent;
+
+            modalTitle.textContent = title;
+            modalMeta.innerHTML = `<i class="fas fa-user"></i> කතුවරයා: ${author}`;
+            modalBody.textContent = fullBodyText;
+            
+            if(category === "poems") {
+                modalContainer.classList.add('poem-layout');
+            } else {
+                modalContainer.classList.remove('poem-layout');
+            }
+
+            modalBody.style.fontSize = baseFontSize + 'px';
+
+            modalOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeContentReader(event, force = false) {
+            if (force || event.target === modalOverlay) {
+                modalOverlay.classList.remove('open');
+                document.body.style.overflow = ''; 
+            }
+        }
+
+        // --- 6. SECURED STATE LOCALSTORAGE LIKE ENGINE ---
+        function initializeLikeDatabase() {
+            postCards.forEach(card => {
+                const id = card.id;
+                const likeBtn = card.querySelector('.like-btn');
+                const heartIcon = likeBtn.querySelector('i');
+                const countSpan = likeBtn.querySelector('.like-count');
+                
+                const hasLiked = localStorage.getItem(`kmx_hub_liked_${id}`) === 'true';
+                let rawBaseCount = parseInt(countSpan.textContent);
+
+                if (hasLiked) {
+                    likeBtn.classList.add('liked');
+                    heartIcon.className = 'fas fa-heart'; 
+                    
+                    if(!localStorage.getItem(`kmx_count_adjusted_${id}`)) {
+                        rawBaseCount = rawBaseCount + 1;
+                        countSpan.textContent = rawBaseCount;
+                        localStorage.setItem(`kmx_count_adjusted_${id}`, 'true');
+                    }
+                }
+            });
+        }
+
+        function toggleLike(postId) {
+            const card = document.getElementById(postId);
+            const likeBtn = card.querySelector('.like-btn');
+            const heartIcon = likeBtn.querySelector('i');
+            const countSpan = likeBtn.querySelector('.like-count');
+            
+            let currentLikes = parseInt(countSpan.textContent);
+            const verifiedLikedState = localStorage.getItem(`kmx_hub_liked_${postId}`) === 'true';
+
+            if (verifiedLikedState) {
+                localStorage.setItem(`kmx_hub_liked_${postId}`, 'false');
+                localStorage.removeItem(`kmx_count_adjusted_${postId}`);
+                likeBtn.classList.remove('liked');
+                heartIcon.className = 'far fa-heart'; 
+                countSpan.textContent = currentLikes - 1;
+            } else {
+                localStorage.setItem(`kmx_hub_liked_${postId}`, 'true');
+                likeBtn.classList.add('liked');
+                heartIcon.className = 'fas fa-heart'; 
+                countSpan.textContent = currentLikes + 1;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initializeLikeDatabase);
+
+        // --- 7. SECURE ANTI-COPY SYSTEM OVERLAYS ---
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') e.preventDefault();
+        });
+    </script>
+</body>
+</html>

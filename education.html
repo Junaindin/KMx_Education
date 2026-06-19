@@ -3,110 +3,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMx Education - Tech Hub</title>
-   
+    <title>Subject Portal - KMx Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
     <style>
-        /* CSS මගින් පිටුව ලස්සන කිරීම */
+        /* --- CSS VARIABLES (STUDENT-FRIENDLY PALETTE) --- */
+        :root {
+            --bg-base: #f5f7fb; 
+            --bg-surface: #ffffff;
+            --bg-widget: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --accent: #0f766e; /* Calm Teal for study focus */
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --title-color: #800020;
+        }
+
+        [data-theme="dark"] {
+            --bg-base: #0f172a; 
+            --bg-surface: #1e293b;
+            --bg-widget: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #800020; 
+            --primary-hover: #a10d32;
+            --accent: #2dd4bf;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --title-color: #f59e0b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.7;
+            transition: var(--transition);
         }
 
-        .container {
-            padding: 30px;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        /* --- NAVIGATION BAR & LIVE CLOCK --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .gears {
-            font-size: 4rem;
-            margin: 20px 0;
-            animation: rotate 4s linear infinite;
-            display: inline-block;
+        .logo span {
+            color: var(--primary);
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* Live Clock Container (Visible only on Desktop Layout) */
+        .live-clock-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--accent);
+            background-color: var(--bg-base);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
         }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #f1f5f9;
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 25px;
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 8px;
         }
 
-        /* JavaScript මගින් ක්‍රියාත්මක වන Button එක */
-        .btn {
-            background-color: #38bdf8;
-            color: #0f172a;
-            border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 15px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
         }
 
-        .btn:hover {
-            background-color: #0ea5e9;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        [data-theme="dark"] .theme-toggle {
+            border-color: var(--title-color);
+            color: var(--title-color);
+        }
+
+        /* --- DYNAMIC QUOTE BOX --- */
+        .quote-section {
+            max-width: 900px;
+            margin: 40px auto 20px auto;
+            padding: 0 20px;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, rgba(128,0,32,0.05), rgba(15,118,110,0.05));
+            border-left: 5px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            box-shadow: var(--shadow);
+            background-color: var(--bg-surface);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quote-box i {
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .quote-text {
+            font-size: 16px;
+            font-weight: 500;
+            font-style: italic;
+            color: var(--text-main);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- MAIN HUB CONTAINER --- */
+        .hub-container {
+            max-width: 1100px;
+            margin: 20px auto 60px auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* SUBJECT SELECTOR BUTTONS */
+        .subject-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .sub-btn {
+            background-color: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .sub-btn:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .sub-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* SEARCH BAR */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 55px;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* --- ARTICLES GRID --- */
+        .articles-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            transition: var(--transition);
+        }
+
+        .article-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, max-height 0.5s;
+            display: none; /* Controlled by JS */
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .article-card.active-tab {
+            display: flex;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-color: rgba(128,0,32,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .article-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* Advanced Read More Collapse & Justify Layout */
+        .article-body {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+            max-height: 122px; /* Roughly 5 lines restriction */
+            transition: max-height 0.5s ease;
+            text-align: justify; /* Justified text layout requested */
+        }
+
+        .article-card.expanded .article-body {
+            max-height: 1000px; /* Expands cleanly to full height */
+        }
+
+        /* Desktop Only Feature: Expand Card to Full Width within container bounds */
+        @media (min-width: 993px) {
+            .article-card.expanded {
+                grid-column: 1 / -1; /* Breaks out of the grid column layout to occupy the full width */
+                transform: none;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 0;
+            transition: var(--transition);
+            align-self: flex-start;
+        }
+
+        .read-more-btn:hover {
+            color: var(--primary-hover);
+            gap: 8px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 992px) {
+            .live-clock-box {
+                display: none; /* Hide clock on small tablets and mobile devices */
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .sub-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo">KMx Education</div>
-       
-        <div class="gears">⚙️</div>
-       
-        <h1>වෙබ් අඩවිය සකස් කරමින් පවතී!</h1>
-        <p>අපගේ නවතම තාක්ෂණික අධ්‍යාපන පිටුව (Tech Hub) ඉතා ඉක්මනින් ඔබ වෙත රැගෙන ඒමට KMx කණ්ඩායම වැඩ කරමින් සිටියි. රැඳී සිටින්න අප සමඟ!</p>
-       
-        <button class="btn" onclick="showAlert()">වැඩි විස්තර</button>
+    <header>
+        <div class="logo-area">
+            <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
+        </div>
+
+        <div class="live-clock-box" id="clockBox">
+            <i class="far fa-clock"></i>
+            <span id="liveDateTime">Loading Date & Time...</span>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tech.html">Tech</a>
+            <a href="#">Book Store</a>
+            <a href="#" class="active">Education</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="quote-section">
+        <div class="quote-box">
+            <i class="fas fa-quote-left"></i>
+            <div class="quote-text" id="quoteText">අධ්‍යාපනය යනු ජීවිතය ජය ගැනීමට ඇති බලවත්ම ආයුධයයි.</div>
+        </div>
     </div>
 
-    <script>
-        /* JavaScript මගින් බටන් එක ක්ලික් කල විට පණිවිඩයක් පෙන්වීම */
-        function showAlert() {
-            alert("KMx Education වෙතින් ඉතා ඉක්මනින්ම ඔබට නවතම පාඨමාලා රැසක් බලාපොරොත්තු විය හැක!");
-        }
-    </script>
+    <div class="hub-container">
+        
+        <div class="subject-nav">
+            <button class="sub-btn active" data-subject="english"><i class="fas fa-language"></i> ඉංග්‍රීසි (English)</button>
+            <button class="sub-btn" data-subject="media"><i class="fas fa-camera-retro"></i> මීඩියා (Media Studies)</button>
+            <button class="sub-btn" data-subject="buddhist"><i class="fas fa-dharmachakra"></i> බෞද්ධ ශිෂ්ටාචාරය</button>
+        </div>
 
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="hubSearch" class="search-input" placeholder="මෙම විෂයට අදාළ මාතෘකා මෙතැනින් සොයන්න...">
+        </div>
+
+        <div class="articles-wrapper" id="articlesWrapper">
+            
+            <div class="article-card active-tab" data-subject="english" data-title="Tenses ඉගෙන ගනිමු">
+                <div>
+                    <div class="article-meta"><span>English Grammar</span><span>Lesson 01</span></div>
+                    <div class="article-title">ඉංග්‍රීසි කාල භේදය (Tenses) සරලව</div>
+                    <div class="article-body">
+                        ඉංග්‍රීසි භාෂාවේ නිවැරදිව වාක්‍ය ගොඩනැඟීමට නම් Tenses පිළිබඳ අවබෝධය අත්‍යවශ්‍ය වේ. ප්‍රධාන වශයෙන් කාලයන් 3ක් පවතින අතර ඒවා නම් Present, Past සහ Future වේ. මෙම සෑම කාලයක්ම නැවත කොටස් 4කට බෙදා දැක්විය හැක. එයින් Simple Present Tense එක එදිනෙදා සාමාන්‍යයෙන් සිදුවන ක්‍රියා ප්‍රකාශ කිරීමට බහුලව භාවිත වේ. මෙම පාඩම් මාලාව මඟින් උදාහරණ සහිතව සියලුම Tenses ඉතාම සරල මට්ටමේ සිට ඉගෙන ගත හැක.
+                    </div>
+                </div>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+
+            <div class="article-card active-tab" data-subject="english" data-title="Active Passive Voice">
+                <div>
+                    <div class="article-meta"><span>English Grammar</span><span>Lesson 02</span></div>
+                    <div class="article-title">Active and Passive Voice හඳුනාගැනීම</div>
+                    <div class="article-body">
+                        වාක්‍යයක ක්‍රියාව සිදුකරන පුද්ගලයාට මුල්තැන දීම Active Voice (කර්තෘ කාරක) වන අතර ක්‍රියාවට හෝ කර්මයට මුල්තැන දීම Passive Voice (කර්ම කාරක) වේ. නිදසුනක් ලෙස "Kasun wrote a book" යන්න Active වන අතර "A book was written by Kasun" යන්න Passive වේ. විභාග වලදී මෙවැනි වාක්‍ය පරිවර්තනය කිරීමේදී නිවැරදි උපකාරක ක්‍රියාපද (Helping Verbs) භාවිතය ඉතාමත් වැදගත් වේ.
+                    </div>
+                </div>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+
+            <div class="article-card" data-subject="media" data-title="සන්නිවේදනය යනු කුමක්ද">
+                <div>
+                    <div class="article-meta"><span>Media Studies</span><span>Lesson 01</span></div>
+                    <div class="article-title">සන්නිවේදනය සහ එහි මූලික ආකෘති</div>
+                    <div class="article-body">
+                        සන්නිවේදනය යනු දෙදෙනෙකු හෝ කිහිපදෙනෙකු අතර අදහස්, තොරතුරු හෝ හැඟීම් හුවමාරු කර ගැනීමේ ක්‍රියාවලියයි. මාධ්‍ය අධ්‍යයනයේදී ප්‍රධාන සන්නිවේදන ආකෘති කිහිපයක් සාකච්ඡා කෙරේ. ඒ අතරින් ලැස්වෙල්ගේ ආකෘතිය සහ ශැනන්-වීවර් ආකෘතිය සන්නිවේදන ප්‍රවාහය වටහා ගැනීමට උපකාරී වේ. නූතන සමාජයේ ජනමාධ්‍ය (Mass Media) මිනිස් චින්තනය කෙරෙහි විශාල බලපෑමක් එල්ල කරයි.
+                    </div>
+                </div>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+
+            <div class="article-card" data-subject="buddhist" data-title="භාරතීය සමාජ පසුබිම">
+                <div>
+                    <div class="article-meta"><span>බෞද්ධ ශිෂ්ටාචාරය</span><span>Lesson 01</span></div>
+                    <div class="article-title">බුද්ධ කාලීන භාරතයේ දේශපාලන පසුබිම</div>
+                    <div class="article-body">
+                        ක්‍රිස්තු පූර්ව ஆறවන සියවසේදී මධ්‍ය දේශයේ දේශපාලන බලය ප්‍රධාන කොටස් දෙකකට බෙදී පැවතුණි. ඒ රාජාණ්ඩු (Monarchies) සහ සමූහාණ්ඩු (Republics) වශයෙනි. මගධ, කෝසල, වත්ස සහ අවන්ති යන මහා ජනපද හතර එකල ප්‍රබලතම රාජාණ්ඩු වූ අතර වජ්ජි සහ මල්ල වැනි රාජ්‍යයන් සමූහාණ්ඩු ගණයට අයත් විය. මෙම දේශපාලනික වෙනස්වීම් බුදුදහමේ ව්‍යාප්තියට සෘජුවම බලපාන ලදී.
+                    </div>
+                </div>
+                <button class="read-more-btn" onclick="toggleReadMore(this)">Read More <i class="fas fa-chevron-down"></i></button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 KMx Education. Smart Learning Content Hub for Students.</p>
+    </footer>
+
+    <script>
+        // --- 1. DARK MODE TOGGLE SYSTEM ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+
+        // --- 2. DYNAMIC EDUCATION QUOTE ENGINE ---
+        const quotes = [
+            "අධ්‍යාපනය යනු ජීවිතය ජය ගැනීමට ඇති බලවත්ම ආයුධයයි. - නෙල්සන් මැන්ඩෙලා",
+            "උගෙනීම කවදාවත් මනස වෙහෙසට පත් කරන්නේ නැත. - ලියනාඩෝ ඩා වින්සි",
+            "අද ඉගෙන ගන්නා දෙය හෙට දවසේ ඔබේ ලෝකය ආලෝකවත් කරනු ඇත.",
+            "අධ්‍යාපනයේ මුල් තිත්ත වුවද එහි ඵල ඉතා මිහිරි ය. - ඇරිස්ටෝටල්",
+            "නිරන්තරයෙන් කියවීම සහ ඉගෙනීම මිනිසෙකු සම්පූර්ණ කරයි."
+        ];
+
+        const quoteTextElem = document.getElementById('quoteText');
+
+        function changeQuote() {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            quoteTextElem.style.opacity = 0;
+            setTimeout(() => {
+                quoteTextElem.textContent = quotes[randomIndex];
+                quoteTextElem.style.opacity = 1;
+            }, 300);
+        }
+
+        window.addEventListener('DOMContentLoaded', changeQuote);
+        setInterval(changeQuote, 300000);
+
+
+        // --- 3. SUBJECT TAB SWITCHER & LIVE SEARCH ---
+        const subButtons = document.querySelectorAll('.sub-btn');
+        const articleCards = document.querySelectorAll('.article-card');
+        const searchInput = document.getElementById('hubSearch');
+        const articlesWrapper = document.getElementById('articlesWrapper');
+
+        function filterArticles() {
+            const activeSubject = document.querySelector('.sub-btn.active').getAttribute('data-subject');
+            const query = searchInput.value.toLowerCase().trim();
+            let matchesCount = 0;
+
+            articleCards.forEach(card => {
+                const cardSubject = card.getAttribute('data-subject');
+                const cardTitle = card.getAttribute('data-title').toLowerCase();
+                const cardContent = card.querySelector('.article-body').textContent.toLowerCase();
+
+                const isCorrectSubject = (cardSubject === activeSubject);
+                const matchesSearch = cardTitle.includes(query) || cardContent.includes(query);
+
+                if (isCorrectSubject && matchesSearch) {
+                    card.classList.add('active-tab');
+                    matchesCount++;
+                } else {
+                    card.classList.remove('active-tab');
+                    card.classList.remove('expanded');
+                    const btn = card.querySelector('.read-more-btn');
+                    if(btn) btn.innerHTML = `Read More <i class="fas fa-chevron-down"></i>`;
+                }
+            });
+
+            const existingNoRes = document.querySelector('.no-results');
+            if (matchesCount === 0) {
+                if (!existingNoRes) {
+                    const noResDiv = document.createElement('div');
+                    noResDiv.classList.add('no-results');
+                    noResDiv.innerHTML = `<i class="fas fa-book-open" style="display:block; font-size:32px; margin-bottom:10px; color:var(--text-muted);"></i> මෙම විෂය යටතේ එවැනි මාතෘකාවක් හමු වූයේ නැත.`;
+                    articlesWrapper.appendChild(noResDiv);
+                }
+            } else if (existingNoRes) {
+                existingNoRes.remove();
+            }
+        }
+
+        subButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                subButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                searchInput.value = ''; 
+                filterArticles();
+            });
+        });
+
+        searchInput.addEventListener('input', filterArticles);
+
+
+        // --- 4. ADVANCED COLLAPSE/EXPAND (READ MORE) LOGIC ---
+        function toggleReadMore(button) {
+            const card = button.closest('.article-card');
+            card.classList.toggle('expanded');
+
+            if (card.classList.contains('expanded')) {
+                button.innerHTML = `Show Less <i class="fas fa-chevron-up"></i>`;
+            } else {
+                button.innerHTML = `Read More <i class="fas fa-chevron-down"></i>`;
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+
+        // --- 5. LIVE DESKTOP DATE & 12-HOUR CLOCK ENGINE ---
+        function updateLiveClock() {
+            const now = new Date();
+            
+            // Format Date (Year-Month-Day structure or Localized Style)
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const dateString = `${year}-${month}-${day}`;
+
+            // Format 12-Hour Clock
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+            const hoursString = String(hours).padStart(2, '0');
+
+            const timeString = `${hoursString}:${minutes}:${seconds} ${ampm}`;
+            
+            // Inject into view element
+            document.getElementById('liveDateTime').textContent = `${dateString} | ${timeString}`;
+        }
+
+        // Initialize clock engine ticks immediately and update every second
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+    </script>
 </body>
 </html>

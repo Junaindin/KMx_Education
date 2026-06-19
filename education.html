@@ -54,9 +54,14 @@
             font-family: var(--font-family);
             line-height: 1.7;
             transition: var(--transition);
+            
+            /* Anti-copy Protection styles */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
         }
 
-        /* --- NAVIGATION BAR & LIVE CLOCK --- */
+        /* --- NAVIGATION BAR --- */
         header {
             background-color: var(--nav-bg);
             padding: 15px 5%;
@@ -91,18 +96,27 @@
             color: var(--primary);
         }
 
-        /* Live Clock Container (Visible only on Desktop Layout) */
+        /* New Clock Container - Placed below header, aligned to the right */
+        .clock-outer-wrapper {
+            max-width: 1100px;
+            margin: 15px auto 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .live-clock-box {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13.5px;
+            font-size: 14px;
             font-weight: 600;
             color: var(--accent);
-            background-color: var(--bg-base);
-            padding: 6px 14px;
+            background-color: var(--bg-surface);
+            padding: 8px 16px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
 
         nav {
@@ -149,7 +163,7 @@
         /* --- DYNAMIC QUOTE BOX --- */
         .quote-section {
             max-width: 900px;
-            margin: 40px auto 20px auto;
+            margin: 20px auto 20px auto; /* Adjusted top margin for spacing */
             padding: 0 20px;
         }
 
@@ -319,15 +333,15 @@
             overflow: hidden;
             max-height: 122px; /* Roughly 5 lines restriction */
             transition: max-height 0.5s ease;
-            text-align: justify; /* Justified text layout requested */
+            text-align: justify;
         }
 
         .article-card.expanded .article-body {
             max-height: 1000px; /* Expands cleanly to full height */
         }
 
-        /* Desktop Only Feature: Expand Card to Full Width within container bounds */
-        @media (min-width: 993px) {
+        /* Desktop & Phone Desktop Mode Layout Fixes */
+        @media (min-width: 900px) {
             .article-card.expanded {
                 grid-column: 1 / -1; /* Breaks out of the grid column layout to occupy the full width */
                 transform: none;
@@ -375,12 +389,6 @@
         }
 
         /* --- RESPONSIVE BREAKPOINTS --- */
-        @media (max-width: 992px) {
-            .live-clock-box {
-                display: none; /* Hide clock on small tablets and mobile devices */
-            }
-        }
-
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -394,6 +402,9 @@
                 width: 100%;
                 justify-content: center;
             }
+            .clock-outer-wrapper {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -402,11 +413,6 @@
     <header>
         <div class="logo-area">
             <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
-        </div>
-
-        <div class="live-clock-box" id="clockBox">
-            <i class="far fa-clock"></i>
-            <span id="liveDateTime">Loading Date & Time...</span>
         </div>
 
         <nav>
@@ -419,6 +425,14 @@
             </button>
         </nav>
     </header>
+
+    <!-- Clock Box shifted here to appear below the Menu Bar, aligned to the right side -->
+    <div class="clock-outer-wrapper">
+        <div class="live-clock-box" id="clockBox">
+            <i class="far fa-clock"></i>
+            <span id="liveDateTime">Loading Date & Time...</span>
+        </div>
+    </div>
 
     <div class="quote-section">
         <div class="quote-box">
@@ -605,35 +619,51 @@
         }
 
 
-        // --- 5. LIVE DESKTOP DATE & 12-HOUR CLOCK ENGINE ---
+        // --- 5. LIVE DATE & 12-HOUR CLOCK ENGINE (Sunday , 2026.06.19 - 03.15pm FORMAT) ---
         function updateLiveClock() {
             const now = new Date();
             
-            // Format Date (Year-Month-Day structure or Localized Style)
+            // Get Day Name
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[now.getDay()];
+
+            // Format Date (YYYY.MM.DD)
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
-            const dateString = `${year}-${month}-${day}`;
+            const dateString = `${year}.${month}.${day}`;
 
-            // Format 12-Hour Clock
+            // Format 12-Hour Time (hh.mmpm)
             let hours = now.getHours();
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const ampm = hours >= 12 ? 'pm' : 'am';
             
             hours = hours % 12;
-            hours = hours ? hours : 12; // The hour '0' should be '12'
+            hours = hours ? hours : 12; // '0' should be '12'
             const hoursString = String(hours).padStart(2, '0');
 
-            const timeString = `${hoursString}:${minutes}:${seconds} ${ampm}`;
+            const timeString = `${hoursString}.${minutes}${ampm}`;
             
-            // Inject into view element
-            document.getElementById('liveDateTime').textContent = `${dateString} | ${timeString}`;
+            // Output layout: Sunday , 2026.06.19 - 03.15pm
+            document.getElementById('liveDateTime').textContent = `${dayName} , ${dateString} - ${timeString}`;
         }
 
-        // Initialize clock engine ticks immediately and update every second
         setInterval(updateLiveClock, 1000);
         updateLiveClock();
+
+        // --- 6. ADDITIONAL ANTI-COPY SECURITY LAYERS (JS) ---
+        // Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Disable Copy Keyboard Shortcuts (Ctrl+C, Ctrl+A, Ctrl+U, Ctrl+S, F12)
+        document.addEventListener('keydown', event => {
+            if (event.ctrlKey && (event.key === 'c' || event.key === 'C' || event.key === 'a' || event.key === 'A' || event.key === 'u' || event.key === 'U' || event.key === 's' || event.key === 'S')) {
+                event.preventDefault();
+            }
+            if (event.key === 'F12') {
+                event.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>

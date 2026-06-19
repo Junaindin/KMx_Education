@@ -177,7 +177,6 @@
             margin-bottom: 15px;
         }
 
-        /* Small Round Image Area as requested */
         .author-thumb {
             width: 90px;
             height: 90px;
@@ -225,7 +224,7 @@
             font-size: 14px;
             color: var(--text-muted);
             margin-bottom: 20px;
-            min-height: 66px; /* Balance heights */
+            min-height: 66px;
         }
 
         /* More Details Button */
@@ -304,6 +303,7 @@
     <div class="authors-container">
         <div class="authors-grid">
            
+            <!-- Author 1: Kasun (Navigates to new.html) -->
             <div class="author-card">
                 <div>
                     <div class="img-container">
@@ -312,13 +312,14 @@
                     </div>
                     <div class="author-name">W.K. කසුන් කල්‍යාණ</div>
                     <span class="author-tags">Novels & ICT Specialist</span>
-                    <p class="author-short-desc">"තරුවක දෛවය" නවකතාව ඇතුළු උසස් පෙළ තොරතුරු තාක්ෂණ ක්ෂේත්‍රයේ ග්‍රන්ථ රැසක් රචනා කළ ප්‍රධාන කර්තෘවරයෙකි.</p>
+                    <p class="author-short-desc">"තරුවක දෛවය" නවකතාව ඇතුළු උසස් පෙළ තොරතුරු තාක්ෂණ ක්ෂේත්‍රයේ ග්‍රන්ථ රැසක් რචනා කළ ප්‍රධාන කර්තෘවරයෙකි.</p>
                 </div>
-                <button class="more-details-btn" onclick="goToDetails('W.K. Kasun Kalyana')">
+                <button class="more-details-btn" onclick="goToDetails('new.html')">
                     More Details <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
+            <!-- Author 2: Hiruni (Navigates to hiruni.html) -->
             <div class="author-card">
                 <div>
                     <div class="img-container">
@@ -329,11 +330,12 @@
                     <span class="author-tags">Short Stories / Novels</span>
                     <p class="author-short-desc">යෞවන සමාජයේ සහ සරසවි ජීවිතයේ සැබෑ අත්දැකීම් පාදක කරගනිමින් හදවතට දැනෙන කෙටිකතා නිර්මාණය කරන ලේඛිකාවකි.</p>
                 </div>
-                <button class="more-details-btn" onclick="goToDetails('Hiruni Dilhara')">
+                <button class="more-details-btn" onclick="goToDetails('hiruni.html')">
                     More Details <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
+            <!-- Author 3: Seneviratne (Navigates to sene.html) -->
             <div class="author-card">
                 <div>
                     <div class="img-container">
@@ -344,7 +346,7 @@
                     <span class="author-tags">Grammar & English Specialist</span>
                     <p class="author-short-desc">පාසල් දරුවන්ට සහ උසස් අධ්‍යාපනය ලබන සිසුන්ට ඉංග්‍රීසි ව්‍යාකරණ (Grammar) ඉතා සරලව පොත්පත් මඟින් කියා දෙන ප්‍රවීණ දේශකයෙකි.</p>
                 </div>
-                <button class="more-details-btn" onclick="goToDetails('K.M. Seneviratne')">
+                <button class="more-details-btn" onclick="goToDetails('sene.html')">
                     More Details <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -375,10 +377,9 @@
             }
         });
 
-        // --- 2. NAVIGATION TO NEW.HTML WITH PARAMETERS ---
-        function goToDetails(authorName) {
-            // E.g: Navigates cleanly to new.html?author=W.K.%20Kasun%20Kalyana
-            window.location.href = `new.html?author=${encodeURIComponent(authorName)}`;
+        // --- 2. DYNAMIC NAVIGATION ENGINE ---
+        function goToDetails(pageName) {
+            window.location.href = pageName;
         }
     </script>
 </body>

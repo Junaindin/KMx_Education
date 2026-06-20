@@ -3,110 +3,857 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMx Education - Tech Hub</title>
-   
+    <title>KMx Technical Hub - Tech Solutions & Software</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
     <style>
-        /* CSS මගින් පිටුව ලස්සන කිරීම */
+        /* --- SYSTEM THEME DESIGN ARCHITECTURE --- */
+        :root {
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --accent-maroon: #800020;    
+            --primary: #06b6d4;          
+            --primary-hover: #0891b2;
+        }
+
+        /* --- DARK THEME VARIANT (DEFAULT) --- */
+        [data-theme="dark"] {
+            --bg-base: #0f172a;          
+            --bg-surface: #1e293b;       
+            --text-main: #f8fafc;        
+            --text-muted: #94a3b8;       
+            --border-color: #334155;
+            --nav-bg: #0f172a;
+            --card-hover-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            --item-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        /* --- LIGHT THEME VARIANT --- */
+        [data-theme="light"] {
+            --bg-base: #f1f5f9;          
+            --bg-surface: #ffffff;       
+            --text-main: #0f172a;        
+            --text-muted: #64748b;       
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            --item-bg: rgba(0, 0, 0, 0.02);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            overflow: hidden;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.8;
+            transition: var(--transition);
+            overflow-x: hidden;
+            
+            /* Anti-Copy Protection Active */
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        .container {
-            padding: 30px;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        /* --- STICKY NAVIGATION BAR SYSTEM --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent-maroon);
+            transition: var(--transition);
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .gears {
-            font-size: 4rem;
-            margin: 20px 0;
-            animation: rotate 4s linear infinite;
-            display: inline-block;
+        .logo span {
+            color: var(--primary);
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .right-nav-bundle {
+            display: flex;
+            align-items: center;
+            gap: 25px;
         }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: #f1f5f9;
+        .nav-links {
+            display: flex;
+            gap: 20px;
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            line-height: 1.6;
+        .nav-link-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 5px 10px;
+        }
+
+        .nav-link-btn:hover, .nav-link-btn.active {
+            color: var(--primary);
+        }
+
+        .theme-toggle-btn {
+            background-color: transparent;
+            border: 2px solid var(--accent-maroon);
+            color: var(--accent-maroon);
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle-btn {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            text-align: center;
+            margin: 50px auto 30px auto;
+            padding: 0 15px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: smoothReveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .hero-title {
+            font-size: 52px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #800020, #38bdf8, #ec4899);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s ease infinite;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .hero-tagline {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        @keyframes smoothReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- THE CORE LAYOUT WRAPPER (FLEX EXECUTION) --- */
+        .main-layout {
+            max-width: 1300px;
+            margin: 0 auto 60px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        /* --- CONTROLS SYSTEM --- */
+        .controls-wrapper {
+            width: 100%;
+        }
+
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
             margin-bottom: 25px;
         }
 
-        /* JavaScript මගින් ක්‍රියාත්මක වන Button එක */
-        .btn {
-            background-color: #38bdf8;
-            color: #0f172a;
-            border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
-            font-weight: bold;
+        .cat-btn {
+            background-color: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 24px;
             border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
         }
 
-        .btn:hover {
-            background-color: #0ea5e9;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        .cat-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .cat-btn.active {
+            background-color: var(--primary);
+            color: #0f172a;
+            border-color: var(--primary);
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 60px;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 15px;
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        /* --- TWIN TIER CONTENT GRID CONTAINER --- */
+        .content-grid-container {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 35px;
+            width: 100%;
+        }
+
+        /* --- ARTICLE MODULE MATRIX --- */
+        .articles-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .post-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: none;
+            width: 100%;
+        }
+
+        .post-card.active-tab {
+            display: block;
+        }
+
+        .post-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        /* CRITICAL DYNAMIC EFFECT: 80% WIDE IN CARDS AT THE TOP SCREEN */
+        .post-card.expanded {
+            display: block !important;
+            width: 80% !important;
+            max-width: 1040px;
+            margin: 0 auto 20px auto;
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .post-meta .tag-badge {
+            color: var(--primary);
+            background-color: rgba(6, 182, 212, 0.1);
+            padding: 2px 12px;
+            border-radius: 12px;
+        }
+
+        .post-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .post-body {
+            font-size: 15px;
+            text-align: justify;
+            white-space: pre-line;
+            display: -webkit-box;
+            -webkit-line-clamp: 5; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .post-card.expanded .post-body {
+            display: block;
+            overflow: visible;
+            -webkit-line-clamp: unset;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 5px 0;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        /* --- SIDEBAR INFRASTRUCTURE --- */
+        .sidebar-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .widget-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--accent-maroon);
+            padding-bottom: 8px;
+        }
+
+        .widget-title i {
+            color: var(--primary);
+        }
+
+        .download-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .download-item {
+            background-color: var(--item-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .download-item:hover {
+            background-color: rgba(6, 182, 212, 0.03);
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .dl-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .dl-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        .download-btn {
+            background-color: var(--accent-maroon);
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            background-color: #5d0017;
+            transform: scale(1.02);
+        }
+
+        .ict-item {
+            border-left: 3px solid var(--primary);
+            padding-left: 12px;
+            margin-bottom: 15px;
+        }
+
+        .ict-item h5 {
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .ict-item p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .tool-node {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--item-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .tool-node:hover {
+            border-color: var(--primary);
+        }
+
+        .tool-meta h6 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .tool-meta span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .tool-action-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .tool-action-btn:hover {
+            color: var(--text-main);
+            transform: translateX(3px);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+            margin-top: 40px;
+            transition: var(--transition);
+        }
+
+        /* --- RESPONSIVE MEDIA ADAPTATIONS --- */
+        @media (max-width: 950px) {
+            .content-grid-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .right-nav-bundle {
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+            }
+            .nav-links {
+                justify-content: center;
+                width: 100%;
+            }
+            .hero-title {
+                font-size: 34px;
+            }
+            .post-card.expanded {
+                width: 100% !important;
+            }
         }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
-    <div class="container">
-        <div class="logo">KMx Technical</div>
-       
-        <div class="gears">⚙️</div>
-       
-        <h1>වෙබ් අඩවිය සකස් කරමින් පවතී!</h1>
-        <p>අපගේ නවතම තාක්ෂණික අධ්‍යාපන පිටුව (Tech Hub) ඉතා ඉක්මනින් ඔබ වෙත රැගෙන ඒමට KMx කණ්ඩායම වැඩ කරමින් සිටියි. රැඳී සිටින්න අප සමඟ!</p>
-       
-        <button class="btn" onclick="showAlert()">වැඩි විස්තර</button>
+    <header>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Technical</span></a>
+        
+        <div class="right-nav-bundle">
+            <div class="nav-links">
+                <a href="#" class="nav-link-btn active">Home</a>
+                <a href="#" class="nav-link-btn">Articles</a>
+                <a href="#" class="nav-link-btn">Softwares</a>
+            </div>
+            
+            <button class="theme-toggle-btn" id="themeToggler" onclick="switchThemeRuntime()">
+                <i class="fas fa-sun" id="themeIcon"></i> <span id="themeLabel">Light Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <h1 class="hero-title">KMx Technical Hub</h1>
+        <p class="hero-tagline">Advanced Technology Solutions, OS Customization & ICT Insights</p>
     </div>
 
-    <script>
-        /* JavaScript මගින් බටන් එක ක්ලික් කල විට පණිවිඩයක් පෙන්වීම */
-        function showAlert() {
-            alert("KMx Education වෙතින් ඉතා ඉක්මනින්ම ඔබට නවතම පාඨමාලා රැසක් බලාපොරොත්තු විය හැක!");
-        }
-    </script>
+    <div class="main-layout">
+        
+        <div class="controls-wrapper">
+            <div class="category-nav">
+                <button class="cat-btn active" data-cat="windows"><i class="fab fa-windows"></i> Windows</button>
+                <button class="cat-btn" data-cat="linux"><i class="fab fa-linux"></i> Linux OS</button>
+                <button class="cat-btn" data-cat="android"><i class="fab fa-android"></i> Android Apps</button>
+            </div>
 
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="techSearch" class="search-input" placeholder="මාතෘකාව හෝ තාක්ෂණික විස්තර මෙතැනින් සොයන්න...">
+            </div>
+        </div>
+
+        <div id="expandedArticleZone"></div>
+
+        <div class="content-grid-container">
+            
+            <div class="articles-column" id="articlesColumn">
+                
+                <div class="post-card active-tab" data-category="windows" data-title="Windows 11 Optimization" id="win_01">
+                    <div class="post-meta"><span>OS Optimization</span><span class="tag-badge">Windows</span></div>
+                    <div class="post-title">Windows 11 Games සහ Softwares සඳහා උපරිම ලෙස සකසමු</div>
+                    <div class="post-body">ඔබේ පරිගණකයේ ක්‍රියාකාරීත්වය (Performance) මන්දගාමී නම්, Windows 11 මෙහෙයුම් පද්ධතිය ක්‍රමවත්ව Optimize කරගැනීම අත්‍යවශ්‍ය වේ. 
+                    පළමුවෙන්ම අනවශ්‍ය Background Apps සහ Startup Programs අක්‍රීය (Disable) කරන්න. Settings -> Apps -> Startup වෙත ගොස් මෙය සිදුකළ හැක.
+                    මීට අමතරව Storage Sense සක්‍රීය කිරීමෙන් තාවකාලික ගොනු (Temporary Files) ස්වයංක්‍රීයව මැකී යයි.
+                    හොඳම ප්‍රතිඵල සඳහා Game Mode සක්‍රීය කර තබා ගන්න. එමඟින් පද්ධතියේ සම්පත් (CPU/RAM) ධාවනය වන ක්‍රීඩාව හෝ මෘදුකාංගය සඳහා උපරිමයෙන් වෙන්කර දෙනු ලබයි.
+                    අවසාන වශයෙන්, Advanced System Settings වෙත ගොස් Visual Effects "Adjust for best performance" ලෙස සැකසීමෙන් පැරණි පරිගණක පවා ඉතා වේගවත් කරගත හැක.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore('win_01')">Read More... <i class="fas fa-chevron-down"></i></button>
+                </div>
+
+                <div class="post-card" data-category="linux" data-title="Linux Terminal Commands" id="lin_01">
+                    <div class="post-meta"><span>Terminal Architecture</span><span class="tag-badge">Linux</span></div>
+                    <div class="post-title">Cyber Security සඳහා Linux Terminal මූලික විධානයන්</div>
+                    <div class="post-body">Parrot OS හෝ Kali Linux වැනි පද්ධති පරිහරණය කිරීමේදී Terminal විධානයන් (Commands) පිළිබඳ අවබෝධය ඉතා වැදගත් වේ. 
+                    මූලිකම විධානයක් වන `sudo apt update` මඟින් මුළු පද්ධතියේම Package Repository යාවත්කාලීන කරනු ලබයි.
+                    නව මෘදුකාංග ස්ථාපනය කිරීමට `sudo apt install [package_name]` භාවිතා කළ හැක.
+                    පද්ධතියේ දැනට ක්‍රියාත්මක වන ෆෝල්ඩරය වෙනස් කිරීමට `cd` විධානයත්, එහි ඇති ගොනු ලැයිස්තුව බලාගැනීමට `ls` විධානයත් භාවිත වේ.
+                    ජාලකරණ ගැටලු නිරාකරණය සඳහා (Network Troubleshooting) `ping` සහ `ifconfig` (නැතහොත් `ip a`) යන මෙවලම් උපකාරී වේ. මේවා නිවැරදිව හැදෑරීම ආරක්ෂිත ජාල පරිපාලනයට මඟ පාදයි.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore('lin_01')">Read More... <i class="fas fa-chevron-down"></i></button>
+                </div>
+
+                <div class="post-card" data-category="android" data-title="Sketchware Application Development" id="and_01">
+                    <div class="post-meta"><span>App Development</span><span class="tag-badge">Android</span></div>
+                    <div class="post-title">Sketchware (Java) භාවිතයෙන් Mobile Apps නිර්මාණය කිරීම</div>
+                    <div class="post-body">Android ස්මාර්ට් ජංගම දුරකථනයක් භාවිතයෙන්ම කේතකරණය (Coding) නොමැතිව Block Programming ක්‍රමයට ඇප්ස් සෑදීමට Sketchware කදිම මෙවලමකි. 
+                    මෙහිදී Java Logic පසුබිමෙහි ක්‍රියාත්මක වන අතර පරිශීලකයාට ඇත්තේ UI Elements (Buttons, ListViews) Drag and Drop කිරීම පමණි.
+                    නමුත් වඩාත් සංකීර්ණ App නිර්මාණය සඳහා custom Java Code (Add Source Directly block) භාවිත කිරීමට සිදුවේ.
+                    Firebase Database එකක් ඇප් එක සමඟ සම්බන්ධ කිරීමෙන් සජීවී දත්ත ගබඩාවක් (Real-time Cloud Database) සහිත Chat Apps, Social Media Apps පවා සෑදිය හැක.
+                    ඇප් එක අවසාන වශයෙන් පරිශීලනයට පෙර Android SDK Build Tools මඟින් නිවැරදිව compile කර .apk හෝ .aab ගොනුවක් ලෙස අපනයනය කරගත හැක.</div>
+                    <button class="read-more-btn" onclick="toggleReadMore('and_01')">Read More... <i class="fas fa-chevron-down"></i></button>
+                </div>
+
+            </div>
+
+            <div class="sidebar-column">
+                
+                <div class="sidebar-widget">
+                    <div class="widget-title"><i class="fas fa-download"></i> Software Downloads</div>
+                    <div class="download-list">
+                        <div class="download-item">
+                            <div class="dl-info">
+                                <h4>Daily Spend Tracker</h4>
+                                <p>Android app එකක් හරහා ඔබේ දෛනික වියදම් කළමනාකරණය කරගන්න.</p>
+                            </div>
+                            <a href="https://www.google.com" target="_blank" class="download-btn"><i class="fas fa-cloud-download-alt"></i> Download APK</a>
+                        </div>
+                        <div class="download-item">
+                            <div class="dl-info">
+                                <h4>KMx Text Editor Pro</h4>
+                                <p>Windows PC සඳහා විශේෂ කේත සංස්කරණ මෙවලම (Lightweight Scripting IDE).</p>
+                            </div>
+                            <a href="https://www.google.com" target="_blank" class="download-btn"><i class="fas fa-laptop-code"></i> Download v1.2</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <div class="widget-title"><i class="fas fa-book-open"></i> ICT Short Notes</div>
+                    <div class="download-list">
+                        <div class="ict-item">
+                            <h5>OS Layer Model Architecture</h5>
+                            <p>OSI ආකෘතියේ ස්ථර (Layers) 7ක් පවතී. භෞතික ස්ථරයේ සිට Application Layer එක දක්වා දත්ත සම්ප්‍රේෂණය වේ.</p>
+                        </div>
+                        <div class="ict-item">
+                            <h5>Database Normalization</h5>
+                            <p>දත්ත සමුදායක (DBMS) දත්ත අතිරික්තතාවය අවම කර අනුකූලතාවය සුරැකීමට 1NF, 2NF සහ 3NF ආකෘති භාවිත වේ.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <div class="widget-title"><i class="fas fa-tools"></i> KMx Tools Hub</div>
+                    <div class="download-list">
+                        <div class="tool-node">
+                            <div class="tool-meta">
+                                <h6>Ping Diagnostic Tool</h6>
+                                <span>Network Latency Verifier v1.0</span>
+                            </div>
+                            <a href="https://www.google.com" target="_blank" class="tool-action-btn"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <div class="tool-node">
+                            <div class="tool-meta">
+                                <h6>Hash Calculator Pro</h6>
+                                <span>MD5, SHA-256 Checksum Engine</span>
+                            </div>
+                            <a href="https://www.google.com" target="_blank" class="tool-action-btn"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <div class="tool-node">
+                            <div class="tool-meta">
+                                <h6>Subnet Mask Calculator</h6>
+                                <span>IP Network Infrastructure Planner</span>
+                            </div>
+                            <a href="https://www.google.com" target="_blank" class="tool-action-btn"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 KMx Technical Hub. Engineered with Precision Security Core Architecture.</p>
+    </footer>
+
+    <script>
+        // --- 1. DYNAMIC CATEGORY FILTER & LIVE SEARCH HUB ---
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const postCards = document.querySelectorAll('.post-card');
+        const searchInput = document.getElementById('techSearch');
+        const articlesColumn = document.getElementById('articlesColumn');
+        const expandedArticleZone = document.getElementById('expandedArticleZone');
+
+        function dynamicFilterHub() {
+            // ලිපියක් Expand වී ඇත්නම් එය මුලින්ම සාමාන්‍ย තැනට පත්කර සෙවීම් සිදුකරයි
+            const expandedCard = expandedArticleZone.querySelector('.post-card');
+            if(expandedCard) {
+                const originalId = expandedCard.getAttribute('id');
+                toggleReadMore(originalId);
+            }
+
+            const activeCategory = document.querySelector('.cat-btn.active').getAttribute('data-cat');
+            const query = searchInput.value.toLowerCase().trim();
+            let visibleCounter = 0;
+
+            postCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardTitle = card.getAttribute('data-title').toLowerCase();
+                const cardContent = card.querySelector('.post-body').textContent.toLowerCase();
+
+                const isCorrectCat = (cardCategory === activeCategory);
+                const matchesSearch = cardTitle.includes(query) || cardContent.includes(query);
+
+                if (isCorrectCat && matchesSearch) {
+                    card.classList.add('active-tab');
+                    visibleCounter++;
+                } else {
+                    card.classList.remove('active-tab');
+                }
+            });
+
+            const existingNoRes = document.querySelector('.no-results');
+            if (visibleCounter === 0) {
+                if (!existingNoRes) {
+                    const noResDiv = document.createElement('div');
+                    noResDiv.classList.add('no-results');
+                    noResDiv.innerHTML = `<i class="fas fa-satellite-dish" style="display:block; font-size:36px; margin-bottom:12px; color:var(--text-muted);"></i> ඔබ සොයන මාතෘකාව මෙම කාණ්ඩය යටතේ හමුනොවීය.`;
+                    articlesColumn.appendChild(noResDiv);
+                }
+            } else if (existingNoRes) {
+                existingNoRes.remove();
+            }
+        }
+
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                searchInput.value = ''; 
+                dynamicFilterHub();
+            });
+        });
+
+        searchInput.addEventListener('input', dynamicFilterHub);
+
+        // --- 2. ADVANCED TOP POSITION INTEGRATION EXTENSION ENGINE (80% WIDE) ---
+        function toggleReadMore(postId) {
+            const originalContainer = document.getElementById('articlesColumn');
+            let card = document.getElementById(postId);
+            
+            // ජංගම දුරකථනයක සාමාන්‍ය View එකකදී ඉහළට නොදමා සාමාන්‍ය පරිදි පළල් කරයි
+            const isDesktopMode = window.innerWidth > 950;
+
+            if (card.classList.contains('expanded')) {
+                // සක්‍රීය ලිපිය නැවත සාමාන්‍ය තැනට ගෙන යාම
+                card.classList.remove('expanded');
+                const btn = card.querySelector('.read-more-btn');
+                btn.innerHTML = `Read More... <i class="fas fa-chevron-down"></i>`;
+                
+                // එය නැවත වම පස ලිපි ගොන්නට (Articles Column) ඇතුළත් කිරීම
+                originalContainer.appendChild(card);
+                dynamicFilterHub(); // කාණ්ඩයට අනුව නිවැරදිව Sorting පාලනය
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                // දැනට වෙනත් ලිපියක් Expand වී ඇත්නම් එය මුලින්ම පියවා ගනී
+                const alreadyExpanded = expandedArticleZone.querySelector('.post-card');
+                if(alreadyExpanded) {
+                    toggleReadMore(alreadyExpanded.getAttribute('id'));
+                }
+
+                // ලිපිය 80% පළලින් ඉහළට එසවීම
+                card = document.getElementById(postId); 
+                card.classList.add('expanded');
+                const btn = card.querySelector('.read-more-btn');
+                btn.innerHTML = `Show Less <i class="fas fa-chevron-up"></i>`;
+                
+                if (isDesktopMode) {
+                    // Search Bar එකට කෙලින්ම යටින් ඇති විශේෂ ස්ථානයට (Expanded Zone) කාඩ් එක මාරු කිරීම
+                    expandedArticleZone.appendChild(card);
+                }
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // --- 3. DYNAMIC THEME CONTROLLER ---
+        function switchThemeRuntime() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                icon.className = 'fas fa-moon';
+                label.textContent = 'Dark Mode';
+                localStorage.setItem('kmx_tech_theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                label.textContent = 'Light Mode';
+                localStorage.setItem('kmx_tech_theme', 'dark');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('kmx_tech_theme') || 'dark';
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeLabel');
+            
+            body.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'light') {
+                icon.className = 'fas fa-moon';
+                label.textContent = 'Dark Mode';
+            } else {
+                icon.className = 'fas fa-sun';
+                label.textContent = 'Light Mode';
+            }
+        });
+
+        // --- 4. HARDENED ANTI-COPY SECURITY ---
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'a' || e.key === 'A' || e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+            }
+            if (e.key === 'F12') e.preventDefault();
+        });
+    </script>
 </body>
 </html>

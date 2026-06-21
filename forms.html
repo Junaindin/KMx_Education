@@ -1,1 +1,750 @@
 
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Store Register</title>
+    <!-- FontAwesome Icons for Theme Toggle & Checkmarks -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CSS Variables for Dynamic Theme Switching */
+        :root {
+            /* Dark Mode Variables */
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --primary-color: #58a6ff;
+            --primary-hover: #1f6feb;
+            --accent-color: #238636;
+            --border-color: #30363d;
+            --input-bg: #0d1117;
+            --footer-text: #8b949e;
+
+            /* Dark Mode Logo Colors */
+            --logo-color-dark: #f0f6fc;
+            --logo-color-red: #ff7b72;
+        }
+
+        /* Light Mode Override Class */
+        body.light-mode {
+            --bg-color: #f6f8fa;
+            --card-bg: #ffffff;
+            --text-color: #24292f;
+            --text-bright: #0969da;
+            --primary-color: #0969da;
+            --primary-hover: #0c2d6b;
+            --accent-color: #1a7f37;
+            --border-color: #d0d7de;
+            --input-bg: #f6f8fa;
+            --footer-text: #57606a;
+
+            /* Light Mode Logo Colors (Exact colors from f95195df-7eac-4c58-b5ff-1774ccf90f31) */
+            --logo-color-dark: #1e293b;  /* Dark Slate/Blue */
+            --logo-color-red: #800000;   /* Deep Maroon/Red */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+        }
+
+        /* Brand & Logo Layout */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        /* Graduation Cap Icon styling (replacing PNG logo) */
+        .logo-icon {
+            font-size: 28px;
+            color: var(--logo-color-dark);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--logo-color-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--logo-color-red);
+            margin-left: 4px;
+        }
+
+        /* Nav Links & Controls */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Container & Navigation Tabs */
+        .main-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .toggle-tabs {
+            display: flex;
+            background-color: var(--card-bg);
+            padding: 5px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        /* Form Wrapper & Sliding Animation */
+        .form-slider-wrapper {
+            display: flex;
+            width: 200%; /* Two forms side-by-side */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-card {
+            width: 50%; /* Equal split */
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            color: var(--text-bright);
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--footer-text);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Form Controls styling */
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column; /* Allows self-alignment of child items */
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: stretch; /* Ensures form-groups in the same row have identical height */
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-bright);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Fixed height for absolute alignment symmetry between Inputs and Select fields */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select {
+            width: 100%;
+            height: 46px;
+            padding: 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-bright);
+            font-size: 15px;
+            margin-top: auto; /* Aligns input fields to the bottom, resolving uneven label issues */
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-bright);
+            font-size: 15px;
+            resize: vertical;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Checkbox Styling */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--input-bg);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            margin-top: 0; /* Override margin-top auto */
+        }
+
+        /* Radio Buttons */
+        .radio-container {
+            display: flex;
+            gap: 20px;
+            background-color: var(--input-bg);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-bright);
+        }
+
+        .radio-option input[type="radio"] {
+            accent-color: var(--primary-color);
+            width: 18px;
+            height: 18px;
+            margin-top: 0; /* Override margin-top auto */
+        }
+
+        /* Submit Buttons */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .free-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .free-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .premium-btn {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .premium-btn:hover {
+            background-color: #2ea043;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            color: var(--footer-text);
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: auto;
+        }
+
+        footer span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            .nav-controls {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            .nav-links {
+                justify-content: center;
+                width: 100%;
+            }
+            .theme-toggle-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .form-row .form-group input,
+            .form-row .form-group select {
+                margin-top: 0; /* Resets auto-alignment for stacked vertical layouts */
+            }
+            .main-container {
+                margin: 20px auto;
+                padding: 10px;
+            }
+            .form-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<!-- Defaulting first-time load to Light Mode -->
+<body class="light-mode">
+
+    <!-- Header Section with Brand Logo and Theme Switcher -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="brand-container">
+                <!-- Vector Graduation Cap Icon representing f95195df-7eac-4c58-b5ff-1774ccf90f31 -->
+                <i class="fa-solid fa-graduation-cap logo-icon"></i>
+                <div class="logo">KMx <span>User Registration</span></div>
+            </a>
+            <div class="nav-controls">
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="allkahrupg.html">Author</a></li>
+                    <li><a href="onlinestore.html">Articles</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <!-- Smooth Dark / Light Mode Toggle Switch (Configured for Light Mode first) -->
+                <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()">
+                    <i class="fa-solid fa-moon"></i>
+                    <span id="themeText">Dark Mode</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+      
+        <!-- Toggle Tabs for Slide Animation -->
+        <div class="toggle-tabs">
+            <button class="tab-btn active" onclick="switchForm('free')">Free Register (නොමිලේ)</button>
+            <button class="tab-btn" onclick="switchForm('premium')">Earn Money (පොත් විකුණන්න)</button>
+        </div>
+
+        <div style="overflow: hidden; border-radius: 12px;">
+            <div class="form-slider-wrapper" id="sliderWrapper">
+              
+                <!-- 1. FREE REGISTRATION FORM CARD -->
+                <div class="form-card">
+                    <h2>KMx Store Register Form</h2>
+                    <p class="subtitle">ඔබේ ලිපි සහ සටහන් නොමිලේ පළකිරීම සඳහා ලියාපදිංචි වන්න.</p>
+                  
+                    <form onsubmit="sendEmail(event, 'Free Content Submission')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>නම (Name)</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>වයස (Age)</label>
+                                <input type="number" min="10" max="100" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>සම්පූර්ණ නම (Full Name)</label>
+                            <input type="text" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ගම (Town/Village)</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>දිස්ත්‍රික්කය (District)</label>
+                                <select required>
+                                    <option value="" disabled selected>තෝරන්න...</option>
+                                    <option value="Ampara">Ampara (අම්පාර)</option>
+                                    <option value="Anuradhapura">Anuradhapura (අනුරාධපුරය)</option>
+                                    <option value="Badulla">Badulla (බදුල්ල)</option>
+                                    <option value="Batticaloa">Batticaloa (මඩකලපුව)</option>
+                                    <option value="Colombo">Colombo (කොළඹ)</option>
+                                    <option value="Galle">Galle (ගාල්ල)</option>
+                                    <option value="Gampaha">Gampaha (ගම්පහ)</option>
+                                    <option value="Hambantota">Hambantota (හම්බන්තොට)</option>
+                                    <option value="Jaffna">Jaffna (යාපනය)</option>
+                                    <option value="Kalutara">Kalutara (කළුතර)</option>
+                                    <option value="Kandy">Kandy (මහනුවර)</option>
+                                    <option value="Kegalle">Kegalle (කෑගල්ල)</option>
+                                    <option value="Kilinochchi">Kilinochchi (කිලිනොච්චිය)</option>
+                                    <option value="Kurunegala">Kurunegala (කුරුණෑගල)</option>
+                                    <option value="Mannar">Mannar (මන්නාරම)</option>
+                                    <option value="Matale">Matale (මාතලේ)</option>
+                                    <option value="Matara">Matara (මාතර)</option>
+                                    <option value="Moneragala">Moneragala (මොණරාගල)</option>
+                                    <option value="Mullaitivu">Mullaitivu (මුලතිව්)</option>
+                                    <option value="Nuwara Eliya">Nuwara Eliya (නුවරඑළිය)</option>
+                                    <option value="Polonnaruwa">Polonnaruwa (පොළොන්නරුව)</option>
+                                    <option value="Puttalam">Puttalam (පුත්තලම)</option>
+                                    <option value="Ratnapura">Ratnapura (රත්නපුරය)</option>
+                                    <option value="Trincomalee">Trincomalee (ත්‍රිකුණාමලය)</option>
+                                    <option value="Vavuniya">Vavuniya (වවුනියාව)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>දුරකථන අංකය (Phone)</label>
+                                <input type="text" required pattern="[0-9]{10}" placeholder="0771234567">
+                            </div>
+                            <div class="form-group">
+                                <label>විද්‍යුත් ලිපිනය (Email)</label>
+                                <input type="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ලිපිනය (Address)</label>
+                            <input type="text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-group">
+                                <input type="checkbox">
+                                <span>ඔබ ලේඛකයෙක්ද? (Are you a writer?)</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>මීට පෙර පොත්/ලිපි ලියා තිබේද? (Have you written before?)</label>
+                            <div class="radio-container">
+                                <label class="radio-option"><input type="radio" name="written_before_free" value="ඔව් (Yes)"> ඔව්</label>
+                                <label class="radio-option"><input type="radio" name="written_before_free" value="නැත (No)" checked> නැත</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ඔබ ගැන කෙටි හැඳින්වීමක් (Brief Intro)</label>
+                            <textarea placeholder="මෙතන ලියන්න..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn free-btn">Submit via Email</button>
+                    </form>
+                </div>
+
+                <!-- 2. PREMIUM (EARN MONEY) REGISTRATION FORM CARD -->
+                <div class="form-card">
+                    <h2>KMx Store Premium Register</h2>
+                    <p class="subtitle">ඔබේ පොත් විකුණා මුදල් සෙවීම සඳහා ලියාපදිංචි වන්න.</p>
+                  
+                    <form onsubmit="sendEmail(event, 'Premium Commercial Author Application')">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>නම (Name)</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>වයස (Age)</label>
+                                <input type="number" min="10" max="100" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>සම්පූර්ණ නම (Full Name)</label>
+                            <input type="text" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>ගම (Town/Village)</label>
+                                <input type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <label>දිස්ත්‍රික්කය (District)</label>
+                                <select required>
+                                    <option value="" disabled selected>තෝරන්න...</option>
+                                    <option value="Ampara">Ampara (අම්පාර)</option>
+                                    <option value="Anuradhapura">Anuradhapura (අනුරාධපුරය)</option>
+                                    <option value="Badulla">Badulla (බදුල්ල)</option>
+                                    <option value="Batticaloa">Batticaloa (මඩකලපුව)</option>
+                                    <option value="Colombo">Colombo (කොළඹ)</option>
+                                    <option value="Galle">Galle (ගාල්ල)</option>
+                                    <option value="Gampaha">Gampaha (ගම්පහ)</option>
+                                    <option value="Hambantota">Hambantota (හම්බන්තොට)</option>
+                                    <option value="Jaffna">Jaffna (යාපනය)</option>
+                                    <option value="Kalutara">Kalutara (කළුතර)</option>
+                                    <option value="Kandy">Kandy (මහනුවර)</option>
+                                    <option value="Kegalle">Kegalle (කෑගල්ල)</option>
+                                    <option value="Kilinochchi">Kilinochchi (කිලිනොච්චිය)</option>
+                                    <option value="Kurunegala">Kurunegala (කුරුණෑගල)</option>
+                                    <option value="Mannar">Mannar (මන්නාරම)</option>
+                                    <option value="Matale">Matale (මාතලේ)</option>
+                                    <option value="Matara">Matara (මාතර)</option>
+                                    <option value="Moneragala">Moneragala (මොණරාගල)</option>
+                                    <option value="Mullaitivu">Mullaitivu (මුලතිව්)</option>
+                                    <option value="Nuwara Eliya">Nuwara Eliya (නුවරඑළිය)</option>
+                                    <option value="Polonnaruwa">Polonnaruwa (පොළොන්නරුව)</option>
+                                    <option value="Puttalam">Puttalam (පුත්තලම)</option>
+                                    <option value="Ratnapura">Ratnapura (රත්නපුරය)</option>
+                                    <option value="Trincomalee">Trincomalee (ත්‍රිකුණාමලය)</option>
+                                    <option value="Vavuniya">Vavuniya (වවුනියාව)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>දුරකථන අංකය (Phone)</label>
+                                <input type="text" required pattern="[0-9]{10}" placeholder="0771234567">
+                            </div>
+                            <div class="form-group">
+                                <label>විද්‍යුත් ලිපිනය (Email)</label>
+                                <input type="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ලිපිනය (Address)</label>
+                            <input type="text" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>බලාපොරොත්තු වන ගෙවීම් ක්‍රමය (Payment Method)</label>
+                                <select required>
+                                    <option value="Bank Transfer">Bank Transfer (බැංකු තැන්පතු)</option>
+                                    <option value="EzCash/Mcash">mCash / eZ Cash</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>පොත් කාණ්ඩය (Book Category)</label>
+                                <input type="text" placeholder="උදා: නවකතා, අධ්‍යාපනික" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-group">
+                                <input type="checkbox" checked disabled>
+                                <span>මම ලේඛකයෙක්මි (I am a writer)</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>මීට පෙර පොත්/ලිපි ලියා විකුණා තිබේද? (Have you sold books before?)</label>
+                            <div class="radio-container">
+                                <label class="radio-option"><input type="radio" name="written_before_premium" value="ඔව් (Yes)"> ඔව්</label>
+                                <label class="radio-option"><input type="radio" name="written_before_premium" value="නැත (No)" checked> නැත</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>විකිණීමට බලාපොරොත්තු වන පොත් ගැන විස්තරයක්</label>
+                            <textarea placeholder="පොතේ නම, මිල ගණන් ආදිය කෙටියෙන්..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn premium-btn">Submit & Register to Earn</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright Footer -->
+    <footer>
+        &copy; 2026 <span>KMx Education</span>. All rights reserved.
+    </footer>
+
+    <script>
+        // Form Switching Slide Animation
+        function switchForm(type) {
+            const wrapper = document.getElementById('sliderWrapper');
+            const buttons = document.querySelectorAll('.tab-btn');
+          
+            if (type === 'free') {
+                wrapper.style.transform = 'translateX(0%)';
+                buttons[0].classList.add('active');
+                buttons[1].classList.remove('active');
+            } else {
+                wrapper.style.transform = 'translateX(-50%)';
+                buttons[1].classList.add('active');
+                buttons[0].classList.remove('active');
+            }
+        }
+
+        // Toggle Dark / Light Theme Dynamically (Starting with Light Mode)
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.getElementById('themeToggle');
+          
+            body.classList.toggle('light-mode');
+          
+            if (body.classList.contains('light-mode')) {
+                themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span id="themeText">Dark Mode</span>`;
+            } else {
+                themeBtn.innerHTML = `<i class="fa-solid fa-sun"></i> <span id="themeText">Light Mode</span>`;
+            }
+        }
+
+        // Process Form Details and Open Default Email Client (with strict validation)
+        function sendEmail(event, subjectTitle) {
+            event.preventDefault();
+          
+            const form = event.target;
+            const inputs = form.querySelectorAll('input, select, textarea');
+          
+            let name = inputs[0].value;
+            let age = inputs[1].value;
+            let fullName = inputs[2].value;
+            let town = inputs[3].value;
+            let district = inputs[4].value;
+            let phone = inputs[5].value;
+            let email = inputs[6].value;
+            let address = inputs[7].value;
+          
+            let isWriter = form.querySelector('input[type="checkbox"]').checked ? "ඔව් (Yes)" : "නැත (No)";
+            let writtenBefore = form.querySelector('input[type="radio"]:checked').value;
+          
+            let extraDetails = "";
+            // Check for additional premium fields (Payment Method & Category)
+            if(inputs.length > 9 && inputs[8].tagName === "SELECT") {
+                extraDetails = `බලාපොරොත්තු වන ගෙවීම් ක්‍රමය: ${inputs[8].value}\nපොත් කාණ්ඩය: ${inputs[9].value}\n`;
+            }
+
+            let bioText = form.querySelector('textarea').value;
+
+            // Formatted plain text template for clean email structure
+            let emailBody = `--- KMx Store Register Details ---\n\n`;
+            emailBody += `නම: ${name}\n`;
+            emailBody += `සම්පූර්ණ නම: ${fullName}\n`;
+            emailBody += `වයස: ${age}\n`;
+            emailBody += `ගම: ${town}\n`;
+            emailBody += `දිස්ත්‍රික්කය: ${district}\n`;
+            emailBody += `දුරකථන අංකය: ${phone}\n`;
+            emailBody += `විද්‍යුත් ලිපිනය: ${email}\n`;
+            emailBody += `ලිපිනය: ${address}\n`;
+            emailBody += `ලේඛකයෙක්ද?: ${isWriter}\n`;
+            emailBody += `මීට පෙර ලියා තිබේද?: ${writtenBefore}\n`;
+            if(extraDetails !== "") { emailBody += extraDetails; }
+            emailBody += `\nහැඳින්වීම / විස්තරය:\n${bioText}\n\n`;
+
+            const targetMail = "application2026k@gmail.com";
+            const encodedSubject = encodeURIComponent(subjectTitle + " - " + name);
+            const encodedBody = encodeURIComponent(emailBody);
+
+            window.location.href = `mailto:${targetMail}?subject=${encodedSubject}&body=${encodedBody}`;
+        }
+    </script>
+</body>
+</html>

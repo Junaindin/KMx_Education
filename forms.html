@@ -2,7 +2,7 @@
 <html lang="si">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KMx Store Register</title>
     <!-- FontAwesome Icons for Theme Toggle & Checkmarks -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -44,6 +44,16 @@
             --logo-color-red: #800000;   /* Deep Maroon/Red */
         }
 
+        /* Essential Reset with Strict Box-Sizing to Prevent Layout Overflow */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -56,19 +66,20 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Navigation Bar */
+        /* Navigation Bar Wrapper */
         header {
+            width: 100%;
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
+            overflow: hidden;
         }
 
         .navbar {
@@ -78,6 +89,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 12px 20px;
+            width: 100%;
         }
 
         /* Brand & Logo Layout */
@@ -86,6 +98,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         /* Graduation Cap Icon styling (replacing PNG logo) */
@@ -152,6 +165,7 @@
 
         /* Container & Navigation Tabs */
         .main-container {
+            width: 100%;
             max-width: 700px;
             margin: 40px auto;
             padding: 20px;
@@ -166,6 +180,7 @@
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-bottom: 30px;
+            width: 100%;
         }
 
         .tab-btn {
@@ -188,9 +203,10 @@
 
         /* Form Wrapper & Sliding Animation */
         .slider-container {
-            overflow: hidden; 
+            overflow: hidden;
             border-radius: 12px;
             width: 100%;
+            max-width: 100%;
         }
 
         .form-slider-wrapper {
@@ -226,13 +242,13 @@
         .form-group {
             margin-bottom: 20px;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
         }
 
         .form-row {
             display: flex;
             gap: 15px;
-            align-items: stretch; 
+            align-items: stretch;
         }
 
         .form-row .form-group {
@@ -253,7 +269,7 @@
         input[type="email"],
         select {
             width: 100%;
-            height: 46px; 
+            height: 46px;
             padding: 12px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
@@ -297,7 +313,7 @@
             height: 18px;
             accent-color: var(--primary-color);
             cursor: pointer;
-            margin-top: 0; 
+            margin-top: 0;
         }
 
         /* Radio Buttons */
@@ -322,7 +338,7 @@
             accent-color: var(--primary-color);
             width: 18px;
             height: 18px;
-            margin-top: 0; 
+            margin-top: 0;
         }
 
         /* Submit Buttons */
@@ -357,14 +373,16 @@
 
         /* Footer Styling */
         footer {
+            width: 100%;
             background-color: var(--card-bg);
             border-top: 1px solid var(--border-color);
-            padding: 20px;
+            padding: 20px 10px;
             text-align: center;
             color: var(--footer-text);
             font-size: 14px;
             font-weight: 500;
             margin-top: auto;
+            box-sizing: border-box;
         }
 
         footer span {
@@ -372,18 +390,28 @@
             font-weight: bold;
         }
 
-        /* ADVANCED RESPONSIVE DESIGN (Highly Tested for Mobile) */
+        /* ADVANCED RESPONSIVE DESIGN (Highly Tested for Mobile and Ultra-Narrow Screens) */
         @media (max-width: 768px) {
             .navbar {
                 display: grid;
-                grid-template-columns: 1fr auto; /* Logo on left, Toggle Button on right */
+                grid-template-columns: 1fr auto; /* Logo left, Theme switch right */
                 align-items: center;
                 gap: 12px;
                 padding: 12px 16px;
+                width: 100%;
             }
 
             .brand-container {
                 grid-column: 1;
+            }
+
+            /* Dynamically shrink font-sizes to prevent horizontal overflow */
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo-icon {
+                font-size: 22px;
             }
 
             .theme-toggle-btn {
@@ -395,32 +423,35 @@
             }
 
             .nav-controls {
-                grid-column: 1 / span 2; /* Spans full width */
+                grid-column: 1 / span 2;
                 width: 100%;
             }
 
             .nav-links {
                 width: 100%;
-                justify-content: space-around;
+                justify-content: space-between;
                 border-top: 1px solid var(--border-color);
                 padding-top: 10px;
                 margin-top: 4px;
-                gap: 8px;
+                gap: 4px;
             }
 
             .nav-links a {
-                font-size: 15px;
+                font-size: 13px;
+                padding: 4px 6px;
             }
 
             .toggle-tabs {
                 margin-bottom: 20px;
                 gap: 4px;
+                padding: 4px;
             }
 
             .tab-btn {
                 font-size: 13px;
-                padding: 10px 4px;
+                padding: 10px 2px;
                 line-height: 1.2;
+                white-space: nowrap;
             }
 
             .form-row {
@@ -429,17 +460,17 @@
             }
 
             .form-row .form-group {
-                margin-bottom: 20px; /* Space between fields when stacked */
+                margin-bottom: 20px;
             }
 
             .form-row .form-group input,
             .form-row .form-group select {
-                margin-top: 0; /* Resets auto-alignment for stacked layouts */
-                font-size: 16px; /* Prevents auto-zoom on iOS safari */
+                margin-top: 0;
+                font-size: 16px; /* Prevents auto-zoom on iOS safari input focus */
             }
 
             .main-container {
-                margin: 20px auto;
+                margin: 15px auto;
                 padding: 12px;
             }
 
@@ -453,15 +484,26 @@
             }
         }
 
+        /* Safe adjustments for very small screens (e.g., iPhone SE) */
         @media (max-width: 360px) {
+            .navbar {
+                padding: 10px 12px;
+            }
             .logo {
-                font-size: 20px; /* Slightly smaller font for ultra-narrow phones */
+                font-size: 16px;
             }
             .logo-icon {
-                font-size: 24px;
+                font-size: 20px;
+            }
+            .brand-container {
+                gap: 6px;
             }
             .tab-btn {
+                font-size: 11px;
+            }
+            .nav-links a {
                 font-size: 12px;
+                padding: 4px;
             }
         }
     </style>
@@ -494,7 +536,7 @@
     </header>
 
     <div class="main-container">
-       
+      
         <!-- Toggle Tabs for Slide Animation -->
         <div class="toggle-tabs">
             <button class="tab-btn active" onclick="switchForm('free')">Free Register (නොමිලේ)</button>
@@ -503,12 +545,12 @@
 
         <div class="slider-container">
             <div class="form-slider-wrapper" id="sliderWrapper">
-               
+              
                 <!-- 1. FREE REGISTRATION FORM CARD -->
                 <div class="form-card">
                     <h2>KMx Store Register Form</h2>
                     <p class="subtitle">ඔබේ ලිපි සහ සටහන් නොමිලේ පළකිරීම සඳහා ලියාපදිංචි වන්න.</p>
-                   
+                  
                     <form onsubmit="sendEmail(event, 'Free Content Submission')">
                         <div class="form-row">
                             <div class="form-group">
@@ -608,7 +650,7 @@
                 <div class="form-card">
                     <h2>KMx Store Premium Register</h2>
                     <p class="subtitle">ඔබේ පොත් විකුණා මුදල් සෙවීම සඳහා ලියාපදිංචි වන්න.</p>
-                   
+                  
                     <form onsubmit="sendEmail(event, 'Premium Commercial Author Application')">
                         <div class="form-row">
                             <div class="form-group">
@@ -732,7 +774,7 @@
         function switchForm(type) {
             const wrapper = document.getElementById('sliderWrapper');
             const buttons = document.querySelectorAll('.tab-btn');
-           
+          
             if (type === 'free') {
                 wrapper.style.transform = 'translateX(0%)';
                 buttons[0].classList.add('active');
@@ -748,9 +790,9 @@
         function toggleTheme() {
             const body = document.body;
             const themeBtn = document.getElementById('themeToggle');
-           
+          
             body.classList.toggle('light-mode');
-           
+          
             if (body.classList.contains('light-mode')) {
                 themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span id="themeText">Dark Mode</span>`;
             } else {
@@ -761,10 +803,10 @@
         // Process Form Details and Open Default Email Client (with strict validation)
         function sendEmail(event, subjectTitle) {
             event.preventDefault();
-           
+          
             const form = event.target;
             const inputs = form.querySelectorAll('input, select, textarea');
-           
+          
             let name = inputs[0].value;
             let age = inputs[1].value;
             let fullName = inputs[2].value;
@@ -773,10 +815,10 @@
             let phone = inputs[5].value;
             let email = inputs[6].value;
             let address = inputs[7].value;
-           
+          
             let isWriter = form.querySelector('input[type="checkbox"]').checked ? "ඔව් (Yes)" : "නැත (No)";
             let writtenBefore = form.querySelector('input[type="radio"]:checked').value;
-           
+          
             let extraDetails = "";
             // Check for additional premium fields (Payment Method & Category)
             if(inputs.length > 9 && inputs[8].tagName === "SELECT") {

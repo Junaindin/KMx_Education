@@ -1,1 +1,343 @@
 
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Cyber Security - Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (DEFAULT: LIGHT MODE) --- */
+        :root {
+            --bg-base: #f4f6f9; 
+            --bg-surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s ease;
+            
+            --toggle-bg: #ffffff;
+            --toggle-text: #800020;
+            --toggle-border: #800020;
+        }
+
+        /* --- DARK MODE STYLES --- */
+        [data-theme="dark"] {
+            --bg-base: #0f172a; 
+            --bg-surface: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #a82042; 
+            --primary-hover: #c92a53;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            
+            --toggle-bg: #a82042;
+            --toggle-text: #ffffff;
+            --toggle-border: #a82042;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 28px; 
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            border: 2px solid var(--toggle-border);
+            color: var(--toggle-text);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* --- ANIMATED TITLE (ආලෝකය/වර්ණය වෙනස් වන මාතෘකාව) --- */
+        .animated-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #800020, #3b82f6, #10b981, #800020);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        /* Dark mode එකේදී මාතෘකාවේ වර්ණ දීප්තිය වැඩි කිරීමට */
+        [data-theme="dark"] .animated-title {
+            background: linear-gradient(90deg, #ff4d7d, #38bdf8, #4ade80, #ff4d7d);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        /* --- LOGIN CARD SECTION --- */
+        .login-card {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 420px;
+            transition: var(--transition);
+        }
+
+        .login-card i.shield-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .login-card h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--text-main);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .password-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.15);
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+            transition: var(--transition);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .animated-title {
+                font-size: 2.2rem;
+            }
+            .login-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Cyber Security</a>
+            <a href="#">About</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        
+        <h1 class="animated-title">KMx Cyber Security</h1>
+        
+        <div class="login-card">
+            <i class="fas fa-shield-halved shield-icon"></i>
+            <h3>ඇතුළත් වීමට මුද්‍රාපදනය සපයන්න</h3>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="coursePassword" class="password-input" placeholder="Enter Access Password Here...">
+            </div>
+            
+            <button class="login-btn" onclick="checkAccess()">
+                Login Course <i class="fas fa-right-to-bracket"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 KMx Education. Secure Learning Portal.</p>
+    </footer>
+
+    <script>
+        // --- 1. DYNAMIC THEME TOGGLE ENGINE (DEFAULT: LIGHT MODE) ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        // පිටුව මුලින්ම ලෝඩ් වෙද්දී Default එක Light Mode නිසා, 
+        // HTML එකේ වෙනස්කම් සිදු කරන්නේ බටන් එක ක්ලික් කළ විට පමණි.
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+
+        // --- 2. LOGIN BUTTON FUNCTION (සරල පරීක්ෂාව සඳහා) ---
+        function checkAccess() {
+            const passwordField = document.getElementById('coursePassword');
+            if (passwordField.value.trim() === "") {
+                alert("කරුණාකර මුලින්ම මුද්‍රාපදනය (Password) ඇතුළත් කරන්න!");
+            } else {
+                alert("ඔබ ඇතුළත් කළ මුද්‍රාපදනය: " + passwordField.value);
+                // ඉදිරියට අවශ්‍ය නම් වෙනත් පිටුවකට මාරු වීමේ කේත මෙතැනට දැමිය හැක.
+            }
+        }
+    </script>
+</body>
+</html>

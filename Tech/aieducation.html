@@ -1,1 +1,438 @@
 
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Future Education - KMx Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;600;700&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (LIGHT MODE) --- */
+        :root {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* Maroon */
+            --accent: #0284c7; /* Sky Blue */
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- EYE-FRIENDLY & PREMIUM DARK MODE --- */
+        [data-theme="dark"] {
+            --bg-base: #0f172a; /* Deep Slate Blue - ඇස්වලට ඉතා පහසුයි */
+            --bg-surface: #1e293b;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9; /* Soft Off-White */
+            --text-muted: #94a3b8;
+            --primary: #38bdf8; /* Soft Teal/Cyan */
+            --accent: #34d399; /* Emerald Mint Green */
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- BASE RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.8;
+            transition: var(--transition);
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            background: linear-gradient(135deg, rgba(128,0,32,0.05) 0%, rgba(2,132,199,0.05) 100%);
+            padding: 60px 8% 40px 8%;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, rgba(56,189,248,0.05) 0%, rgba(52,211,153,0.05) 100%);
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- CONTAINER & MAIN CONTENT --- */
+        .main-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .content-card {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        /* --- ARTICLE STYLING --- */
+        h2 {
+            font-size: 26px;
+            color: var(--primary);
+            margin-top: 35px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+            padding-left: 15px;
+            line-height: 1.4;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--accent);
+            margin-top: 25px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: justify;
+            color: var(--text-main);
+        }
+
+        /* Highlight box / Quote */
+        .insight-box {
+            background-color: rgba(2, 132, 199, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        [data-theme="dark"] .insight-box {
+            background-color: rgba(52, 211, 153, 0.05);
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Comparison Table */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-surface);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 15px;
+        }
+
+        th {
+            background-color: rgba(128, 0, 32, 0.1);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] th {
+            background-color: rgba(56, 189, 248, 0.15);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--nav-bg);
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .content-card {
+                padding: 25px 20px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            h3 {
+                font-size: 18px;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><i class="fas fa-brain"></i> KMx <span>Education</span></a>
+        <nav>
+            <a href="#">මුල් පිටුව</a>
+            <a href="#">තාක්ෂණය</a>
+            <a href="#">පොත් කුටිය</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>කෘතිම බුද්ධිය (AI) සහ අධ්‍යාපනයේ අනාගත විප්ලවය</h1>
+        <p>තාක්ෂණික දියුණුවත් සමඟ වර්තමාන සිසුන්ගේ අධ්‍යයන රටාව වෙනස් වන ආකාරය සහ සාම්ප්‍රදායික ගුරු භූමිකාවට එල්ල වන බලපෑම පිළිබඳ ගැඹුරු විශ්ලේෂණාත්මක විග්‍රහය.</p>
+    </div>
+
+    <div class="main-container">
+        <div class="content-card">
+            
+            <p>විසිඑක්වන සියවසේ මානව වර්ගයා අත්පත් කරගත් දැවැන්තම සහ බලපෑම් සහගතම තාක්ෂණික ජයග්‍රහණය වන්නේ කෘතිම බුද්ධිය (Artificial Intelligence හෙවත් AI) තාක්ෂණයයි. සරලවම පැවසුවහොත්, මිනිස් මොළයට සමානව සිතීමට, තීරණ ගැනීමට, භාෂාව තේරුම් ගැනීමට සහ ගැටලු විසඳීමට පරිගණක පද්ධති පුහුණු කිරීම මෙහිදී සිදු වේ. වර්තමාන ලෝකයේ සෞඛ්‍ය, ව්‍යාපාර, සහ ප්‍රවාහන වැනි ක්ෂේත්‍ර රැසක් උඩුයටිකුරු කළ AI තාක්ෂණය, මේ වන විට ලෝකයේ වටිනාම සහ සංවේදීම ක්ෂේත්‍රය වන 'අධ්‍යාපන ක්ෂේත්‍රය' තුළ දැවැන්ත විප්ලවයක් සිදු කරමින් පවතී. සාම්ප්‍රදායික පන්තිකාමර රටාව, ගුරුවරයා කේන්ද්‍ර කරගත් ඉගැන්වීම් ක්‍රමවේද සහ සිසුන්ගේ පාඩම් කිරීමේ රටාවන් මේ වන විටත් මෙමඟින් වේගයෙන් වෙනස් වෙමින් පවතී.</p>
+
+            <div class="insight-box">
+                "අධ්‍යාපනයේ මූලික අරමුණ වන්නේ සෑම දරුවෙකුටම සමාන සහ ගුණාත්මක ඉගෙනුම් අවස්ථාවක් ලබා දීමයි. කෘතිම බුද්ධිය (AI) යනු එම අරමුණ සැබෑවක් බවට පත් කළ හැකි එකම සහ බලවත්ම මෙවලමයි."
+            </div>
+
+            <h2>1. වර්තමාන සිසුන්ගේ අධ්‍යයන කටයුතු පහසු කරවන ආකාරය</h2>
+            <p>අතීතයේදී සිසුවෙකුට යම් විෂය කරුණක් වටහා ගැනීමට නම් ගුරුවරයෙකු හමුවන තෙක් හෝ පුස්තකාලයක පොත් සිය ගණනක් පරිශීලනය කරන තෙක් බලා සිටීමට සිදු විය. නමුත් අද වන විට AI තාක්ෂණය සිසුන්ගේ සමීපතම අධ්‍යයන සහායකයා බවට පත්ව ඇත. සිසුන්ගේ එදිනෙදා ඉගෙනුම් ක්‍රියාවලිය පහසු කිරීම සඳහා කෘතිම බුද්ධිය විවිධාකාරයෙන් දායක වන ප්‍රධාන ආකාර කිහිපයක් පහතින් විග්‍රහ කෙරේ.</p>
+
+            <h3><i class="fas fa-user-grad"></i> 1.1 පුද්ගලානුබද්ධ ඉගෙනුම් ක්‍රමවේද (Personalized Learning)</h3>
+            <p>සාම්ප්‍රදායික පන්තිකාමරයක සිසුන් 40ක් පමණ සිටින විට, ගුරුවරයා උගන්වන්නේ පොදු මට්ටමකටය. නමුත් සෑම දරුවෙකුගේම ග්‍රහණය කර ගැනීමේ ශක්තිය (Learning Pace) එක හා සමාන නොවේ. සමහර සිසුන් ඉක්මනින් වටහා ගන්නා අතර, තවත් සමහර සිසුන්ට එකම කරුණ කිහිප වරක් අධ්‍යයනය කිරීමට සිදු වේ. AI තාක්ෂණය මඟින් ක්‍රියාත්මක වන ඉගෙනුම් මෘදුකාංගවලට (උදාහරණයක් ලෙස: Khan Academy, Century) පුළුවන සෑම සිසුවෙකුගේම දුර්වලතා සහ දක්ෂතා වෙන වෙනම හඳුනා ගැනීමට.</p>
+            <p>සිසුවෙකු ප්‍රශ්න පත්‍රයකට පිළිතුරු සපයන විට ඔහු නිතරම වැරදි කරන්නේ කුමන කොටසින්ද යන්න AI මඟින් විශ්ලේෂණය කරයි. ඉන්පසු එම දරුවාට වඩාත් ගැළපෙන සහ තේරුම් ගත හැකි සරල ක්‍රමවේද ඔස්සේ එම පාඩම නැවත කියා දීමට AI කටයුතු කරයි. මෙමඟින් කිසිදු දරුවෙකු පන්තිය තුළ තනි නොවන අතර, තමන්ගේ වේගයට අනුව ඉගෙනීමේ නිදහස දරුවාට ලැබේ.</p>
+
+            <h3><i class="fas fa-clock"></i> 1.2 24/7 නොකඩවා ලැබෙන අධ්‍යයන සහාය (Constant Academic Support)</h3>
+            <p>සිසුවෙකුට රාත්‍රී 11ට ගණිත ගැටලුවක් විසඳීමට නොහැකි වුවහොත්, එම අවස්ථාවේදී උපකාර කිරීමට ගුරුවරයෙකු සිටින්නේ නැත. නමුත් ChatGPT, Google Gemini හෝ Claude වැනි උසස් AI මෙවලම් නිසා සිසුන්ට දවසේ ඕනෑම පැයකදී, ඕනෑම ස්ථානයක සිට තම සැකයන් දුරු කර ගැනීමට අවස්ථාව ලැබී ඇත. මෙහි ඇති විශේෂත්වය වන්නේ AI විසින් හුදෙක් පිළිතුර පමණක් ලබා නොදී, එම ගැටලුව පියවරෙන් පියවර (Step-by-Step) විසඳන ආකාරය පැහැදිලි කර දීමයි. මෙය සිසුන්ගේ ස්වයං අධ්‍යයන (Self-Study) කුසලතාව උපරිම මට්ටමකට නංවයි.</p>
+
+            <h3><i class="fas fa-language"></i> 1.3 භාෂා බාධක ඉවත් කිරීම සහ සරල පරිවර්තන (Breaking Language Barriers)</h3>
+            <p>ශ්‍රී ලංකාව වැනි රටවල සිසුන් මුහුණ දෙන ප්‍රධානතම ගැටලුවක් වන්නේ උසස් අධ්‍යාපනයට අවශ්‍ය වටිනා තොරතුරු බොහොමයක් ඉංග්‍රීසි භාෂාවෙන් පැවතීමයි. AI මඟින් ක්‍රියාත්මක වන උසස් පරිවර්තන පද්ධති සහ සාරාංශකරණ මෙවලම් (AI Summarizers) මඟින් පිටු සිය ගණනක ඉංග්‍රීසි පර්යේෂණ පත්‍රිකා, සිංහල හෝ තමන්ට අවශ්‍ය ඕනෑම භාෂාවකට තත්පර කිහිපයකින් පරිවර්තනය කර ගත හැක. එමෙන්ම සංකීර්ණ විද්‍යාත්මක න්‍යායන් "Explain it to me like I am 5 years old" (අවුරුදු 5ක දරුවෙකුට මෙන් පැහැදිලි කරන්න) යන විධානය (Prompt) හරහා අතිශය සරල බසට හරවා ගැනීමට සිසුන්ට හැකියාව ඇත.</p>
+
+            <h3><i class="fas fa-magic"></i> 1.4 අන්තර්ක්‍රියාකාරී සහ දෘශ්‍යමය ඉගෙනුම (Interactive & Visual Learning)</h3>
+            <p>කෘතිම බුද්ධිය මුසු වූ VR (Virtual Reality) සහ AR (Augmented Reality) තාක්ෂණයන් හරහා සිසුන්ට වියළි අකුරු කියවනවා වෙනුවට පාඩම් සජීවීව විඳීමේ හැකියාව ලැබී ඇත. උදාහරණයක් ලෙස, ජීව විද්‍යාව හදාරන සිසුවෙකුට මිනිස් හෘදයක ක්‍රියාකාරීත්වය ත්‍රිමාණ (3D) ආකෘතියකින් දැක බලා ගැනීමටත්, ඉතිහාසය හදාරන සිසුවෙකුට පුරාණ ඊජිප්තුවේ පිරමිඩ ඇතුළට ගොස් ගවේෂණය කිරීමටත් AI මඟින් අවස්ථාව සලසා දෙයි. මෙය සිසුන්ගේ මතකයේ කරුණු තැන්පත් වීමේ සම්භාවිතාව බෙහෙවින් වැඩි කරයි.</p>
+
+            <h2>2. අනාගතයේදී ගුරුවරුන් වෙනුවට AI භාවිත විය හැකි ආකාරය</h2>
+            <p>තාක්ෂණයේ වේගවත් දියුණුව දෙස බලන විට, "අනාගතයේදී පන්තිකාමර තුළ මිනිස් ගුරුවරුන් වෙනුවට සම්පූර්ණයෙන්ම කෘතිම බුද්ධිය ආදේශ වෙයිද?" යන ප්‍රශ්නය සමාජය තුළ තදින්ම මතු වේ. සම්පූර්ණයෙන්ම මිනිස් ශ්‍රමය ඉවත් නොවුණත්, සාම්ප්‍රදායික ගුරු භූමිකාවෙන් 80%කට වඩා වැඩි ප්‍රමාණයක් AI විසින් අත්පත් කර ගැනීමට නියමිතය. එය සිදුවිය හැකි ප්‍රධාන ආකාර මෙසේය.</p>
+
+            <h3><i class="fas fa-robot"></i> 2.1 සුපිරි බුද්ධිමත් AI ගුරුවරුන් සහ රොබෝවරු (Super-Intelligent AI Tutors)</h3>
+            <p>අනාගතයේදී සෑම දරුවෙකුටම තමන්ගේම කියා පෞද්ගලික AI ගුරුවරයෙකු (AI Avatar Tutor) සිටිනු ඇත. මෙම AI ගුරුවරුන්ට ලෝකයේ ඇති සියලුම විෂයයන් (ගණිතය, විද්‍යාව, පරිගණක, ඉතිහාසය, කලාව) පිළිබඳව අසීමිත දැනුමක් පවතී. මිනිස් ගුරුවරයෙකුට මෙන් ඔවුන්ට කේන්ති යන්නේ නැත, මහන්සි වන්නේ නැත, කිසිවිටෙකත් පක්ෂපාතී වන්නේද නැත. දරුවාගේ මානසික මට්ටම හඳුනාගෙන, මිතුරෙකු මෙන් ලෙන්ගතුව ඉගැන්වීමේ හැකියාව අනාගත හැඟීම් හඳුනාගත හැකි AI (Emotion-AI) පද්ධති සතු වනු ඇත.</p>
+
+            <h3><i class="fas fa-check-double"></i> 2.2 ඇගයීම් සහ ලකුණු ලබාදීමේ ක්‍රියාවලිය ස්වයංක්‍රීය වීම (Automated Grading)</h3>
+            <p>ගුරුවරයෙකුගේ කාලයෙන් වැඩි ප්‍රමාණයක් වැය වන්නේ සිසුන්ගේ පොත් බැලීමට, නිබන්ධන පරීක්ෂා කිරීමට සහ ප්‍රශ්න පත්‍ර ලකුණු කිරීමටය. අනාගතයේදී උසස් AI පද්ධති මඟින් සිසුන් ලියන රචනා (Essays) සහ සංකීර්ණ පිළිතුරු පවා තත්පර කිහිපයකින් ඇගයීමට ලක් කරනු ඇත. එහිදී හුදෙක් ලකුණක් පමණක් නොව, සිසුවා තවදුරටත් හැදෑරිය යුතු කොටස් මොනවාද, ව්‍යාකරණ වැරදි මොනවාද යන්න පිළිබඳව සවිස්තරාත්මක වාර්තාවක් (Feedback Report) ක්ෂණිකව ලබා දීමට AI සමත් වේ. මෙමඟින් ගුරුවරුන්ගේ පරිපාලන බර සම්පූර්ණයෙන්ම නැති වී යයි.</p>
+
+            <h3><i class="fas fa-chart-line"></i> 2.3 ගෝලීය මට්ටමේ සමාන අධ්‍යාපන අවස්ථා (Democratization of Education)</h3>
+            <p>ලෝකයේ දක්ෂතම සහ ඉහළම සුදුසුකම් ලත් ගුරුවරුන් ඉන් පස්සේ කොළඹ හෝ ලන්ඩන් වැනි ප්‍රධාන නගරවලට පමණක් සීමා නොවේ. AI තාක්ෂණය හරහා ශ්‍රී ලංකාවේ අති දුෂ්කර ගමක සිටින දරුවෙකුට වුවද, ලෝකයේ පවතින අති නවීන සහ ගුණාත්මකම අධ්‍යාපනය තමන්ගේ කුඩා ස්මාර්ට් දුරකථනය හරහා නොමිලේම ලබා ගැනීමට හැකි වනු ඇත. ගුරු හිඟයට ස්ථිරසාර විසඳුම ලෙස අනාගතයේදී AI ක්‍රියාත්මක වනු නොඅනුමානය.</p>
+
+            <h2>3. මිනිස් ගුරුවරයා සහ AI ගුරුවරයා අතර වෙනස</h2>
+            <p>අනාගත අධ්‍යාපන රටාව වඩාත් හොඳින් වටහා ගැනීමට මිනිස් ගුරුවරුන් සහ කෘතිම බුද්ධිය සතු සුවිශේෂී ලක්ෂණ සංසන්දනය කර බැලීම වටී:</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ලක්ෂණය (Feature)</th>
+                            <th>මිනිස් ගුරුවරයා (Human Teacher)</th>
+                            <th>AI ගුරුවරයා (AI Tutor)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>දැනුමේ ප්‍රමාණය</strong></td>
+                            <td>යම් නිශ්චිත විෂය පථයකට පමණක් සීමා වේ.</td>
+                            <td>ලෝකයේ පවතින සෑම විෂයකම අසීමිත දැනුම පවතී.</td>
+                        </tr>
+                    <tr>
+                        <td><strong>පවතින කාලය</strong></td>
+                        <td>පාසල් හෝ උපකාරක පන්ති වේලාවන්ට පමණක් සීමා වේ.</td>
+                        <td>ඕනෑම වේලාවක (24/7) ක්ෂණිකව සම්බන්ධ විය හැක.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ඉවසීම සහ හැඟීම්</strong></td>
+                        <td>මහන්සිය, කේන්තිය සහ මානසික ආතතිය ඇති විය හැක.</td>
+                        <td>සෑම විටම එක හා සමාන ඉවසීමකින් යුතුව කටයුතු කරයි.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>සමාජීය සහ චිත්තවේගීය බැඳීම</strong></td>
+                        <td>දරුවන්ට සෙනෙහස, ආදරය සහ සදාචාරය ලබා දෙයි (ඉහළයි).</td>
+                        <td>තාක්ෂණික වේ, සැබෑ මානුෂීය හැඟීම් නොමැත (පහළයි).</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>4. AI මඟින් මිනිස් ගුරුවරයා සම්පූර්ණයෙන්ම ඉවත් කළ හැකිද?</h2>
+            <p>තාක්ෂණය කෙතරම් දියුණු වුවද, මිනිස් ගුරුවරයෙකු සතු <strong>'මානුෂීය ගුණාංග' (Human Touch)</strong> කිසි දිනක කෘතිම බුද්ධියකට ආදේශ කළ නොහැක. අධ්‍යාපනය යනු හුදෙක් තොරතුරු සහ දත්ත ඔළුවට දමා ගැනීමක් පමණක් නොවේ. එය චරිත සංවර්ධනය, සදාචාරය, හික්මීම සහ ජීවිතය හුරුවීම මුසු වූ ක්‍රියාවලියකි.</p>
+            <p>දරුවෙකු සැලෙන අවස්ථාවකදී උරහිසට අත තබා ධෛර්යවත් කිරීමට, වැරදි මඟක යන විට ආදරයෙන් අවවාද කිරීමට සහ සමාජයීය සබඳතා වර්ධනය කිරීමට මිනිස් ගුරුවරයෙකු අත්‍යවශ්‍ය වේ. එබැවින්, අනාගතයේදී සිදුවන්නේ ගුරුවරුන් වඳ වී යාම නොව, ගුරුවරුන් විසින් තමන්ගේ සහායකයා ලෙස AI භාවිතා කරමින් වඩාත් ප්‍රබල භූමිකාවක් (Facilitator Role) සිදු කිරීමයි. <strong>"AI විසින් ගුරුවරුන්ව ප්‍රතිස්ථාපනය නොකරනු ඇත, නමුත් AI භාවිතා කරන ගුරුවරුන් විසින් AI භාවිතා නොකරන ගුරුවරුන්ව ප්‍රතිස්ථාපනය කරනු ඇත."</strong></p>
+
+            <h2>5. නිගමනය (Conclusion)</h2>
+            <p>කෘතිම බුද්ධිය යනු අධ්‍යාපන ක්ෂේත්‍රයට ලැබුණු මහඟු ආශිර්වාදයකි. එමඟින් වර්තමාන සිසුන්ට ලැබී ඇති ඉගෙනුම් පහසුකම් අතිමහත්ය. අනාගතයේදී ගුරු භූමිකාවේ හැඩතල වෙනස් කිරීමට AI සමත් වන බව පැහැදිලිය. සිසුන් සහ ගුරුවරුන් ලෙස අප කළ යුත්තේ මෙම තාක්ෂණයට බිය වී එය ප්‍රතික්ෂේප කිරීම නොව, එහි ඇති ධනාත්මක පැති හඳුනාගෙන අධ්‍යාපනයේ ගුණාත්මකභාවය ඉහළ නැංවීම සඳහා එය බුද්ධිමත්ව සහ සදාචාරාත්මකව වැළඳ ගැනීමයි.</p>
+            
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 KMx Education. All Rights Reserved. Designed for Smart Learners.</p>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        // පද්ධතියේ කලින් සේව් කර ඇති Theme එක පරීක්ෂා කිරීම
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            toggleText.textContent = "Light Mode";
+        }
+
+        // ක්ලික් කළ විට Theme එක මාරු කිරීම
+        themeBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+    </script>
+</body>
+</html>

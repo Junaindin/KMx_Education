@@ -433,7 +433,7 @@
 
     <div class="search-wrapper">
         <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" class="search-input" placeholder="ඔබට අවශ්‍ය පොතේ නම මෙතනින් සොයන්න...">
+        <input type="text" id="searchInput" class="search-input" placeholder="ඔබට අවශ්‍ය පොතේ නම හෝ කර්තෘ නම මෙතනින් සොයන්න...">
     </div>
 
     <div class="store-container">
@@ -451,7 +451,7 @@
         </div>
 
         <div class="books-grid" id="booksGrid">
-            <div class="book-card" data-category="ICT" data-title="Ethical Hacking Fundamental">
+            <div class="book-card" data-category="ICT" data-title="Ethical Hacking Fundamental" data-author="Cyber KMx Team">
                 <span class="book-tag">ICT</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/Ehacking.png" alt="Ethical Hacking Fundamental">
@@ -464,18 +464,7 @@
                 <button class="buy-btn" onclick="navigateToBuy('Ethical Hacking Fundamental', '1800.00')">Buy Now</button>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-            <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය">
+            <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය" data-author="W.K කසුන් කල්‍යාණ">
                 <span class="book-tag" style="background-color: #800020;">Novel</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/tharuwaka-daiwaya.jpg" alt="තරුවක දෛවය">
@@ -488,8 +477,7 @@
                 <button class="buy-btn" onclick="navigateToBuy('තරුවක දෛවය', '1350.00')">Buy Now</button>
             </div>
 
-
-            <div class="book-card" data-category="Novels" data-title="සකුරා ප්‍රේමය">
+            <div class="book-card" data-category="Novels" data-title="සකුරා ප්‍රේමය" data-author="W.K කසුන් කල්‍යාණ">
                 <span class="book-tag" style="background-color: #800020;">Novel</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/sakura.jpeg" alt="සකුරා ප්‍රේමය">
@@ -502,19 +490,7 @@
                 <button class="buy-btn" onclick="navigateToBuy('සකුරා ප්‍රේමය', '1350.00')">Buy Now</button>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ pahana සහ තවත්...">
+            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ පහණ සහ තවත් කෙටිකතා" data-author="W.K කසුන් කල්‍යාණ">
                 <span class="book-tag" style="background-color: #4a0e17;">Short Story</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/2.png" alt="සඳකඩ පහණ">
@@ -565,12 +541,19 @@
 
             bookCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
-                const cardTitle = card.getAttribute('data-title').toLowerCase();
+                
+                // පොතේ නම සහ කර්තෘගේ නම දෙකම වෙන වෙනම ලබා ගැනීම
+                const cardTitle = card.getAttribute('data-title') ? card.getAttribute('data-title').toLowerCase() : '';
+                const cardAuthor = card.getAttribute('data-author') ? card.getAttribute('data-author').toLowerCase() : '';
               
-                const matchesSearch = cardTitle.includes(searchText);
+                // සෙවුම් වචනය පොතේ නමට හෝ කර්තෘගේ නමට ගැළපේදැයි පරීක්ෂාව
+                const matchesSearchTitle = cardTitle.includes(searchText);
+                const matchesSearchAuthor = cardAuthor.includes(searchText);
+                
                 const matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
 
-                if (matchesSearch && matchesCategory) {
+                // කොන්දේසි සපුරාලන්නේ නම් පමණක් පොත දර්ශනය කිරීම
+                if ((matchesSearchTitle || matchesSearchAuthor) && matchesCategory) {
                     card.style.display = 'flex';
                     visibleCount++;
                 } else {
@@ -584,7 +567,7 @@
                 if (!existingNoRes) {
                     const noResDiv = document.createElement('div');
                     noResDiv.classList.add('no-results');
-                    noResDiv.innerHTML = `<i class="fas fa-folder-open" style="display:block; font-size:30px; margin-bottom:10px;"></i> ඔබ සෙවූ පොත හමු වූයේ නැත.`;
+                    noResDiv.innerHTML = `<i class="fas fa-folder-open" style="display:block; font-size:30px; margin-bottom:10px;"></i> ඔබ සෙවූ පොත හෝ කර්තෘ හමු වූයේ නැත.`;
                     booksGrid.appendChild(noResDiv);
                 }
             } else if (existingNoRes) {
@@ -606,7 +589,6 @@
 
         // --- 3. DYNAMIC NAVIGATION TO SENDDETAILS WITH DATA ---
         function navigateToBuy(bookName, price) {
-            // Passing variables cleanly via url query parameters to senddetails.html
             const targetUrl = `kasunemailbook.html?book=${encodeURIComponent(bookName)}&price=${encodeURIComponent(price)}`;
             window.location.href = targetUrl;
         }

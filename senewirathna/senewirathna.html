@@ -1,45 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="si">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMx Book Store - Place Your Order</title>
+    <title>Author Profile & Book Store - KMx Education</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Share+Tech+Mono&display=swap">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+   
     <style>
-        /* --- CSS VARIABLES (LIGHT MODE / PROFESSIONAL) --- */
+        /* --- CSS VARIABLES (LIGHT/DARK THEME) --- */
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #2c3e50;
-            --text-muted: #7f8c8d;
-            --active-color: #800020; /* මරූන් වර්ණය */
-            --accent-color: #3498db;
+            --bg-base: #fdfbf7;
+            --bg-surface: #ffffff;
+            --bg-widget: #f9f6f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
             --nav-bg: #ffffff;
-            --input-border: #cccccc;
-            --shadow: 0 10px 30px rgba(0,0,0,0.06);
-            --border-radius: 12px;
-            --font-main: 'Poppins', sans-serif;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
             --transition: all 0.3s ease;
+            --title-color: #800020;
+            --card-border: 1px dashed #c4a4a4;
+           
+            --toggle-bg: #ffffff;
+            --toggle-text: #800020;
+            --toggle-border: #800020;
         }
 
-        /* --- DARK MODE (HACKING / CYBERPUNK MATRIX VIBE) --- */
         [data-theme="dark"] {
-            --bg-color: #0d0f12;
-            --card-bg: #161a1f;
-            --text-color: #00ff66; /* Neon Green */
-            --text-muted: #00aa44;
-            --active-color: #00ff66;
-            --accent-color: #ff0055; /* Cyber Pink */
-            --nav-bg: #111418;
-            --input-border: #00ff66;
-            --shadow: 0 5px 15px rgba(0, 255, 102, 0.1);
-            --font-main: 'Share Tech Mono', monospace;
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-widget: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #800020;
+            --primary-hover: #a10d32;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --title-color: #f59e0b;
+            --card-border: 1px dashed #475569;
+           
+            --toggle-bg: #800020;
+            --toggle-text: #ffffff;
+            --toggle-border: #800020;
         }
 
-        /* --- BASE STYLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -47,14 +59,14 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
             transition: var(--transition);
-            min-height: 100vh;
         }
 
-        /* --- RESPONSIVE NAVIGATION BAR --- */
+        /* --- HEADER & NAVIGATION --- */
         header {
             background-color: var(--nav-bg);
             padding: 15px 5%;
@@ -65,466 +77,499 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 3px solid var(--primary);
             transition: var(--transition);
-            flex-wrap: wrap; /* Accounted for mobile breakage */
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
-            color: var(--text-color);
+            color: var(--text-main);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .logo span {
-            color: #800020;
-        }
-        [data-theme="dark"] .logo span {
-            color: var(--accent-color);
+            color: var(--primary);
         }
 
         nav {
             display: flex;
             align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 25px;
         }
 
         nav a {
             text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 4px;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 16px;
             transition: var(--transition);
-            font-size: 15px;
+            padding: 6px 14px;
+            border-radius: 8px;
         }
 
-        nav a.active-page {
-            background-color: #800020;
-            color: white !important;
-        }
-
-        [data-theme="dark"] nav a.active-page {
-            background-color: var(--active-color);
-            color: #0d0f12 !important;
-            box-shadow: 0 0 15px var(--active-color);
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
         }
 
         .theme-toggle {
-            background: none;
-            border: 1px solid var(--text-color);
-            color: var(--text-color);
-            padding: 6px 14px;
+            background-color: var(--toggle-bg);
+            border: 2px solid var(--toggle-border);
+            color: var(--toggle-text);
+            padding: 6px 15px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: var(--transition);
         }
 
-        /* --- FORM CONTAINER --- */
-        .form-container {
-            max-width: 650px;
-            margin: 40px auto;
+        /* --- AUTHOR PROFILE SECTION --- */
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto 20px auto;
+            text-align: center;
             padding: 0 20px;
         }
 
-        .form-card {
-            background-color: var(--card-bg);
-            padding: 40px;
-            border-radius: var(--border-radius);
+        .author-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
             box-shadow: var(--shadow);
-            border-top: 5px solid #800020;
-            transition: var(--transition);
-        }
-
-        [data-theme="dark"] .form-card {
-            border-top: 5px solid var(--active-color);
-            border: 1px solid rgba(0, 255, 102, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
-        }
-
-        .form-card h2 {
-            font-size: 26px;
             margin-bottom: 10px;
-            text-align: center;
         }
 
-        .form-card p.subtitle {
-            text-align: center;
+        .author-badge {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        /* Form Grouping */
-        .form-group {
-            margin-bottom: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
             font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .form-group input, 
-        .form-group select, 
-        .form-group textarea {
+        .author-name {
+            font-size: 32px;
+            color: var(--title-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .author-bio {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 25px auto;
+        }
+
+        /* --- SEARCH BAR --- */
+        .search-wrapper {
+            max-width: 500px;
+            margin: 0 auto 40px auto;
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            background-color: transparent;
-            color: var(--text-color);
-            font-family: inherit;
+            padding: 14px 16px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
             font-size: 15px;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus, 
-        .form-group select:focus, 
-        .form-group textarea:focus {
+            box-shadow: var(--shadow);
             outline: none;
-            border-color: #800020;
-            box-shadow: 0 0 8px rgba(128, 0, 32, 0.2);
-        }
-
-        [data-theme="dark"] .form-group input:focus, 
-        [data-theme="dark"] .form-group select:focus, 
-        [data-theme="dark"] .form-group textarea:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 12px var(--accent-color);
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            background-color: #800020;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
             transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(128, 0, 32, 0.1);
+        }
+
+        /* --- MAIN CONTENT & SHOWCASE --- */
+        .store-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            background-color: var(--bg-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .store-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .store-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 10px;
         }
 
-        .submit-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        /* --- CATEGORIES --- */
+        .category-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        [data-theme="dark"] .submit-btn {
-            background-color: var(--active-color);
-            color: #0d0f12;
-            box-shadow: 0 0 15px var(--active-color);
+        .cat-btn {
+            background-color: var(--bg-widget);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        /* --- CUSTOM POPUP MODAL STYLES (එක පාරින්ම වැඩ කිරීමට එකතු කරන ලදී) --- */
-        .custom-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .cat-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .cat-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* --- BOOK GRID --- */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .book-card {
+            background-color: var(--bg-surface);
+            border: var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .book-tag {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .book-img-box {
+            width: 100%;
+            height: 240px;
+            background-color: #f2ede4;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8c7e6c;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .book-img-box img {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            object-fit: contain;
+            padding: 6px;
+            border-radius: 8px;
         }
 
-        .custom-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .book-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 50px;
         }
 
-        .custom-modal {
-            background-color: var(--card-bg);
-            border: 2px solid var(--active-color);
-            padding: 30px;
-            border-radius: var(--border-radius);
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
+        .book-author {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
-        .custom-overlay.active .custom-modal {
-            transform: translateY(0);
-        }
-
-        .custom-modal i {
-            font-size: 45px;
-            color: var(--active-color);
+        .book-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #b02a2a;
             margin-bottom: 15px;
         }
 
-        .custom-modal h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-
-        .custom-modal p {
+        .buy-btn {
+            width: 100%;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px;
+            border-radius: 8px;
             font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .modal-btn {
-            background-color: #800020;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 15px;
             transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
         }
 
-        [data-theme="dark"] .modal-btn {
-            background-color: var(--active-color);
-            color: #0d0f12;
+        .buy-btn:hover {
+            background-color: var(--primary);
+            color: white;
         }
 
-        .modal-btn:hover {
-            opacity: 0.9;
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 16px;
         }
 
-        /* --- RESPONSIVE DESIGN --- */
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                gap: 12px;
-                text-align: center;
-                padding: 15px 20px;
+                gap: 15px;
             }
-            nav {
-                justify-content: center;
-                gap: 8px;
+            .store-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
-        }
-
-        @media (max-width: 600px) {
-            nav a {
-                padding: 6px 10px;
-                font-size: 13px;
-            }
-            .theme-toggle {
-                padding: 5px 10px;
-                font-size: 12px;
-            }
-            .form-card {
-                padding: 25px 20px;
-            }
-            .form-card h2 {
-                font-size: 22px;
+            .category-container {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- HEADER / MENU BAR -->
     <header>
-        <a href="index.html" class="logo"><span>KMx</span> Education</a>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
         <nav>
+            <a href="#" class="active">K.M Senewirathna Store</a>
             
-            <a href="book.html" class="active-page">Senewirathna store</a>
-           
             <button class="theme-toggle" id="themeBtn">
                 <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
             </button>
         </nav>
     </header>
 
-    <div class="form-container">
-        <div class="form-card">
-            <h2>ඇණවුම් පත්‍රිකාව (Order Form)</h2>
-            <p class="subtitle">කරුණාකර නිවැරදි විස්තර ඇතුළත් කර Submit කරන්න.</p>
+    <!-- AUTHOR PROFILE SECTION -->
+    <div class="profile-container">
+        <img src="senewirathna/sagaraya.png" alt="Author" class="author-img">
+        <span class="author-badge"><i class="fas fa-circle-check" style="color: #22c55e;"></i> Verified Author</span>
+        <h1 class="author-name">කේ. එම්. සෙනෙවිරත්න</h1>
+        <p class="author-bio">ශ්‍රී ලාංකීය පාඨක මනස පිනවන නවකතා, කෙටිකතා මෙන්ම නවීන ග්‍රන්ථ කර්තෘවරයෙකි.</p>
+    </div>
+
+    <!-- LIVE SEARCH BAR -->
+    <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="ඔබට අවශ්‍ය පොතේ නම මෙතනින් සොයන්න...">
+    </div>
+
+    <!-- MAIN SHOWCASE CONTAINER -->
+    <div class="store-container">
+        <div class="store-header">
+            <div class="store-title">📚 අලුතින්ම එක්වූ පොත්</div>
+           
+            <!-- CATEGORIES FILTER -->
+            <div class="category-container">
+                <button class="cat-btn active" data-filter="all">All</button>
+                <button class="cat-btn" data-filter="Novels">Novels</button>
+                <button class="cat-btn" data-filter="ICT">ICT Books</button>
+                <button class="cat-btn" data-filter="Short Stories">Short Stories</button>
+                <button class="cat-btn" data-filter="Grammar">Grammar</button>
+                <button class="cat-btn" data-filter="Others">Others</button>
+            </div>
+        </div>
+
+        <!-- BOOK CARDS GRID -->
+        <div class="books-grid" id="booksGrid">
             
-            <form id="orderForm">
-                
-                <div class="form-group">
-                    <label><i class="fas fa-book"></i> අවශ්‍ය පොතේ නම:</label>
-                    <input type="text" id="bookName" placeholder="උදා: තරුවක දෛවය" required>
+
+
+
+
+
+
+
+            <!-- Book 2 -->
+            <div class="book-card" data-category="Novels" data-title="සාගරයක ආදරය ">
+                <span class="book-tag" style="background-color: #800020;">Novel</span>
+                <div class="book-img-box">
+                    <img src="sagaraya.png" alt="සාගරයක ආදරය">
                 </div>
-
-                <div class="form-group">
-                    <label><i class="fas fa-calendar-alt"></i> අද දිනය:</label>
-                    <input type="date" id="orderDate" required>
+                <div>
+                    <div class="book-title">සාගරයක ආදරය</div>
+                    <div class="book-author">කේ. එම්. සෙනෙවිරත්න</div>
+                    <div class="book-price">Rs. 1,090.00</div>
                 </div>
+                <button class="buy-btn" onclick="navigateToBuy('සාගරයක ආදරය', '1090.00')">Buy Now</button>
+            </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-list-ol"></i> අවශ්‍ය පොත් ප්‍රමාණය:</label>
-                    <input type="number" id="quantity" min="1" value="1" required>
-                </div>
+            
 
-                <div class="form-group">
-                    <label><i class="fas fa-map-marked-alt"></i> ඔබගේ ලිපිනය:</label>
-                    <textarea id="userAddress" rows="3" placeholder="පොත් එවීමට අවශ්‍ය නිවැරදි ලිපිනය ඇතුළත් කරන්න" required></textarea>
-                </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-phone"></i> දුරකථන අංකය:</label>
-                    <input type="tel" id="phoneNum" placeholder="උදා: 0712345678" required>
-                </div>
 
-                <div class="form-group">
-                    <label><i class="fab fa-whatsapp"></i> වට්ස්ඇප් අංකය (WhatsApp):</label>
-                    <input type="tel" id="whatsappNum" placeholder="උදා: 0712345678" required>
-                </div>
 
-                <div class="form-group">
-                    <label><i class="fas fa-city"></i> දිස්ත්‍රික්කය (District):</label>
-                    <select id="district" required>
-                        <option value="" disabled selected>දිස්ත්‍රික්කය තෝරන්න</option>
-                        <option value="Colombo">කොළඹ (Colombo)</option>
-                        <option value="Gampaha">ගම්පහ (Gampaha)</option>
-                        <option value="Kalutara">කළුතර (Kalutara)</option>
-                        <option value="Kandy">මහනුවර (Kandy)</option>
-                        <option value="Matale">මාතලේ (Matale)</option>
-                        <option value="Nuwara Eliya">නුවරඑළිය (Nuwara Eliya)</option>
-                        <option value="Galle">ගාල්ල (Galle)</option>
-                        <option value="Matara">මාතර (Matara)</option>
-                        <option value="Hambantota">හම්බන්තොට (Hambantota)</option>
-                        <option value="Jaffna">යාපනය (Jaffna)</option>
-                        <option value="Kilinochchi">කිලිනොච්චිය (Kilinochchi)</option>
-                        <option value="Mannar">මන්නාරම (Mannar)</option>
-                        <option value="Vavuniya">වවුනියාව (Vavuniya)</option>
-                        <option value="Mullaitivu">මුලතීවු (Mullaitivu)</option>
-                        <option value="Batticaloa">මඩකලපුව (Batticaloa)</option>
-                        <option value="Ampara">අම්පාර (Ampara)</option>
-                        <option value="Trincomalee">ත්‍රිකුණාමලය (Trincomalee)</option>
-                        <option value="Kurunegala">කුරුණෑගල (Kurunegala)</option>
-                        <option value="Puttalam">පුත්තලම (Puttalam)</option>
-                        <option value="Anuradhapura">අනුරාධපුරය (Anuradhapura)</option>
-                        <option value="Polonnaruwa">පොළොන්නරුව (Polonnaruwa)</option>
-                        <option value="Badulla">බදුල්ල (Badulla)</option>
-                        <option value="Moneragala">මොණරාගල (Moneragala)</option>
-                        <option value="Ratnapura">රත්නපුරය (Ratnapura)</option>
-                        <option value="Kegalle">කෑගල්ල (Kegalle)</option>
-                    </select>
-                </div>
 
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> Submit Order
-                </button>
 
-            </form>
+
+            
         </div>
     </div>
 
-    <div class="custom-overlay" id="customOverlay">
-        <div class="custom-modal">
-            <i class="fas fa-check-circle"></i>
-            <h3>Thank You for Your Order!</h3>
-            <p>ඔබගේ ඇණවුම සාර්ථකයි. විස්තර ඊමේල් මඟින් අප වෙත එවීමට පහත බටන් එක ඔබන්න.</p>
-            <button class="modal-btn" id="modalOkBtn">OK</button>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2026 KMx Education. All Rights Reserved. Smart Book Store System.</p>
+    </footer>
 
     <script>
-        // 1. Auto-fill Today's Date
-        document.getElementById('orderDate').valueAsDate = new Date();
-
-        // ගෝලීයව mailto සබැඳිය තබා ගැනීමට Variable එකක්
-        let generatedMailtoUrl = "";
-
-        // 2. Form Submission to Custom Modal
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            // Input දත්ත ලබා ගැනීම
-            const bookName = document.getElementById('bookName').value;
-            const orderDate = document.getElementById('orderDate').value;
-            const quantity = document.getElementById('quantity').value;
-            const userAddress = document.getElementById('userAddress').value;
-            const phoneNum = document.getElementById('phoneNum').value;
-            const whatsappNum = document.getElementById('whatsappNum').value;
-            const district = document.getElementById('district').value;
-
-            // ඔයාගේ ඊමේල් ලිපිනය
-            const myEmail = "application2026k@gmail.com";
-            
-            // Email එකේ සිරස්තලය (Subject)
-            const subject = encodeURIComponent("New Book Order - KMx Store");
-            
-            // Email එකේ ඇතුළත විස්තර සැකසීම (Email Body)
-            const emailBody = encodeURIComponent(
-                "--- NEW BOOK ORDER DETAILS ---\n\n" +
-                "1. Book Name: " + bookName + "\n" +
-                "2. Order Date: " + orderDate + "\n" +
-                "3. Quantity: " + quantity + "\n" +
-                "4. Delivery Address: " + userAddress + "\n" +
-                "5. Phone Number: " + phoneNum + "\n" +
-                "6. WhatsApp Number: " + whatsappNum + "\n" +
-                "7. District: " + district + "\n\n" +
-                "---------------------------------"
-            );
-
-            // Mailto URL එක සකසා සේව් කර ගැනීම
-            generatedMailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;
-
-            // බ්‍රවුසරය හිර නොකර Custom Popup එක පෙන්වීම
-            document.getElementById('customOverlay').classList.add('active');
-        });
-
-        // 3. Modal OK බටන් එක ක්ලික් කළ විට එක පාරින්ම ඊමේල් ඇප් එක විවෘත කිරීම
-        document.getElementById('modalOkBtn').addEventListener('click', function() {
-            document.getElementById('customOverlay').classList.remove('active');
-            if(generatedMailtoUrl !== "") {
-                window.location.href = generatedMailtoUrl;
-            }
-        });
-
-        // 4. Dark Mode Toggle Script
+        // --- 1. DYNAMIC THEME TOGGLE ENGINE ---
         const themeBtn = document.getElementById('themeBtn');
         const themeIcon = themeBtn.querySelector('i');
         const toggleText = document.getElementById('toggleText');
 
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-            toggleText.textContent = "Light Mode";
-        }
-
         themeBtn.addEventListener('click', () => {
-            let theme = document.documentElement.getAttribute('data-theme');
-            if (theme === 'dark') {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
                 document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
                 toggleText.textContent = "Dark Mode";
             } else {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
                 toggleText.textContent = "Light Mode";
             }
         });
+
+        // --- 2. LIVE SEARCH & CATEGORY FILTER LOGIC ---
+        const searchInput = document.getElementById('searchInput');
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const bookCards = document.querySelectorAll('.book-card');
+        const booksGrid = document.getElementById('booksGrid');
+
+        function filterBooks() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            const activeCategory = document.querySelector('.cat-btn.active').getAttribute('data-filter');
+            let visibleCount = 0;
+
+            bookCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardTitle = card.getAttribute('data-title').toLowerCase();
+               
+                const matchesSearch = cardTitle.includes(searchText);
+                const matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle No Results Message
+            const existingNoRes = document.querySelector('.no-results');
+            if (visibleCount === 0) {
+                if (!existingNoRes) {
+                    const noResDiv = document.createElement('div');
+                    noResDiv.classList.add('no-results');
+                    noResDiv.innerHTML = `<i class="fas fa-folder-open" style="display:block; font-size:30px; margin-bottom:10px;"></i> ඔබ සෙවූ පොත හමු වූයේ නැත.`;
+                    booksGrid.appendChild(noResDiv);
+                }
+            } else if (existingNoRes) {
+                existingNoRes.remove();
+            }
+        }
+
+        // Search Input Event
+        searchInput.addEventListener('input', filterBooks);
+
+        // Category Buttons Event
+        catButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                catButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterBooks();
+            });
+        });
+
+        // --- 3. DYNAMIC NAVIGATION TO KASUNEMAILBOOK.HTML ---
+        function navigateToBuy(bookName, price) {
+            // User ව කෙලින්ම emailbook.html පිටුවට රැගෙන යාම
+            const targetUrl = `senewirathnaemail.html?book=${encodeURIComponent(bookName)}&price=${encodeURIComponent(price)}`;
+            window.location.href = targetUrl;
+        }
     </script>
 </body>
 </html>

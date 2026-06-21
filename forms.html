@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="si">
 <head>
@@ -188,6 +187,12 @@
         }
 
         /* Form Wrapper & Sliding Animation */
+        .slider-container {
+            overflow: hidden; 
+            border-radius: 12px;
+            width: 100%;
+        }
+
         .form-slider-wrapper {
             display: flex;
             width: 200%; /* Two forms side-by-side */
@@ -221,13 +226,13 @@
         .form-group {
             margin-bottom: 20px;
             display: flex;
-            flex-direction: column; /* Allows self-alignment of child items */
+            flex-direction: column; 
         }
 
         .form-row {
             display: flex;
             gap: 15px;
-            align-items: stretch; /* Ensures form-groups in the same row have identical height */
+            align-items: stretch; 
         }
 
         .form-row .form-group {
@@ -248,7 +253,7 @@
         input[type="email"],
         select {
             width: 100%;
-            height: 46px;
+            height: 46px; 
             padding: 12px;
             background-color: var(--input-bg);
             border: 1px solid var(--border-color);
@@ -292,7 +297,7 @@
             height: 18px;
             accent-color: var(--primary-color);
             cursor: pointer;
-            margin-top: 0; /* Override margin-top auto */
+            margin-top: 0; 
         }
 
         /* Radio Buttons */
@@ -317,7 +322,7 @@
             accent-color: var(--primary-color);
             width: 18px;
             height: 18px;
-            margin-top: 0; /* Override margin-top auto */
+            margin-top: 0; 
         }
 
         /* Submit Buttons */
@@ -367,40 +372,96 @@
             font-weight: bold;
         }
 
-        /* Responsive Design */
+        /* ADVANCED RESPONSIVE DESIGN (Highly Tested for Mobile) */
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
+                display: grid;
+                grid-template-columns: 1fr auto; /* Logo on left, Toggle Button on right */
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
             }
-            .nav-controls {
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
+
+            .brand-container {
+                grid-column: 1;
             }
-            .nav-links {
-                justify-content: center;
-                width: 100%;
-            }
+
             .theme-toggle-btn {
-                width: 100%;
-                justify-content: center;
+                grid-column: 2;
+                width: auto;
+                padding: 6px 12px;
+                font-size: 13px;
+                border-radius: 15px;
             }
+
+            .nav-controls {
+                grid-column: 1 / span 2; /* Spans full width */
+                width: 100%;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+                border-top: 1px solid var(--border-color);
+                padding-top: 10px;
+                margin-top: 4px;
+                gap: 8px;
+            }
+
+            .nav-links a {
+                font-size: 15px;
+            }
+
+            .toggle-tabs {
+                margin-bottom: 20px;
+                gap: 4px;
+            }
+
+            .tab-btn {
+                font-size: 13px;
+                padding: 10px 4px;
+                line-height: 1.2;
+            }
+
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
+
+            .form-row .form-group {
+                margin-bottom: 20px; /* Space between fields when stacked */
+            }
+
             .form-row .form-group input,
             .form-row .form-group select {
-                margin-top: 0; /* Resets auto-alignment for stacked vertical layouts */
+                margin-top: 0; /* Resets auto-alignment for stacked layouts */
+                font-size: 16px; /* Prevents auto-zoom on iOS safari */
             }
+
             .main-container {
                 margin: 20px auto;
-                padding: 10px;
+                padding: 12px;
             }
+
             .form-card {
-                padding: 20px;
+                padding: 24px 16px;
+                border-radius: 10px;
+            }
+
+            h2 {
+                font-size: 21px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo {
+                font-size: 20px; /* Slightly smaller font for ultra-narrow phones */
+            }
+            .logo-icon {
+                font-size: 24px;
+            }
+            .tab-btn {
+                font-size: 12px;
             }
         }
     </style>
@@ -433,21 +494,21 @@
     </header>
 
     <div class="main-container">
-      
+       
         <!-- Toggle Tabs for Slide Animation -->
         <div class="toggle-tabs">
             <button class="tab-btn active" onclick="switchForm('free')">Free Register (නොමිලේ)</button>
             <button class="tab-btn" onclick="switchForm('premium')">Earn Money (පොත් විකුණන්න)</button>
         </div>
 
-        <div style="overflow: hidden; border-radius: 12px;">
+        <div class="slider-container">
             <div class="form-slider-wrapper" id="sliderWrapper">
-              
+               
                 <!-- 1. FREE REGISTRATION FORM CARD -->
                 <div class="form-card">
                     <h2>KMx Store Register Form</h2>
                     <p class="subtitle">ඔබේ ලිපි සහ සටහන් නොමිලේ පළකිරීම සඳහා ලියාපදිංචි වන්න.</p>
-                  
+                   
                     <form onsubmit="sendEmail(event, 'Free Content Submission')">
                         <div class="form-row">
                             <div class="form-group">
@@ -547,7 +608,7 @@
                 <div class="form-card">
                     <h2>KMx Store Premium Register</h2>
                     <p class="subtitle">ඔබේ පොත් විකුණා මුදල් සෙවීම සඳහා ලියාපදිංචි වන්න.</p>
-                  
+                   
                     <form onsubmit="sendEmail(event, 'Premium Commercial Author Application')">
                         <div class="form-row">
                             <div class="form-group">
@@ -671,7 +732,7 @@
         function switchForm(type) {
             const wrapper = document.getElementById('sliderWrapper');
             const buttons = document.querySelectorAll('.tab-btn');
-          
+           
             if (type === 'free') {
                 wrapper.style.transform = 'translateX(0%)';
                 buttons[0].classList.add('active');
@@ -687,9 +748,9 @@
         function toggleTheme() {
             const body = document.body;
             const themeBtn = document.getElementById('themeToggle');
-          
+           
             body.classList.toggle('light-mode');
-          
+           
             if (body.classList.contains('light-mode')) {
                 themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i> <span id="themeText">Dark Mode</span>`;
             } else {
@@ -700,10 +761,10 @@
         // Process Form Details and Open Default Email Client (with strict validation)
         function sendEmail(event, subjectTitle) {
             event.preventDefault();
-          
+           
             const form = event.target;
             const inputs = form.querySelectorAll('input, select, textarea');
-          
+           
             let name = inputs[0].value;
             let age = inputs[1].value;
             let fullName = inputs[2].value;
@@ -712,10 +773,10 @@
             let phone = inputs[5].value;
             let email = inputs[6].value;
             let address = inputs[7].value;
-          
+           
             let isWriter = form.querySelector('input[type="checkbox"]').checked ? "ඔව් (Yes)" : "නැත (No)";
             let writtenBefore = form.querySelector('input[type="radio"]:checked').value;
-          
+           
             let extraDetails = "";
             // Check for additional premium fields (Payment Method & Category)
             if(inputs.length > 9 && inputs[8].tagName === "SELECT") {

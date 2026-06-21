@@ -6,11 +6,11 @@
     <title>Author Profile & Book Store - KMx Education</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
-    
+   
     <style>
         /* --- CSS VARIABLES (LIGHT/DARK THEME) --- */
         :root {
-            --bg-base: #fdfbf7; 
+            --bg-base: #fdfbf7;
             --bg-surface: #ffffff;
             --bg-widget: #f9f6f0;
             --text-main: #1e293b;
@@ -26,19 +26,19 @@
             --transition: all 0.3s ease;
             --title-color: #800020;
             --card-border: 1px dashed #c4a4a4;
-            
+           
             --toggle-bg: #ffffff;
             --toggle-text: #800020;
             --toggle-border: #800020;
         }
 
         [data-theme="dark"] {
-            --bg-base: #0f172a; 
+            --bg-base: #0f172a;
             --bg-surface: #1e293b;
             --bg-widget: #0f172a;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
-            --primary: #800020; 
+            --primary: #800020;
             --primary-hover: #a10d32;
             --border-color: #334155;
             --input-bg: #0f172a;
@@ -46,7 +46,7 @@
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             --title-color: #f59e0b;
             --card-border: 1px dashed #475569;
-            
+           
             --toggle-bg: #800020;
             --toggle-text: #ffffff;
             --toggle-border: #800020;
@@ -322,10 +322,13 @@
             font-weight: 500;
         }
 
+        /* පොත් වල පින්තූර කොටුව ඇතුළත ලස්සනට සකසන නව CSS කේතය */
         .book-img-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* පින්තූරය ඇද නොවී නියම හැඩයෙන් තබා ගනී */
+            padding: 6px;
+            border-radius: 8px;
         }
 
         .book-title {
@@ -410,7 +413,6 @@
 </head>
 <body>
 
-    <!-- HEADER / MENU BAR -->
     <header>
         <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Education</span></a>
         <nav>
@@ -422,27 +424,22 @@
         </nav>
     </header>
 
-    <!-- AUTHOR PROFILE SECTION -->
     <div class="profile-container">
-        <!-- Placeholder author image (Can replace src with actual image path) -->
         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=250" alt="Author" class="author-img">
         <span class="author-badge"><i class="fas fa-circle-check" style="color: #22c55e;"></i> Verified Author</span>
         <h1 class="author-name">W.K. කසුන් කල්‍යාණ</h1>
         <p class="author-bio">ශ්‍රී ලාංකීය පාඨක මනස පිනවන නවකතා, කෙටිකතා මෙන්ම නවීන තාක්ෂණික ක්ෂේත්‍රයේ දැනුම බෙදාදෙන තොරතුරු තාක්ෂණ (ICT) ග්‍රන්ථ කර්තෘවරයෙකි.</p>
     </div>
 
-    <!-- LIVE SEARCH BAR -->
     <div class="search-wrapper">
         <i class="fas fa-search"></i>
         <input type="text" id="searchInput" class="search-input" placeholder="ඔබට අවශ්‍ය පොතේ නම මෙතනින් සොයන්න...">
     </div>
 
-    <!-- MAIN SHOWCASE CONTAINER -->
     <div class="store-container">
         <div class="store-header">
             <div class="store-title">📚 අලුතින්ම එක්වූ පොත්</div>
-            
-            <!-- CATEGORIES FILTER -->
+           
             <div class="category-container">
                 <button class="cat-btn active" data-filter="all">All</button>
                 <button class="cat-btn" data-filter="Novels">Novels</button>
@@ -453,28 +450,35 @@
             </div>
         </div>
 
-        <!-- BOOK CARDS GRID -->
         <div class="books-grid" id="booksGrid">
-            <!-- Book 1 -->
             <div class="book-card" data-category="ICT" data-title="A/L ICT Master Guide">
                 <span class="book-tag">ICT</span>
                 <div class="book-img-box">
-                    <i class="fas fa-laptop-code" style="margin-right: 5px;"></i> ICT Cover Image
+                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/Ehacking.png" alt="A/L ICT Master Guide">
                 </div>
                 <div>
-                    <div class="book-title">A/L ICT Master Guide</div>
-                    <div class="book-author">By W.K කසුන් කල්‍යාණ</div>
-                    <div class="book-price">Rs. 1,250.00</div>
+                    <div class="book-title">Ethical Hacking Fundamental</div>
+                    <div class="book-author">By Cyber KMx Team</div>
+                    <div class="book-price">Rs. 1,800.00</div>
                 </div>
-                <button class="buy-btn" onclick="navigateToBuy('A/L ICT Master Guide', '1250.00')">Buy Now</button>
+                <button class="buy-btn" onclick="navigateToBuy('Ethical Hacking Fundamental', '1800.00')">Buy Now</button>
             </div>
 
-            <!-- Book 2 -->
+
+
+
+
+
+
+
+
+
+
+
             <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය">
                 <span class="book-tag" style="background-color: #800020;">Novel</span>
                 <div class="book-img-box">
-                    <!-- Placeholder representing image path option from 105309.jpg -->
-                    <i class="fas fa-book-open" style="margin-right: 5px;"></i> Novel Cover Image
+                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/tharuwaka-daiwaya.jpg" alt="තරුවක දෛවය">
                 </div>
                 <div>
                     <div class="book-title">තරුවක දෛවය</div>
@@ -484,11 +488,36 @@
                 <button class="buy-btn" onclick="navigateToBuy('තරුවක දෛවය', '1350.00')">Buy Now</button>
             </div>
 
-            <!-- Book 3 -->
-            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ පහණ සහ තවත්...">
+
+            <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය">
+                <span class="book-tag" style="background-color: #800020;">Novel</span>
+                <div class="book-img-box">
+                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/sakura.jpeg" alt="තරුවක දෛවය">
+                </div>
+                <div>
+                    <div class="book-title">සකුරා ප්‍රේමය</div>
+                    <div class="book-author">By W.K කසුන් කල්‍යාණ</div>
+                    <div class="book-price">Rs. 1,350.00</div>
+                </div>
+                <button class="buy-btn" onclick="navigateToBuy('සකුරා ප්‍රේමය', '1350.00')">Buy Now</button>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ pahana සහ තවත්...">
                 <span class="book-tag" style="background-color: #4a0e17;">Short Story</span>
                 <div class="book-img-box">
-                    <i class="fas fa-book" style="margin-right: 5px;"></i> Story Cover Image
+                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/2.png" alt="සඳකඩ පහණ">
                 </div>
                 <div>
                     <div class="book-title">සඳකඩ පහණ සහ තවත් කෙටිකතා</div>
@@ -537,7 +566,7 @@
             bookCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 const cardTitle = card.getAttribute('data-title').toLowerCase();
-                
+               
                 const matchesSearch = cardTitle.includes(searchText);
                 const matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
 

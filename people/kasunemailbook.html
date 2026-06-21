@@ -33,18 +33,18 @@
         }
 
         [data-theme="dark"] {
-            --bg-base: #0b0f19;        /* ඇසට පහසු තද අධ්‍යාපනික පසුබිම් වර්ණය */
-            --bg-surface: #1e2640;     /* කාඩ්පත් සහ ප්‍රධාන කොටස් සඳහා වර්ණය */
-            --bg-widget: #131a30;      /* සෙවුම් සහ කුඩා Widgets සඳහා වර්ණය */
-            --text-main: #f8fafc;       /* කියවීමට ඉතා පැහැදිලි සුදු පැහැය */
-            --text-muted: #94a3b8;     /* උප මාතෘකා සඳහා මෘදු අළු පැහැය */
-            --primary: #a82042;        /* Dark mode එකට ගැළපෙන KMx Maroon වර්ණය */
-            --primary-hover: #c92a53;  /* බොත්තම් මතට මූසිකය ගෙනගිය විට පෙනෙන වර්ණය */
-            --border-color: #2e3a5f;   /* සියුම් සීමා මායිම් වර්ණය */
+            --bg-base: #0b0f19;        
+            --bg-surface: #1e2640;     
+            --bg-widget: #131a30;      
+            --text-main: #f8fafc;       
+            --text-muted: #94a3b8;     
+            --primary: #a82042;        
+            --primary-hover: #c92a53;  
+            --border-color: #2e3a5f;   
             --input-bg: #131a30;
             --nav-bg: #1e2640;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            --title-color: #38bdf8;    /* ප්‍රධාන මාතෘකා සඳහා අධ්‍යාපනික නිල් පැහැය (Sky Blue) */
+            --title-color: #38bdf8;    
             --card-border: 1px dashed #3a4b7c;
           
             --toggle-bg: #a82042;
@@ -82,7 +82,7 @@
         }
 
         .logo {
-            font-size: 28px; /* Bigger Logo as requested */
+            font-size: 28px; 
             font-weight: 700;
             color: var(--text-main);
             text-decoration: none;
@@ -238,7 +238,7 @@
             gap: 10px;
         }
 
-        /* --- CATEGORIES (Matching 105309.jpg) --- */
+        /* --- CATEGORIES --- */
         .category-container {
             display: flex;
             gap: 10px;
@@ -267,7 +267,7 @@
             border-color: var(--primary);
         }
 
-        /* --- BOOK GRID (Matching 105309.jpg) --- */
+        /* --- BOOK GRID --- */
         .books-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -292,7 +292,6 @@
             box-shadow: var(--shadow);
         }
 
-        /* Tag styled matching image 105309.jpg */
         .book-tag {
             position: absolute;
             top: 15px;
@@ -322,11 +321,10 @@
             font-weight: 500;
         }
 
-        /* පොත් වල පින්තූර කොටුව ඇතුළත ලස්සනට සකසන නව CSS කේතය */
         .book-img-box img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* පින්තූරය ඇද නොවී නියම හැඩයෙන් තබා ගනී */
+            object-fit: contain; 
             padding: 6px;
             border-radius: 8px;
         }
@@ -395,7 +393,6 @@
             background-color: var(--nav-bg);
         }
 
-        /* --- RESPONSIVE BREAKPOINTS --- */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -451,7 +448,8 @@
         </div>
 
         <div class="books-grid" id="booksGrid">
-            <div class="book-card" data-category="ICT" data-title="Ethical Hacking Fundamental" data-author="Cyber KMx Team">
+            <!-- සෙවුම් පද්ධතිය නිවැරදිව ක්‍රියා කිරීමට සියලුම දත්ත සිංහල/ඉංග්‍රීසි දෙකෙන්ම ඇතුළත් කරන ලදි -->
+            <div class="book-card" data-category="ICT" data-title="Ethical Hacking Fundamental" data-author="Cyber KMx Team සයිබර් කේඑම්එක්ස් ටීම්">
                 <span class="book-tag">ICT</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/Ehacking.png" alt="Ethical Hacking Fundamental">
@@ -464,7 +462,7 @@
                 <button class="buy-btn" onclick="navigateToBuy('Ethical Hacking Fundamental', '1800.00')">Buy Now</button>
             </div>
 
-            <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය" data-author="W.K කසුන් කල්‍යාණ">
+            <div class="book-card" data-category="Novels" data-title="තරුවක දෛවය tharuwaka daiwaya" data-author="W.K කසුන් කල්‍යාණ Kasun Kalyana">
                 <span class="book-tag" style="background-color: #800020;">Novel</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/tharuwaka-daiwaya.jpg" alt="තරුවක දෛවය">
@@ -477,10 +475,10 @@
                 <button class="buy-btn" onclick="navigateToBuy('තරුවක දෛවය', '1350.00')">Buy Now</button>
             </div>
 
-            <div class="book-card" data-category="Novels" data-title="සකුරා ප්‍රේමය" data-author="W.K කසුන් කල්‍යාණ">
+            <div class="book-card" data-category="Novels" data-title="සකුරා ප්‍රේමය sakura premaya" data-author="W.K කසුන් කල්‍යාණ Kasun Kalyana">
                 <span class="book-tag" style="background-color: #800020;">Novel</span>
                 <div class="book-img-box">
-                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/sakura.jpeg" alt="සකුරා ප්‍රේමය">
+                    <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/sakura.jpeg" alt="තරුවක දෛවය">
                 </div>
                 <div>
                     <div class="book-title">සකුරා ප්‍රේමය</div>
@@ -490,7 +488,7 @@
                 <button class="buy-btn" onclick="navigateToBuy('සකුරා ප්‍රේමය', '1350.00')">Buy Now</button>
             </div>
 
-            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ පහණ සහ තවත් කෙටිකතා" data-author="W.K කසුන් කල්‍යාණ">
+            <div class="book-card" data-category="Short Stories" data-title="සඳකඩ පහණ සහ තවත් කෙටිකතා sandakada pahana saha thawat ketikatha" data-author="W.K කසුන් කල්‍යාණ Kasun Kalyana">
                 <span class="book-tag" style="background-color: #4a0e17;">Short Story</span>
                 <div class="book-img-box">
                     <img src="https://raw.githubusercontent.com/Junaindin/KMx_Education/main/img/2.png" alt="සඳකඩ පහණ">
@@ -542,17 +540,14 @@
             bookCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 
-                // පොතේ නම සහ කර්තෘගේ නම දෙකම වෙන වෙනම ලබා ගැනීම
                 const cardTitle = card.getAttribute('data-title') ? card.getAttribute('data-title').toLowerCase() : '';
                 const cardAuthor = card.getAttribute('data-author') ? card.getAttribute('data-author').toLowerCase() : '';
               
-                // සෙවුම් වචනය පොතේ නමට හෝ කර්තෘගේ නමට ගැළපේදැයි පරීක්ෂාව
                 const matchesSearchTitle = cardTitle.includes(searchText);
                 const matchesSearchAuthor = cardAuthor.includes(searchText);
                 
                 const matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
 
-                // කොන්දේසි සපුරාලන්නේ නම් පමණක් පොත දර්ශනය කිරීම
                 if ((matchesSearchTitle || matchesSearchAuthor) && matchesCategory) {
                     card.style.display = 'flex';
                     visibleCount++;
@@ -587,7 +582,7 @@
             });
         });
 
-        // --- 3. DYNAMIC NAVIGATION TO SENDDETAILS WITH DATA ---
+        // --- 3. DYNAMIC NAVIGATION WITH DATA ---
         function navigateToBuy(bookName, price) {
             const targetUrl = `kasunemailbook.html?book=${encodeURIComponent(bookName)}&price=${encodeURIComponent(price)}`;
             window.location.href = targetUrl;

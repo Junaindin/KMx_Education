@@ -1,1 +1,531 @@
 
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Book Store - Place Your Order</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Share+Tech+Mono&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (LIGHT MODE / PROFESSIONAL) --- */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --text-muted: #7f8c8d;
+            --active-color: #800020; /* මරූන් වර්ණය */
+            --accent-color: #3498db;
+            --nav-bg: #ffffff;
+            --input-border: #cccccc;
+            --shadow: 0 10px 30px rgba(0,0,0,0.06);
+            --border-radius: 12px;
+            --font-main: 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- DARK MODE (HACKING / CYBERPUNK MATRIX VIBE) --- */
+        [data-theme="dark"] {
+            --bg-color: #0d0f12;
+            --card-bg: #161a1f;
+            --text-color: #00ff66; /* Neon Green */
+            --text-muted: #00aa44;
+            --active-color: #00ff66;
+            --accent-color: #ff0055; /* Cyber Pink */
+            --nav-bg: #111418;
+            --input-border: #00ff66;
+            --shadow: 0 5px 15px rgba(0, 255, 102, 0.1);
+            --font-main: 'Share Tech Mono', monospace;
+        }
+
+        /* --- BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        /* --- RESPONSIVE NAVIGATION BAR --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            flex-wrap: wrap; /* Accounted for mobile breakage */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #800020;
+        }
+        [data-theme="dark"] .logo span {
+            color: var(--accent-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 15px;
+        }
+
+        nav a.active-page {
+            background-color: #800020;
+            color: white !important;
+        }
+
+        [data-theme="dark"] nav a.active-page {
+            background-color: var(--active-color);
+            color: #0d0f12 !important;
+            box-shadow: 0 0 15px var(--active-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        /* --- FORM CONTAINER --- */
+        .form-container {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-top: 5px solid #800020;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .form-card {
+            border-top: 5px solid var(--active-color);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
+        }
+
+        .form-card h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-card p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Form Grouping */
+        .form-group {
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background-color: transparent;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #800020;
+            box-shadow: 0 0 8px rgba(128, 0, 32, 0.2);
+        }
+
+        [data-theme="dark"] .form-group input:focus, 
+        [data-theme="dark"] .form-group select:focus, 
+        [data-theme="dark"] .form-group textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 12px var(--accent-color);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #800020;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        [data-theme="dark"] .submit-btn {
+            background-color: var(--active-color);
+            color: #0d0f12;
+            box-shadow: 0 0 15px var(--active-color);
+        }
+
+        /* --- CUSTOM POPUP MODAL STYLES (එක පාරින්ම වැඩ කිරීමට එකතු කරන ලදී) --- */
+        .custom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .custom-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-modal {
+            background-color: var(--card-bg);
+            border: 2px solid var(--active-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-overlay.active .custom-modal {
+            transform: translateY(0);
+        }
+
+        .custom-modal i {
+            font-size: 45px;
+            color: var(--active-color);
+            margin-bottom: 15px;
+        }
+
+        .custom-modal h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .custom-modal p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-btn {
+            background-color: #800020;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .modal-btn {
+            background-color: var(--active-color);
+            color: #0d0f12;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+                padding: 15px 20px;
+            }
+            nav {
+                justify-content: center;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav a {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+            .theme-toggle {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+            .form-card {
+                padding: 25px 20px;
+            }
+            .form-card h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo"><span>KMx</span> Education</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="tech.html">Tech</a>
+            <a href="book.html" class="active-page">Book Store</a>
+            <a href="about.html">About</a>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+    </header>
+
+    <div class="form-container">
+        <div class="form-card">
+            <h2>ඇණවුම් පත්‍රිකාව (Order Form)</h2>
+            <p class="subtitle">කරුණාකර නිවැරදි විස්තර ඇතුළත් කර Submit කරන්න.</p>
+            
+            <form id="orderForm">
+                
+                <div class="form-group">
+                    <label><i class="fas fa-book"></i> අවශ්‍ය පොතේ නම:</label>
+                    <input type="text" id="bookName" placeholder="උදා: තරුවක දෛවය" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> අද දිනය:</label>
+                    <input type="date" id="orderDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-list-ol"></i> අවශ්‍ය පොත් ප්‍රමාණය:</label>
+                    <input type="number" id="quantity" min="1" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-map-marked-alt"></i> ඔබගේ ලිපිනය:</label>
+                    <textarea id="userAddress" rows="3" placeholder="පොත් එවීමට අවශ්‍ය නිවැරදි ලිපිනය ඇතුළත් කරන්න" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> දුරකථන අංකය:</label>
+                    <input type="tel" id="phoneNum" placeholder="උදා: 0712345678" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fab fa-whatsapp"></i> වට්ස්ඇප් අංකය (WhatsApp):</label>
+                    <input type="tel" id="whatsappNum" placeholder="උදා: 0712345678" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-city"></i> දිස්ත්‍රික්කය (District):</label>
+                    <select id="district" required>
+                        <option value="" disabled selected>දිස්ත්‍රික්කය තෝරන්න</option>
+                        <option value="Colombo">කොළඹ (Colombo)</option>
+                        <option value="Gampaha">ගම්පහ (Gampaha)</option>
+                        <option value="Kalutara">කළුතර (Kalutara)</option>
+                        <option value="Kandy">මහනුවර (Kandy)</option>
+                        <option value="Matale">මාතලේ (Matale)</option>
+                        <option value="Nuwara Eliya">නුවරඑළිය (Nuwara Eliya)</option>
+                        <option value="Galle">ගාල්ල (Galle)</option>
+                        <option value="Matara">මාතර (Matara)</option>
+                        <option value="Hambantota">හම්බන්තොට (Hambantota)</option>
+                        <option value="Jaffna">යාපනය (Jaffna)</option>
+                        <option value="Kilinochchi">කිලිනොච්චිය (Kilinochchi)</option>
+                        <option value="Mannar">මන්නාරම (Mannar)</option>
+                        <option value="Vavuniya">වවුනියාව (Vavuniya)</option>
+                        <option value="Mullaitivu">මුලතීවු (Mullaitivu)</option>
+                        <option value="Batticaloa">මඩකලපුව (Batticaloa)</option>
+                        <option value="Ampara">අම්පාර (Ampara)</option>
+                        <option value="Trincomalee">ත්‍රිකුණාමලය (Trincomalee)</option>
+                        <option value="Kurunegala">කුරුණෑගල (Kurunegala)</option>
+                        <option value="Puttalam">පුත්තලම (Puttalam)</option>
+                        <option value="Anuradhapura">අනුරාධපුරය (Anuradhapura)</option>
+                        <option value="Polonnaruwa">පොළොන්නරුව (Polonnaruwa)</option>
+                        <option value="Badulla">බදුල්ල (Badulla)</option>
+                        <option value="Moneragala">මොණරාගල (Moneragala)</option>
+                        <option value="Ratnapura">රත්නපුරය (Ratnapura)</option>
+                        <option value="Kegalle">කෑගල්ල (Kegalle)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Submit Order
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="custom-overlay" id="customOverlay">
+        <div class="custom-modal">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You for Your Order!</h3>
+            <p>ඔබගේ ඇණවුම සාර්ථකයි. විස්තර ඊමේල් මඟින් අප වෙත එවීමට පහත බටන් එක ඔබන්න.</p>
+            <button class="modal-btn" id="modalOkBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. Auto-fill Today's Date
+        document.getElementById('orderDate').valueAsDate = new Date();
+
+        // ගෝලීයව mailto සබැඳිය තබා ගැනීමට Variable එකක්
+        let generatedMailtoUrl = "";
+
+        // 2. Form Submission to Custom Modal
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            // Input දත්ත ලබා ගැනීම
+            const bookName = document.getElementById('bookName').value;
+            const orderDate = document.getElementById('orderDate').value;
+            const quantity = document.getElementById('quantity').value;
+            const userAddress = document.getElementById('userAddress').value;
+            const phoneNum = document.getElementById('phoneNum').value;
+            const whatsappNum = document.getElementById('whatsappNum').value;
+            const district = document.getElementById('district').value;
+
+            // ඔයාගේ ඊමේල් ලිපිනය
+            const myEmail = "application2026k@gmail.com";
+            
+            // Email එකේ සිරස්තලය (Subject)
+            const subject = encodeURIComponent("New Book Order - KMx Store");
+            
+            // Email එකේ ඇතුළත විස්තර සැකසීම (Email Body)
+            const emailBody = encodeURIComponent(
+                "--- NEW BOOK ORDER DETAILS ---\n\n" +
+                "1. Book Name: " + bookName + "\n" +
+                "2. Order Date: " + orderDate + "\n" +
+                "3. Quantity: " + quantity + "\n" +
+                "4. Delivery Address: " + userAddress + "\n" +
+                "5. Phone Number: " + phoneNum + "\n" +
+                "6. WhatsApp Number: " + whatsappNum + "\n" +
+                "7. District: " + district + "\n\n" +
+                "---------------------------------"
+            );
+
+            // Mailto URL එක සකසා සේව් කර ගැනීම
+            generatedMailtoUrl = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;
+
+            // බ්‍රවුසරය හිර නොකර Custom Popup එක පෙන්වීම
+            document.getElementById('customOverlay').classList.add('active');
+        });
+
+        // 3. Modal OK බටන් එක ක්ලික් කළ විට එක පාරින්ම ඊමේල් ඇප් එක විවෘත කිරීම
+        document.getElementById('modalOkBtn').addEventListener('click', function() {
+            document.getElementById('customOverlay').classList.remove('active');
+            if(generatedMailtoUrl !== "") {
+                window.location.href = generatedMailtoUrl;
+            }
+        });
+
+        // 4. Dark Mode Toggle Script
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            toggleText.textContent = "Light Mode";
+        }
+
+        themeBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+        });
+    </script>
+</body>
+</html>

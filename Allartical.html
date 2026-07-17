@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Article - Authors Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (DEFAULT: LIGHT MODE) --- */
+        :root {
+            --bg-base: #fdfbf7; 
+            --bg-surface: #ffffff;
+            --bg-widget: #f9f6f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --toggle-bg: #ffffff;
+            --toggle-text: #800020;
+            --toggle-border: #800020;
+        }
+
+        /* --- DARK MODE variables --- */
+        [data-theme="dark"] {
+            --bg-base: #0f172a; 
+            --bg-surface: #1e293b;
+            --bg-widget: #0f172a;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #a82042; 
+            --primary-hover: #c92a53;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            
+            --toggle-bg: #a82042;
+            --toggle-text: #ffffff;
+            --toggle-border: #a82042;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 24px; 
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            border: 2px solid var(--toggle-border);
+            color: var(--toggle-text);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        /* ජංගම දුරකථන සඳහා Hamburger Icon එක */
+        .menu-icon {
+            display: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* --- BANNER SECTION --- */
+        .banner-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 30px auto 10px auto;
+            padding: 0 20px;
+        }
+
+        .banner-container {
+            background: linear-gradient(135deg, rgba(128, 0, 32, 0.9), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80') no-repeat center center;
+            background-size: cover;
+            border-radius: var(--radius);
+            padding: 50px 30px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease;
+        }
+
+        .banner-container h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .banner-container p {
+            font-size: 15px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- LIVE SEARCH BAR --- */
+        .search-section {
+            max-width: 500px;
+            width: calc(100% - 40px);
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 15px;
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(128, 0, 32, 0.15);
+        }
+
+        /* --- AUTHORS WRAPPER --- */
+        .authors-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+        }
+
+        .authors-scroll-container {
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
+            padding: 15px 5px 25px 5px;
+            scroll-behavior: smooth;
+        }
+
+        .authors-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .authors-scroll-container::-webkit-scrollbar-track {
+            background: var(--bg-widget);
+            border-radius: 10px;
+        }
+
+        .authors-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+
+        /* --- AUTHOR CARD --- */
+        .author-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 30px 20px;
+            text-align: center;
+            min-width: 280px; 
+            flex: 0 0 calc(33.333% - 17px); 
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .author-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(128, 0, 32, 0.15);
+        }
+
+        .author-img-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 15px auto;
+        }
+
+        .author-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .author-card:hover .author-img {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .author-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .author-role {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rating-stars {
+            color: #f1c40f; 
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .view-btn {
+            background-color: var(--bg-widget);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .author-card:hover .view-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .no-results {
+            width: 100%;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 15px;
+            display: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+            transition: var(--transition);
+            width: 100%;
+            margin-top: auto; 
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            .author-card {
+                flex: 0 0 calc(50% - 13px); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+                position: relative;
+            }
+
+            .menu-icon {
+                display: block; 
+            }
+
+            /* [ගැස්සීමේ ගැටලුව විසඳීම] 
+               මෙනුව පූරණය වන විට (Load/Refresh) අනවශ්‍ය ලෙස එහා මෙහා වීම වැළැක්වීමට 
+               මෙහිදී transition එක ඉවත් කර ඇත.
+            */
+            .nav-container {
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                border-bottom: 2px solid var(--border-color);
+                gap: 20px;
+                z-index: 999;
+                opacity: 0;
+            }
+
+            /* මෙනුව විවෘත වන විට පමණක් සුමටව ක්‍රියාත්මක වන ඇනිමේෂන් එක */
+            .nav-container.open {
+                display: flex;
+                opacity: 1;
+                transition: opacity 0.25s ease-in-out;
+            }
+
+            nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .theme-toggle {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .banner-container {
+                padding: 35px 20px;
+            }
+
+            .banner-container h1 {
+                font-size: 1.7rem;
+            }
+
+            .authors-scroll-container {
+                flex-direction: column;
+                overflow-x: visible;
+                gap: 20px;
+            }
+
+            .author-card {
+                width: 100%;
+                min-width: 100%;
+                flex: unset;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Article</span></a>
+        
+        <div class="menu-icon" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-container" id="navContainer">
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="#" class="active">Articles</a>
+                <a href="about.html">About</a>
+            </nav>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="banner-section">
+        <div class="banner-container">
+            <h1>KMx ලිපි කර්තෘ මණ්ඩලය</h1>
+            <p>නවීන තාක්ෂණය, කලාව සහ අධ්‍යාපනික ක්ෂේත්‍ර රැසක දැනුම බෙදාදෙන අපගේ දක්ෂ ලේඛක ලේඛිකාවන් මෙතැනින් හඳුනාගන්න.</p>
+        </div>
+    </section>
+
+    <div class="search-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="කර්තෘගේ නම ඇතුළත් කර සොයන්න...">
+        </div>
+    </div>
+
+    <section class="authors-section">
+        <div class="section-title">
+            <i class="fas fa-users" style="color: var(--primary);"></i> අපගේ කතුවරුන්
+        </div>
+        
+        <div class="authors-scroll-container" id="authorsContainer">
+            
+            <div class="author-card" data-name="කසුන් කල්‍යාණ">
+                <div class="author-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Kasun" class="author-img">
+                </div>
+                <div class="author-name">W.K. කසුන් කල්‍යාණ</div>
+                <div class="author-role">ICT කර්තෘ</div>
+                <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> 
+                </div>
+                <button class="view-btn" onclick="location.href='kasun.html'">ලිපි කියවන්න</button>
+            </div>
+
+            <div class="author-card" data-name="මිශාන් මාලික">
+                <div class="author-img-wrapper">
+                    <img src="Articles\Mishan\Mishan.jpg" alt="Dilini" class="author-img">
+                </div>
+                <div class="author-name">මිශාන් මාලික</div>
+                <div class="author-role">Writter</div>
+                <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i> 
+                </div>
+                <button class="view-btn" onclick="location.href='Articles/Mishan/Mishan.html'">ලිපි කියවන්න</button>
+            </div>
+
+            
+
+        </div>
+
+        <div class="no-results" id="noResults">
+            <i class="fas fa-user-slash" style="font-size: 30px; display: block; margin-bottom: 10px;"></i>
+            ඔබ සෙවූ කර්තෘවරයා මෙහි හමු වූයේ නැත.
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 KMx Education. All Rights Reserved. Smart Book & Article Store.</p>
+    </footer>
+
+    <script>
+        // --- 1. MOBILE MENU TOGGLE ---
+        const menuToggle = document.getElementById('menuToggle');
+        const navContainer = document.getElementById('navContainer');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('open');
+            if(navContainer.classList.contains('open')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // --- 2. DARK MODE / LIGHT MODE ENGINE (Default: Light Mode) ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+            
+            navContainer.classList.remove('open');
+            menuIcon.classList.replace('fa-xmark', 'fa-bars');
+        });
+
+        // --- 3. LIVE SEARCH LOGIC ---
+        const searchInput = document.getElementById('searchInput');
+        const authorCards = document.querySelectorAll('.author-card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase().trim();
+            let matchesFound = 0;
+
+            authorCards.forEach(card => {
+                const authorName = card.getAttribute('data-name').toLowerCase();
+                if (authorName.includes(searchText)) {
+                    card.style.display = 'block';
+                    matchesFound++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (matchesFound === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

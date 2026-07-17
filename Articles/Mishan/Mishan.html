@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Article - Author Profile</title>
+    <!-- FontAwesome Icons සහ Google Fonts සම්බන්ධ කිරීම -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600;700&display=swap">
+    
+    <style>
+        /* --- CSS VARIABLES (DEFAULT: LIGHT MODE - ඩාර්ක් මෝඩ් ඕෆ්) --- */
+        :root {
+            --bg-base: #fdfbf7; 
+            --bg-surface: #ffffff;
+            --bg-widget: #f9f6f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #800020; /* KMx Maroon */
+            --primary-hover: #5d0017;
+            --border-color: #e2e8f0;
+            --nav-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --toggle-bg: #ffffff;
+            --toggle-text: #800020;
+            --toggle-border: #800020;
+        }
+
+        /* --- DARK MODE variables (ඩාර්ක් මෝඩ් ක්‍රියාත්මක වූ විට) --- */
+        [data-theme="dark"] {
+            --bg-base: #0f172a; 
+            --bg-surface: #1e293b;
+            --bg-widget: #111e30;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #a82042; 
+            --primary-hover: #c92a53;
+            --border-color: #334155;
+            --nav-bg: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            
+            --toggle-bg: #a82042;
+            --toggle-text: #ffffff;
+            --toggle-border: #a82042;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: var(--nav-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 24px; 
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .theme-toggle {
+            background-color: var(--toggle-bg);
+            border: 2px solid var(--toggle-border);
+            color: var(--toggle-text);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .menu-icon {
+            display: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* --- PROFILE BANNER & DETAILS --- */
+        .profile-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .profile-container {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-img-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: 0 8px 25px rgba(128, 0, 32, 0.2);
+            transition: var(--transition);
+        }
+
+        .profile-container:hover .profile-img {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-info h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        .profile-role {
+            font-size: 14px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .profile-bio {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 20px;
+            max-width: 700px;
+            text-align: justify; /* බයෝ එකද ලස්සනට Justify කිරීම */
+        }
+
+        /* කතෘ දත්ත (Stats) */
+        .author-stats {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            background-color: var(--bg-base);
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item span {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        /* සමාජ මාධ්‍ය ලින්ක්ස් (Social Media) */
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .social-btn.facebook { background-color: #1877f2; }
+        .social-btn.tiktok { background-color: #010101; border: 1px solid #334155; }
+        .social-btn.linkedin { background-color: #0077b5; }
+        .social-btn.youtube { background-color: #ff0000; }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* --- ARTICLE SEARCH SECTION --- */
+        .search-section {
+            max-width: 500px;
+            width: calc(100% - 40px);
+            margin: 40px auto;
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 15px;
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(128, 0, 32, 0.15);
+        }
+
+        /* --- ARTICLES LIST SECTION --- */
+        .articles-section {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .article-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 25px rgba(128, 0, 32, 0.1);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .article-meta span i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .article-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        /* උපරිම පේළි 5ක් පමණක් පෙන්වීම සහ Justify කිරීම */
+        .article-snippet {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: justify; /* දෙපසට සමපාත කිරීම (Justify) */
+            transition: var(--transition);
+        }
+
+        /* ජංගම දුරකථන වලදී ක්‍රියා කරන inline-expanded පන්තිය */
+        .article-card.inline-expanded .article-snippet {
+            display: block;
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
+        .read-btn {
+            background-color: var(--bg-widget);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .read-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* REAL-TIME LIKE SYSTEM BUTTON */
+        .like-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .like-btn.liked {
+            color: #ff4d7d;
+        }
+
+        .like-btn.liked i {
+            animation: popHeart 0.4s ease;
+        }
+
+        @keyframes popHeart {
+            50% { transform: scale(1.4); }
+        }
+
+        /* --- MOBILE INLINE CLOSE BUTTON --- */
+        .inline-close-btn {
+            display: none;
+            background-color: #fee2e2;
+            color: #ef4444;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            align-self: center;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .inline-close-btn {
+            background-color: #ef444422;
+        }
+
+        .article-card.inline-expanded .inline-close-btn {
+            display: block;
+        }
+
+        /* --- DESKTOP MODAL POPUP (85% WIDTH) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background-color: var(--bg-surface);
+            width: 85%;
+            max-width: 1100px;
+            max-height: 85vh;
+            border-radius: var(--radius);
+            padding: 40px;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--bg-widget);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background-color: #ef4444;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-body h2 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .modal-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .modal-text {
+            color: var(--text-main);
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: justify; /* Modal ඇතුළත ඇති සම්පූර්ණ විස්තරයද Justify කිරීම */
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 13px;
+            background-color: var(--nav-bg);
+            transition: var(--transition);
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+                position: relative;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-container {
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--nav-bg);
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                border-bottom: 2px solid var(--border-color);
+                gap: 20px;
+                z-index: 999;
+                opacity: 0;
+            }
+
+            .nav-container.open {
+                display: flex;
+                opacity: 1;
+                transition: opacity 0.25s ease-in-out;
+            }
+
+            nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .theme-toggle {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            .author-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- මෙනු තීරුව (Header) -->
+    <header>
+        <a href="#" class="logo"><i class="fas fa-graduation-cap"></i> KMx <span>Article</span></a>
+        
+        <div class="menu-icon" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-container" id="navContainer">
+            <nav>
+                
+                <a href="#" class="active">Mishan Malika Articles</a>
+                
+            </nav>
+            <button class="theme-toggle" id="themeBtn">
+                <i class="fas fa-moon"></i> <span id="toggleText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- කර්තෘගේ විස්තර ඇතුළත් කොටස (Author Profile) -->
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="profile-img-wrapper">
+                <img src="Mishan.jpg" alt="Mishan" class="profile-img">
+            </div>
+            <div class="profile-info">
+                <h2>Mishan Malika</h2>
+                <p class="profile-role">Journalist</p>
+                <p>mishanmalika15@gmail.com</p> <br>
+                <p class="profile-bio">
+                    I am Mishan Malika, a bilingual educator, certified trainer, coach, and writer with a multidisciplinary background in Biology, Psychology, and Health Sciences. I hold an Associate Degree in Health Science and a Bachelor's degree in Psychology and Counselling.
+                    I write articles that explore social issues, human behavior, education, mental well-being, and contemporary topics from a thoughtful and evidence-informed perspective. My background in psychology and health sciences allows me to analyze complex social challenges while presenting ideas in a way that is engaging, balanced, and accessible to a wide audience.
+                </p>
+                
+                <div class="author-stats">
+                    <div class="stat-item"><span>01+</span> ලිපි</div>
+                    <div class="stat-item"><span>1+</span> කියවීම්</div>
+                    <div class="stat-item"><span>0.1⭐</span> ශ්‍රේණිගත කිරීම</div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://tiktok.com" target="_blank" class="social-btn tiktok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.linkedin.com/in/mishanmalika" target="_blank" class="social-btn linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://youtube.com" target="_blank" class="social-btn youtube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- සෙවුම් තීරුව (Search Bar) -->
+    <div class="search-section">
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="articleSearch" class="search-input" placeholder="ලිපි වල මාතෘකා ඇතුළත් කර සොයන්න...">
+        </div>
+    </div>
+
+    <!-- ආර්ටිකල් ලැයිස්තුව (Articles Grid) -->
+    <section class="articles-section">
+        <div class="section-title">
+            <i class="fas fa-book-open" style="color: var(--primary);"></i> මෑතකදී පළකළ ලිපි
+        </div>
+
+        <div class="articles-grid" id="articlesGrid">
+            
+            <!-- ලිපිය 1 -->
+            <div class="article-card">
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> July 18, 2026</span>
+                    <span><i class="far fa-clock"></i> 5 Min Read</span>
+                </div>
+                <h3 class="article-title">අපරාධයක සැබෑ මුහුණුවර</h3>
+                <p class="article-snippet">
+                    අපරාධකරුවෙකුගේ මනස යනු, මිනිස් චර්යාවන් පිළිබඳව අධ්‍යයනය කරන මනෝවිද්‍යාඥයින් සඳහා අතිශය සංකීර්ණ සහ අභියෝගාත්මක ගැටලුවකි. එයට හේතුව වන්නේ, සමාජය විසින් නීති විරෝධී ලෙස සලකනු ලබන ක්‍රියාවන් සිදු කරනු ලබන පුද්ගලයෙකුගේ අභ්‍යන්තර ලෝකය සරලව තේරුම් ගත නොහැකි වීමයි. එය උපතින් රැගෙන එන ජානමය සාධක සහ ජීවිත කාලය පුරාම උකහා ගන්නා පාරිසරික අත්දැකීම්වල එකතුවකි.
+​අපරාධකරුවෙකුගේ මනෝවිද්‍යාත්මක පැතිකඩ දෙස බැලීමේදී එහි මූලික වශයෙන් හැඟීම් පාලනය, තීරණ ගැනීමේ හැකියාව සහ සදාචාරාත්මක සංවේදීතාව වැනි සාධක කැපී පෙනේ. බොහෝ විට අපරාධකරුවන්ගේ මනස තුළ අනුකම්පාව හෝ තමා කරන දෙයින් අනෙකෙකුට සිදුවන හානිය පිළිබඳව ඇතිවන සංවේදීතාව අවම මට්ටමක පවතී. මනෝවිද්‍යාත්මකව මෙය හැඳින්වෙන්නේ ‘සමාජ විරෝධී පෞරුෂ ලක්ෂණ’ ලෙසය. මෙවැනි පුද්ගලයින්ට අන් අයගේ වේදනාව තේරුම් ගැනීමේ හැකියාව දුර්වලය. ඔවුන් බොහෝ විට තම අරමුණු ඉටු කර ගැනීම සඳහා ඕනෑම ක්‍රමයක් භාවිත කිරීමට පසුබට නොවෙති. මෙහිදී ඔවුන්ගේ මනස තුළ ක්‍රියාත්මක වන්නේ අන් අයගේ යහපතට වඩා තමාගේ ක්ෂණික සතුට හෝ අවශ්‍යතාවය මුල් කරගත් සිතුවිලි පද්ධතියකි.
+​ළමාවියේ අත්දැකීම් මෙහිදී ඉතා තීරණාත්මක බලපෑමක් ඇති කරයි. බොහෝ අපරාධකරුවන්ගේ පසුබිම පිරික්සීමේදී පෙනී යන්නේ ඔවුන් කුඩා කල සිටම දරුණු මානසික හෝ ශාරීරික හිංසනයන්ට ලක්ව ඇති බවයි. ආදරය සහ සුරක්ෂිතභාවය නොමැති පරිසරයක හැදී වැඩීමෙන් ඔවුන්ගේ මනස තුළ සමාජය කෙරෙහි වෛරයක් හෝ අවිශ්වාසයක් ගොඩනැඟෙයි. මෙය ඔවුන් පසුකාලීනව නීතියට පිටින් ක්‍රියා කිරීමට පෙළඹෙන මූලික මානසික අඩිතාලම බවට පත්වේ. සමාජය තමාට ආදරය නොකළේ යැයි සිතන විට, ඔවුන් සමාජයට ද වෛර කිරීමේ ස්වභාවයක් පෙන්වයි.
+​කෙසේ වෙතත්, සියලුම අපරාධකරුවන් මෙලෙස පටු මානසිකත්වයකින් ක්‍රියා කරන්නේ යැයි පැවසිය නොහැක. ඇතැම් අපරාධකරුවන් අතිශය බුද්ධිමත් මට්ටමක සිටිති. ඔවුන් තම අපරාධ සැලසුම් කරන්නේ ඉතා සූක්ෂ්ම ලෙසය. එවැනි පුද්ගලයින් තුළ ඇත්තේ තම බුද්ධිය නීති විරෝධී මාර්ගයක මෙහෙයවීමේ මනෝභාවයකි. මෙහිදී ඔවුන්ගේ මනස ක්‍රියාත්මක වන්නේ අභියෝග ජය ගැනීමේ ආවේගයකිනි. එම අභියෝගය බොහෝ විට සමාජීය නීතියක් කඩ කිරීම තුළින් අත්කර ගනී. 
+​තවත් ප්‍රධාන සාධකයක් වන්නේ ආවේගශීලීත්වයයි. බාහිර උත්තේජකයන්ට ප්‍රතිචාර දැක්වීමේදී තමාට සිදුවන හානිය ගැන නොසිතා වහාම ක්‍රියාත්මක වීමේ ස්වභාවය බොහෝ අපරාධකරුවන් තුළ දැකිය හැකිය. මොළයේ තීරණ ගැනීමේ කොටස වන පූර්ව මස්තිෂ්ක බාහිකයේ සිදුවන රසායනික හෝ ව්‍යුහාත්මක වෙනස්කම් නිසා ක්ෂණික ආවේග පාලනය කිරීමට ඔවුන්ට නොහැකි වේ. බීමත්කම, මත්ද්‍රව්‍ය භාවිතය වැනි දේ මෙම තත්ත්වය තවත් උග්‍ර කරයි. මෙවැනි අවස්ථාවලදී ඔවුන්ගේ තර්කනය සම්පූර්ණයෙන්ම යටපත් වී ආවේගය පමණක් ඉස්මතු වේ.
+​එබැවින්, අපරාධකරුවෙකුගේ මනස නිවැරදි ලෙස වටහා ගැනීම යනු ඔහුව අනුමත කිරීම නොවේ. නමුත්, අනාගත අපරාධ වළක්වා ගැනීමට නම් මෙම මනෝවිද්‍යාත්මක තත්ත්වයන් හඳුනාගෙන ඒවාට පිළියම් යෙදීම අත්‍යවශ්‍ය වේ. දරුවෙකුගේ මනස පෝෂණය කිරීමේදී ඇතිවන හිඩැස් පුරවාලීම සහ සමාජීය අසාධාරණයන් අවම කිරීම තුළින් අපරාධකාරී මනසක් ඇතිවීම බොහෝ දුරට අවම කරගත හැකිය.
+​අවසාන වශයෙන්, අපරාධකරුවෙකුගේ මනස යනු ආලෝකය සහ අන්ධකාරය අතර සටන් කරන අභ්‍යන්තර ලෝකයකි. එය හුදෙක් නපුරුකම පමණක් නොව, නොසලකා හැරීම්, මානසික රෝග, පාරිසරික බලපෑම් සහ පෞරුෂ ගැටලුවල එකතුවකි. මනෝවිද්‍යාත්මක විග්‍රහයකින් අපට ලැබෙන හොඳම දායාදය නම්, අපරාධකරු ද මිනිසෙකු ලෙස හඳුනාගෙන, එම මනස තුළ සිදුවන කැළඹීම් දෙස තර්කානුකූලව බැලීමට පුරුදු වීමයි. එමඟින් පමණක් අපට නීතිය ක්‍රියාත්මක කිරීමේදී මෙන්ම අපරාධ වැළැක්වීමේදී ද වඩාත් මානුෂීය සහ ඵලදායී විසඳුම් කරා ළඟා විය හැකිය.
+                </p>
+                <button class="inline-close-btn"><i class="fas fa-times"></i> Close Article</button>
+                <div class="card-footer">
+                    <button class="read-btn">Read More</button>
+                    <button class="like-btn" onclick="toggleLike(this)"><i class="far fa-heart"></i> <span class="like-count">03</span></button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="no-results" id="noResults" style="text-align: center; display: none; padding: 40px; color: var(--text-muted);">
+            <i class="fas fa-search-minus" style="font-size: 30px; display: block; margin-bottom: 10px;"></i>
+            ඔබ සෙවූ ලිපිය මෙහි හමු වූයේ නැත.
+        </div>
+    </section>
+
+    <!-- පරිගණක සඳහා Modal Overlay (85% Width) -->
+    <div class="modal-overlay" id="desktopModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+            <div class="modal-body">
+                <h2 id="modalTitle">Article Title</h2>
+                <div class="modal-meta">
+                    <span id="modalDate"><i class="far fa-calendar"></i> Date</span>
+                    <span id="modalRead"><i class="far fa-clock"></i> Read Time</span>
+                </div>
+                <div class="modal-text" id="modalText">
+                    Article Full Text...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- පාදම (Footer) -->
+    <footer>
+        <p>&copy; 2026 KMx Education. All Rights Reserved. Smart Book & Article Store.</p>
+    </footer>
+
+    <!-- JAVASCRIPT කේත කොටස -->
+    <script>
+        // --- 1. ජංගම දුරකථන මෙනුව (Mobile Menu Toggle) ---
+        const menuToggle = document.getElementById('menuToggle');
+        const navContainer = document.getElementById('navContainer');
+        const menuIcon = menuToggle.querySelector('i');
+
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('open');
+            if(navContainer.classList.contains('open')) {
+                menuIcon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                menuIcon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // --- 2. ඩාර්ක් මෝඩ් සහ ලයිට් මෝඩ් මාරු කිරීම (Default: Light Mode Off) ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        const toggleText = document.getElementById('toggleText');
+
+        themeBtn.addEventListener('click', () => {
+            let currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                toggleText.textContent = "Dark Mode";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                toggleText.textContent = "Light Mode";
+            }
+            navContainer.classList.remove('open');
+            menuIcon.classList.replace('fa-xmark', 'fa-bars');
+        });
+
+        // --- 3. රියල් ටයිම් ලයික් පද්ධතිය (Real-Time Like System) ---
+        function toggleLike(button) {
+            const likeCountSpan = button.querySelector('.like-count');
+            const heartIcon = button.querySelector('i');
+            let currentLikes = parseInt(likeCountSpan.textContent);
+
+            if (button.classList.contains('liked')) {
+                button.classList.remove('liked');
+                heartIcon.classList.replace('fas', 'far');
+                likeCountSpan.textContent = currentLikes - 1;
+            } else {
+                button.classList.add('liked');
+                heartIcon.classList.replace('far', 'fas');
+                likeCountSpan.textContent = currentLikes + 1;
+            }
+        }
+
+        // --- 4. RESPONSIVE READ MORE / CLOSE ARTICLE TOGGLE ---
+        const readButtons = document.querySelectorAll('.read-btn');
+        const desktopModal = document.getElementById('desktopModal');
+        const modalClose = document.getElementById('modalClose');
+        const inlineCloseBtns = document.querySelectorAll('.inline-close-btn');
+
+        // Modal Elements
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDate = document.getElementById('modalDate');
+        const modalRead = document.getElementById('modalRead');
+        const modalText = document.getElementById('modalText');
+
+        readButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.article-card');
+                const title = card.querySelector('.article-title').textContent;
+                const snippet = card.querySelector('.article-snippet').textContent;
+                const metaDate = card.querySelector('.article-meta span:first-child').innerHTML;
+                const metaRead = card.querySelector('.article-meta span:last-child').innerHTML;
+
+                // ජංගම දුරකථන තිරයක් නම් (Mobile Mode <= 768px)
+                if (window.innerWidth <= 768) {
+                    const isAlreadyExpanded = card.classList.contains('inline-expanded');
+                    
+                    // අනෙකුත් සියලුම කාඩ්පත් වසා දමා ඒවායේ බොත්තම් "Read More" තත්ත්වයට පත් කරයි
+                    document.querySelectorAll('.article-card').forEach(c => {
+                        if (c !== card) {
+                            c.classList.remove('inline-expanded');
+                            c.querySelector('.read-btn').innerHTML = 'Read More';
+                        }
+                    });
+
+                    // වත්මන් කාඩ්පත toggle කිරීම සහ බොත්තම "Close Article" බවට පත් කිරීම
+                    if (!isAlreadyExpanded) {
+                        card.classList.add('inline-expanded');
+                        btn.innerHTML = '<i class="fas fa-times"></i> Close Article';
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        card.classList.remove('inline-expanded');
+                        btn.innerHTML = 'Read More';
+                    }
+                } else {
+                    // පරිගණක තිරයක් නම් (Desktop: 85% Modal Popup එකක් ලෙස පෙන්වීම)
+                    modalTitle.textContent = title;
+                    modalDate.innerHTML = metaDate;
+                    modalRead.innerHTML = metaRead;
+                    modalText.textContent = snippet;
+                    
+                    desktopModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // පසුබිම scroll වීම වැළැක්වීමට
+                }
+            });
+        });
+
+        // ජංගම දුරකථන වල පහලින් ඇති වෙනම Close බොත්තම එබූ විටද බොත්තමේ අකුරු "Read More" බවට හැරවීම
+        inlineCloseBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.article-card');
+                card.classList.remove('inline-expanded');
+                card.querySelector('.read-btn').innerHTML = 'Read More';
+            });
+        });
+
+        // පරිගණක Modal එක වසා දැමීම
+        modalClose.addEventListener('click', closeDesktopModal);
+        desktopModal.addEventListener('click', (e) => {
+            if (e.target === desktopModal) closeDesktopModal();
+        });
+
+        function closeDesktopModal() {
+            desktopModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // --- 5. සජීවී ලිපි සෙවුම් පද්ධතිය (Live Article Search Logic) ---
+        const articleSearch = document.getElementById('articleSearch');
+        const articleCards = document.querySelectorAll('.article-card');
+        const noResults = document.getElementById('noResults');
+
+        articleSearch.addEventListener('input', () => {
+            const searchText = articleSearch.value.toLowerCase().trim();
+            let matchesFound = 0;
+
+            articleCards.forEach(card => {
+                const title = card.querySelector('.article-title').textContent.toLowerCase();
+                const snippet = card.querySelector('.article-snippet').textContent.toLowerCase();
+
+                if (title.includes(searchText) || snippet.includes(searchText)) {
+                    card.style.display = 'flex';
+                    matchesFound++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (matchesFound === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

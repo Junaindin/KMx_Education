@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMx Online Store - Job Apply Form</title>
+    <style>
+        /* CSS Variables - Light Mode (Default) */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #2563eb;
+            --border-color: #cccccc;
+            --input-bg: #ffffff;
+        }
+
+        /* CSS Variables - Dark Mode */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #3b82f6;
+            --border-color: #444444;
+            --input-bg: #2d2d2d;
+        }
+
+        /* සාමාන්‍ය පිටුවේ මෝස්තර */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Dark Mode Button Styles */
+        .theme-toggle-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .theme-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Header Styles */
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+            opacity: 0.8;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            box-sizing: border-box;
+        }
+
+        /* Phone/Laptop/Tab Responsive Flex Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Payment Fields Hiding Mechanism */
+        .dynamic-field {
+            display: none;
+            background: rgba(0,0,0,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Dark Mode Toggle Button -->
+    <div class="theme-toggle-container">
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Header Section -->
+    <h1>KMx Online Store</h1>
+    <p class="subtitle">KMx Online Job Apply Form - පොත් අලෙවිකරුවන් ලියාපදිංචි කිරීමේ පෝරමය</p>
+
+    <!-- Main Registration Form -->
+    <form id="registrationForm">
+        
+        <!-- Name Fields -->
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="firstName">මුල් නම (First Name)*</label>
+                <input type="text" id="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">අවසාන නම (Last Name)*</label>
+                <input type="text" id="lastName" required>
+            </div>
+        </div>
+
+        <!-- Personal Info -->
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="dob">උපන්දිනය (Date of Birth)*</label>
+                <input type="date" id="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="age">වයස (Age)*</label>
+                <input type="number" id="age" required>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="nic">NIC අංකය*</label>
+                <input type="text" id="nic" required>
+            </div>
+            <div class="form-group">
+                <label for="district">දිස්ත්‍රික්කය*</label>
+                <input type="text" id="district" required>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="phone">දුරකථන අංකය*</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="whatsapp">WhatsApp අංකය*</label>
+                <input type="tel" id="whatsapp" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">විද්‍යුත් තැපෑල (Email)*</label>
+            <input type="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">ලිපිනය (Address)*</label>
+            <textarea id="address" rows="3" required></textarea>
+        </div>
+
+        <!-- Checkboxes Section -->
+        <div class="form-group">
+            <label>🎀 අමතර විස්තර (අදාළ ඒවා ටික් කරන්න)</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="prevExp" value="ඔවු">
+                    <label for="prevExp" style="font-weight:normal;">මීට කලින් Online Job කරලා තිබේද?</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="hasPhone" value="ඔවු">
+                    <label for="hasPhone" style="font-weight:normal;">දුරකථනයක් තිබේද?</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="hasComputer" value="ඔවු">
+                    <label for="hasComputer" style="font-weight:normal;">පරිගණකයක් තිබේද?</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="form-group">
+            <label for="paymentMethod">🎀 මුදල් ලබාගැනීමට කැමති ක්‍රමය*</label>
+            <select id="paymentMethod" onchange="handlePaymentChange()" required>
+                <option value="">-- තෝරන්න --</option>
+                <option value="Bank Deposit">Bank Deposit</option>
+                <option value="Phone Reload">Phone Reload</option>
+            </select>
+        </div>
+
+        <!-- Dynamic Fields for Bank Deposit -->
+        <div id="bankFields" class="dynamic-field">
+            <h4>බැංකු විස්තර</h4>
+            <div class="form-group">
+                <label for="accNo">Account Number</label>
+                <input type="text" id="accNo">
+            </div>
+            <div class="form-group">
+                <label for="accName">Account Name</label>
+                <input type="text" id="accName">
+            </div>
+            <div class="form-group">
+                <label for="branch">Branch Name</label>
+                <input type="text" id="branch">
+            </div>
+            <div class="form-group">
+                <label for="bankPhone">Phone Number</label>
+                <input type="tel" id="bankPhone">
+            </div>
+        </div>
+
+        <!-- Dynamic Fields for Phone Reload -->
+        <div id="reloadFields" class="dynamic-field">
+            <h4>Reload විස්තර</h4>
+            <div class="form-group">
+                <label for="reloadPhone">Phone Number</label>
+                <input type="tel" id="reloadPhone">
+            </div>
+            <div class="form-group">
+                <label for="reloadName">Name</label>
+                <input type="text" id="reloadName">
+            </div>
+            <div class="form-group">
+                <label for="reloadEmail">Email</label>
+                <input type="email" id="reloadEmail">
+            </div>
+            <div class="form-group">
+                <label for="reloadAddress">Address</label>
+                <input type="text" id="reloadAddress">
+            </div>
+        </div>
+
+        <!-- Advanced Section: Preferred Categories -->
+        <div class="form-group">
+            <label for="bookPref">විකිණීමට කැමති පොත් වර්ග (Advanced Selection)</label>
+            <select id="bookPref">
+                <option value="සියල්ල">සියලුම වර්ගවල පොත්</option>
+                <option value="නාවලකතා">නවකතා / ශාස්ත්‍රීය</option>
+                <option value="අධ්‍යාපනික">අධ්‍යාපනික / ළමා පොත්</option>
+                <option value="පරිවර්තන">පරිවර්තන පොත්</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">ලියාපදිංචි වන්න (Submit)</button>
+
+    </form>
+</div>
+
+<script>
+    // 1. Dark Mode Toggle Script
+    function toggleTheme() {
+        const body = document.documentElement;
+        const currentTheme = body.getAttribute('data-theme');
+        const themeBtn = document.getElementById('themeBtn');
+
+        if (currentTheme === 'dark') {
+            body.removeAttribute('data-theme');
+            themeBtn.innerText = '🌙 Dark Mode';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.innerText = '☀️ Light Mode';
+        }
+    }
+
+    // 2. Dynamic Form Fields Script (Payment Method)
+    function handlePaymentChange() {
+        const method = document.getElementById('paymentMethod').value;
+        const bankFields = document.getElementById('bankFields');
+        const reloadFields = document.getElementById('reloadFields');
+
+        bankFields.style.display = (method === 'Bank Deposit') ? 'block' : 'none';
+        reloadFields.style.display = (method === 'Phone Reload') ? 'block' : 'none';
+    }
+
+    // 3. Form Submission & Direct Email Logic (No Alert Box)
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // පිටුව Reload වීම වළක්වයි
+
+        // සියලුම Data එකතු කරගැනීම
+        const fName = document.getElementById('firstName').value;
+        const lName = document.getElementById('lastName').value;
+        const dob = document.getElementById('dob').value;
+        const age = document.getElementById('age').value;
+        const nic = document.getElementById('nic').value;
+        const district = document.getElementById('district').value;
+        const phone = document.getElementById('phone').value;
+        const whatsapp = document.getElementById('whatsapp').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+
+        // Checkboxes Validation
+        const prevExp = document.getElementById('prevExp').checked ? 'ඔවු' : 'නැත';
+        const hasPhone = document.getElementById('hasPhone').checked ? 'ඔවු' : 'නැත';
+        const hasComputer = document.getElementById('hasComputer').checked ? 'ඔවු' : 'නැත';
+
+        // Payment Details Gathering
+        const payMethod = document.getElementById('paymentMethod').value;
+        let payDetails = "";
+
+        if(payMethod === 'Bank Deposit') {
+            payDetails = `\n-- Bank Details --\nAccount No: ${document.getElementById('accNo').value}\nAccount Name: ${document.getElementById('accName').value}\nBranch: ${document.getElementById('branch').value}\nBank Phone: ${document.getElementById('bankPhone').value}`;
+        } else if(payMethod === 'Phone Reload') {
+            payDetails = `\n-- Reload Details --\nReload Phone: ${document.getElementById('reloadPhone').value}\nName: ${document.getElementById('reloadName').value}\nEmail: ${document.getElementById('reloadEmail').value}\nAddress: ${document.getElementById('reloadAddress').value}`;
+        }
+
+        const bookPref = document.getElementById('bookPref').value;
+
+        // Email Body සකස් කිරීම
+        const emailBody = `KMx Online Store - Job Registration Details:\n\n` +
+            `නම: ${fName} ${lName}\n` +
+            `උපන්දිනය: ${dob}\n` +
+            `වයස: ${age}\n` +
+            `NIC: ${nic}\n` +
+            `දිස්ත්‍රික්කය: ${district}\n` +
+            `දුරකථන: ${phone}\n` +
+            `WhatsApp: ${whatsapp}\n` +
+            `Email: ${email}\n` +
+            `ලිපිනය: ${address}\n\n` +
+            `-- අමතර විස්තර --\n` +
+            `කලින් Online Job කර තිබේද: ${prevExp}\n` +
+            `දුරකථනයක් තිබේද: ${hasPhone}\n` +
+            `පරිගණකයක් තිබේද: ${hasComputer}\n\n` +
+            `ගෙවීම් ක්‍රමය: ${payMethod}` + payDetails + `\n\n` +
+            `කැමති පොත් කාණ්ඩය: ${bookPref}`;
+
+        const subject = encodeURIComponent(`KMx Online Job Application - ${fName} ${lName}`);
+        const body = encodeURIComponent(emailBody);
+
+        // කෙලින්ම User ගේ Email App එක open කර විස්තර mailto හරහා යැවීම
+        window.location.href = `mailto:application2026k@gmail.com?subject=${subject}&body=${body}`;
+    });
+</script>
+
+</body>
+</html>
